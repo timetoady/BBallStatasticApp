@@ -5,6 +5,7 @@ let Player = new Schema({
     name: String,
     number: Number,
     height: String,
+    weight: Number,
     position: String,
     class: {type: String, default: "Freshman"},
     hometown: String,

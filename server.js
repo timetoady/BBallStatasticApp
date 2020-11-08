@@ -20,8 +20,14 @@ app.use(express.static("src"));
 app.use(bodyParser.urlencoded({ extended: false }));
 app.use(bodyParser.json());
 
-app.use("/todos", todoRoutes);
-app.use("/categories", categoryRoutes);
+
+//define routes
+const playerRoutes = require("./routes/playerRoutes");
+const statRoutes = require("./routes/statRoutes");
+
+//route middleware
+app.use("/players", playerRoutes);
+app.use("/stats", statRoutes);
 
 
 app.listen(port, () => {

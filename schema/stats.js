@@ -12,21 +12,19 @@ let Stats = new Schema({
     ftm: Number,
     assists: Number,
     steals: Number,
-    shots: Number,
-    makes: Number,
     blocks: Number,
     fouls: Number,
     tos: Number,
     off: Number,
     def: Number,
-    reb: {type: Number, default: () => this.off + this.def},
-    ppg: {type: Number, default: () => this.points / this.gp},
-    apg: {type: Number, default: () => this.assists / this.gp},
-    rpg: {type: Number, default: () => this.reb / this.gp},
-    spg: {type: Number, default: () => this.steals / this.gp},
-    bpg:{type: Number, default: () => this.blocks / this.gp},
+    reb: {type: Number, default: function() {return this.off + this.def}},
+    ppg: {type: Number, default: function() {return this.points / this.gp}},
+    apg: {type: Number, default: function() {return this.assists / this.gp}},
+    rpg: {type: Number, default: function() {return this.reb / this.gp}},
+    spg: {type: Number, default: function() {return this.steals / this.gp}},
+    bpg: {type: Number, default: function() {return this.blocks / this.gp}},
+    fgam: {type: String, default: function() {return `${this.fgm} - ${this.fga}`}},
 
-    fgPER: {type: String, default: () => `${this.fgm} - ${this.fga}`},
 
   });
   
