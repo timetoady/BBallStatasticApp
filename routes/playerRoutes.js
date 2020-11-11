@@ -52,5 +52,40 @@ router.get("/", (req, res) => {
   });
 
 
+//Delete a player by id
+router.delete("/:id", (req, res) => {
+  playerID = req.params.id
+  Player.deleteOne({ _id: playerID}, (err) => {
+    err
+      ? res.send(`Error! ${err}`)
+      : res.send(`Player ID ${req.params.id} removed`);
+  }).then(Stats.deleteOne({player: playerID}, (err) =>{
+    if (err) res.send(`Error! ${err}`)
+  }));
+});
+
+//Delete all players
+router.delete("/purge/all", (req, res) => {
+  Player.deleteMany({ "__v": 0 }, (err) => {
+    err
+      ? res.send(`Error! ${err}`)
+      : res.send(`Deleted ${res.deletedCount} players.`);
+  })
+});
+
+//Find and change Player key's value by id via direct params
+router.put("/:id/:key/:value", (req, res) => {
+  const { id, key, value } = req.params;
+  data = { [key]: value };
+  Player.findByIdAndUpdate(id, data, { new: true }, function (
+    err,
+    player
+  ) {
+    err ? res.send(`Put method says: Error! ${err}`) : res.json(player);
+  });
+});
+
+
+
 
   module.exports = router;
