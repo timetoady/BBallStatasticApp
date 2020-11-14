@@ -58,7 +58,7 @@ router.delete("/:id", (req, res) => {
   Player.deleteOne({ _id: playerID}, (err) => {
     err
       ? res.send(`Error! ${err}`)
-      : res.send(`Player ID ${req.params.id} removed`);
+      : res.send(`Player ID ${playerID} removed`);
   }).then(Stats.deleteOne({player: playerID}, (err) =>{
     if (err) res.send(`Error! ${err}`)
   }));
@@ -66,10 +66,10 @@ router.delete("/:id", (req, res) => {
 
 //Delete all players
 router.delete("/purge/all", (req, res) => {
-  Player.deleteMany({ "__v": 0 }, (err) => {
+  Player.deleteMany({  }, (err, result) => {
     err
       ? res.send(`Error! ${err}`)
-      : res.send(`Deleted ${res.deletedCount} players.`);
+      : res.send(`Deleted ${result.deletedCount} players.`);
   })
 });
 
@@ -84,8 +84,6 @@ router.put("/:id/:key/:value", (req, res) => {
     err ? res.send(`Put method says: Error! ${err}`) : res.json(player);
   });
 });
-
-
 
 
   module.exports = router;

@@ -3,9 +3,9 @@ const Schema = mongoose.Schema;
 
 let Player = new Schema({
     name: String,
-    number: Number,
+    number: {type: Number, min: 0},
     height: String,
-    weight: Number,
+    weight: {type: Number, min: 0},
     position: String,
     class: {type: String, default: "Freshman"},
     hometown: String,

@@ -42,7 +42,7 @@ router.post("/", (req, res) => {
         ? res.send(`Looks like we've got an Error in create stats: ${err}`)
         : Player.findByIdAndUpdate(
             stats.player,
-            { "stats": stats._id },
+            { stats: stats._id },
             { new: true },
             function (err, player) {
               err
@@ -66,11 +66,11 @@ router.delete("/:id", (req, res) => {
 //Delete all stats
 
 router.delete("/purge/all", (req, res) => {
-  Stats.deleteMany({ __v: 0 }, (err) => {
+  Stats.deleteMany({ }, (err, result) => {
     err
       ? res.send(`Error! ${err}`)
-      : res.send(`Deleted ${res.deletedCount} categories.`);
-  }).then(Player.updateMany({ __v: 0 }, { "stats": " " }), (err) => {
+      : res.send(`Deleted all players' stats. Count: ${result.deletedCount}`);
+  }).then(Player.updateMany({ }, { stats: " " }), (err) => {
     err
       ? res.send(`Error here! ${err}`)
       : res.send(`Added single blank category.`);
@@ -78,7 +78,7 @@ router.delete("/purge/all", (req, res) => {
 });
 
 //Find and change player's stat by stat id via direct params
-router.put("/changeStat/:id/:key/:value", (req, res) => {
+router.put("/changeBaseStat/:id/:key/:value", (req, res) => {
   const { id, key, value } = req.params;
   data = { [key]: value };
   Stats.findByIdAndUpdate(id, data, { new: true }, function (err, player) {
@@ -87,13 +87,45 @@ router.put("/changeStat/:id/:key/:value", (req, res) => {
 });
 
 //Edit/update all players by adding a global Stat category
-
-router.put("/statToAll/:key/:value", (req, res) => {
+router.put("/addUniqueStatToAll/:key/:value", (req, res) => {
   const { key, value } = req.params;
   data = { [key]: value };
-  Stats.updateMany({ __v: 0 }, data, function (err, stats) {
-    err ? res.send(`Stat to all method says: Error! ${err}`) : res.json(stats);
+  Stats.updateMany({ }, {$addToSet: {otherProps: data}}, function (err, stats) {
+    let status = ""
+    stats.ok === 0 ? status = false : status = true;
+    err
+      ? res.send(`Stat to all method says: Error! ${err}`)
+      : res.send(
+          `Successful: ${status}. Matches found: ${stats.n}. Matches changed: ${stats.nModified}`
+        );
   });
 });
+
+//Edit/update all players by removing a global Stat category
+router.put("/removeUniqueStatFromAll/:key/", (req, res) => {
+  const { key } = req.params;
+  data = { [key]: {$gte: 0} };
+  Stats.updateMany({ }, {$pull: {otherProps: data}}, function (err, stats) {
+    let status = ""
+    stats.ok === 0 ? status = false : status = true;
+    err
+      ? res.send(`Stat to all method says: Error! ${err}`)
+      : res.send(
+          `Successful: ${status}. Matches found: ${stats.n}. Matches changed: ${stats.nModified}`
+        );
+  });
+});
+
+
+//Update one unique stat
+router.put("/updateUniqueStat/:statID/:statName/:oldValue/:newValue", (req, res) => {
+  const { statID, statName, oldValue, newValue } = req.params
+  updateItem = `otherProps.$.${statName}`
+  console.log(updateItem)
+  console.log(newValue)
+  Stats.findOneAndUpdate({_id: statID}, {updateItem: newValue}, {new: true}, function(err, result){
+    err ? res.send(`Survey says: Error! ${err}`) : res.json(result);
+  })
+})
 
 module.exports = router;
