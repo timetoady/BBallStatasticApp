@@ -2,9 +2,9 @@ const mongoose = require("mongoose");
 const Schema = mongoose.Schema;
 
 let Player = new Schema({
-    name: String,
-    number: {type: Number, min: 0},
-    height: String,
+    name: {type: String, required: true},
+    number: {type: Number, min: 0, required: true},
+    height: {type: String, required: true},
     weight: {type: Number, min: 0},
     position: String,
     class: {type: String, default: "Freshman"},

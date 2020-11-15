@@ -28,7 +28,7 @@ router.post("/", (req, res) => {
           ? res.send(`Sorry, looks like we've got an Error: ${err}`)
           : Player.find((err, stats) => {
               checkError(err, res);
-            })
+            }).sort({number: 1})
               .populate("stats")
               .exec(function (err, todo) {
                 err
