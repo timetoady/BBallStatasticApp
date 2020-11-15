@@ -1,0 +1,40 @@
+html, body{
+    margin: 0;
+    padding: 0;
+}
+
+.container{
+margin: .5rem;
+}
+
+header h1{
+    font-size: 3rem;
+    font-family: 'Lato', sans-serif;
+    margin: .2rem 0 0 0;
+}
+
+header h3{
+    font-size: 1.28rem;
+    font-family: 'Open Sans', sans-serif;
+    margin-top: 0;
+}
+
+.teamTitle{
+    text-align: center;
+    font-family: 'Lato', sans-serif;
+}
+
+.indexButtons{
+    display: flex;
+    flex-direction: column;
+}
+
+.indexButtons button{
+    font-family: 'Open Sans', sans-serif;
+    background-color: #cc5500;
+    padding: .5rem;
+    font-size: 1rem;
+    font-weight: 700;
+    margin: .4rem 0;
+    border-radius: 8px;
+}
