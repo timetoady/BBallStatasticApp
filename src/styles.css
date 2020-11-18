@@ -4,7 +4,8 @@ html, body{
 }
 
 .container{
-margin: .5rem;
+padding: .25rem;
+
 }
 
 header h1{
@@ -27,6 +28,7 @@ header h3{
 .indexButtons{
     display: flex;
     flex-direction: column;
+
 }
 
 .indexButtons button{
@@ -36,5 +38,115 @@ header h3{
     font-size: 1rem;
     font-weight: 700;
     margin: .4rem 0;
+    border: 2px solid black;
     border-radius: 8px;
+    cursor: pointer;
+
+}
+
+.indexButtons select{
+    padding: .5rem;
+    font-size: 1rem;
+}
+
+/* Player card styles */
+
+#team{
+    display: grid;
+    gap: .8rem;
+    margin-top: 1rem;
+}
+
+@media screen and (min-width: 503px) {
+    .container{
+        max-width: 1200px;
+        margin: 0 auto;
+        
+        }
+    #team{
+        grid-template-columns: 1fr 1fr 1fr 1fr 1fr;
+        max-width: 100%;
+    }
+    .indexButtons button, .indexButtons select{
+        font-size: 1.6rem;
+    }
+    .bottomDiv{
+        max-width: 100%;
+    }
+    .bottomDiv button{
+        margin: .2rem 4% !important;
+        width: 92%;
+    }
+    .indexButtons{
+        flex-direction: row;
+        justify-content: space-evenly;
+        align-items: center;
+    }
+    .bottomDiv p {
+        font-size: smaller;
+    }
+}
+
+.playerDiv{
+    display: flex;
+    flex-direction: column;
+    padding: .2rem;
+    max-width: 92vw;
+    
+}
+
+.topDiv{
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 1rem 0rem;
+    
+
+}
+
+.topDiv button{
+    font-family: 'Open Sans', sans-serif;
+    background-color: #cc5500;
+    border: 2px solid black;
+    font-size: .8rem;
+    padding: .75rem;
+    line-height: 1px;
+    font-weight: 700;
+    border-radius: 4px;
+    cursor: pointer;
+
+}
+
+.topDiv h3{
+    padding: .2rem 1rem;
+    border: 2px black solid;
+    font-family: 'Open Sans', sans-serif;
+    font-size: .8rem;
+}
+
+.bottomDiv{
+    border: black 2px solid;
+}
+
+.bottomDiv img{
+    max-width: 100%;
+    
+}
+
+.bottomDiv p {
+    margin: .25rem .75rem;
+}
+
+.bottomDiv button{
+    font-family: 'Open Sans', sans-serif;
+    background-color: #cc5500;
+    border: 2px solid black;
+    font-size: .8rem;
+    padding: .75rem;
+    line-height: 5px;
+    font-weight: 700;
+    border-radius: 4px;
+    margin: .25rem .75rem;
+    max-width: 82vw;
+    cursor: pointer;
 }

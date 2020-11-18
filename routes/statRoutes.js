@@ -23,6 +23,7 @@ router.post("/", (req, res) => {
   Stats.create(
     {
       player: req.body.player,
+      imgURL: req.body.imgURL,
       minutes: req.body.minutes,
       gp: req.body.gp,
       points: req.body.points,
@@ -37,6 +38,7 @@ router.post("/", (req, res) => {
       tos: req.body.tos,
       off: req.body.off,
       def: req.body.def,
+      otherStats: req.body.otherStats,
     },
     (err, stats) => {
       err
@@ -87,12 +89,11 @@ router.put("/changeBaseStat/:id/:key/:value", (req, res) => {
   });
 });
 
-
 //Edit/update all players by adding a global Stat category
 router.put("/addUniqueStatToAll/:key/:value", (req, res) => {
   const { key, value } = req.params;
   data = { [key]: value };
-  Stats.updateMany({}, { $addToSet: { otherProps: data } }, function (
+  Stats.updateMany({}, { $addToSet: { otherStats: data } }, function (
     err,
     stats
   ) {
@@ -109,10 +110,10 @@ router.put("/addUniqueStatToAll/:key/:value", (req, res) => {
 //Edit/update all players by removing a global Stat category
 router.put("/removeUniqueStatFromAll/:key", (req, res) => {
   const { key } = req.params;
-  data = { [key]: {$gte: 0} };
-  Stats.updateMany({ }, {$unset: {otherProps: data}}, function (err, stats) {
-    let status = ""
-    stats.ok === 0 ? status = false : status = true;
+  data = { [key]: { $gte: 0 } };
+  Stats.updateMany({}, { $unset: { otherStats: data } }, function (err, stats) {
+    let status = "";
+    stats.ok === 0 ? (status = false) : (status = true);
     err
       ? res.send(`Stat to all method says: Error! ${err}`)
       : res.send(
@@ -121,20 +122,46 @@ router.put("/removeUniqueStatFromAll/:key", (req, res) => {
   });
 });
 
-
 //Update one unique stat
 router.put("/updateUniqueStat/:statID/:statName/:newValue", (req, res) => {
   const { statID, statName, newValue } = req.params;
   data = { [statName]: { $gte: 0 } };
   newData = { [statName]: newValue };
-  Stats.updateOne({_id: statID}, { $unset: { otherProps: statName } }, function (err, stats) {
-   err 
-   ? res.send(`Error! ${err}`) 
-   : Stats.updateOne({_id: statID}, { $addToSet: { otherProps: newData } }, function (err, stats) {
-     err ? res.send(`Error, captain! ${err}`) : res.send(`Updated ${statName} for ID ${statID} to ${newValue}.`)
-   })
-  });
+  Stats.updateOne(
+    { _id: statID },
+    { $unset: { otherStats: statName } },
+    function (err, stats) {
+      err
+        ? res.send(`Error! ${err}`)
+        : Stats.updateOne(
+            { _id: statID },
+            { $addToSet: { otherStats: newData } },
+            function (err, stats) {
+              err
+                ? res.send(`Error, captain! ${err}`)
+                : res.send(
+                    `Updated ${statName} for ID ${statID} to ${newValue}.`
+                  );
+            }
+          );
+    }
+  );
 });
 
+//Add one unique stat
+router.put("/updateUniqueStat/:statID/:statName/:newValue", (req, res) => {
+  const { statID, statName, newValue } = req.params;
+  data = { [statName]: { $gte: 0 } };
+  newData = { [statName]: newValue };
+  Stats.updateOne(
+    { _id: statID },
+    { $addToSet: { otherStats: newData } },
+    function (err, stats) {
+      err
+        ? res.send(`Error, captain! ${err}`)
+        : res.send(`Updated ${statName} for ID ${statID} to ${newValue}.`);
+    }
+  );
+});
 
 module.exports = router;

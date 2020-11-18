@@ -24,7 +24,7 @@ let Stats = new Schema({
     spg: {type: Number, min: 0, default: function() {return this.steals / this.gp}},
     bpg: {type: Number, min: 0, default: function() {return this.blocks / this.gp}},
     fgam: {type: String, default: function() {return `${this.fgm} - ${this.fga}`}},
-    otherProps: [],
+    otherStats: [],
 
   });
   
