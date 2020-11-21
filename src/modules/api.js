@@ -72,3 +72,15 @@ export async function useAPIData(URL, method, modifier = " ") {
     }
   }
 
+  //PUT Add new stat category to all players
+  export async function addSpecialStat(key, value) {
+    try {
+      const response = await fetch("../stats/addUniqueStatToAll" + `/${key}/${value}`, {
+        method: "PUT",
+      });
+      const data = await response;
+      return data;
+    } catch (error) {
+      console.error(error);
+    }
+  }

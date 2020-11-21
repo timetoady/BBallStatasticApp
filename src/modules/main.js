@@ -20,57 +20,31 @@ Module 3:
 
 
 */
-
-import getAPIData, { useAPIData, deleteAPIData } from "./api.js";
-const teamDisplay = document.querySelector("#team");
-
+import getPlayers from './getPlayerData.js'
+import { addSpecialStat } from "./api.js";
 const players = "../players";
+const stats = "../stats"
 
-const getPlayers = (schema) => {
-  getAPIData(schema).then((data) => {
-    data.forEach((player) => {
-      let playerDiv = document.createElement("div");
-        playerDiv.setAttribute('class', 'playerDiv')
-      let topDiv = document.createElement("div");
-        topDiv.setAttribute('class', 'topDiv')
-        let editButton = document.createElement("button");
-            editButton.textContent = "EDIT"
-        let numberPlaque = document.createElement("h3");
-            numberPlaque.textContent = `#${player.number}`
-      let bottomDiv = document.createElement("div");
-        bottomDiv.setAttribute('class', 'bottomDiv')
-        let playerPic = document.createElement("img");
-            player.imgURL === 'https://pixabay.com/vectors/blank-profile-picture-mystery-man-973460/' 
-                ? playerPic.src = './assets/blankProfile.png'
-                : playerPic.src = player.imgURL;
-        let playerName = document.createElement("p");
-            playerName.textContent = `Name: ${player.name}`
-        let playerHeight = document.createElement("p");
-            playerHeight.textContent = `Height: ${player.height}`
-        let playerWeight = document.createElement("p");
-            playerWeight.textContent = `Weight: ${player.weight}`
-        let playerPosition = document.createElement("p");
-            playerPosition.textContent =`Position: ${player.position}`
-        let statButton = document.createElement("button");
-            statButton.textContent = "SEE STATS"
 
-      teamDisplay.appendChild(playerDiv)
-        playerDiv.appendChild(topDiv)
-            topDiv.appendChild(editButton)
-            topDiv.appendChild(numberPlaque)
-        playerDiv.appendChild(bottomDiv)
-            bottomDiv.appendChild(playerPic)
-            bottomDiv.appendChild(playerName)
-            bottomDiv.appendChild(playerHeight)
-            bottomDiv.appendChild(playerWeight)
-            bottomDiv.appendChild(playerPosition)
-            bottomDiv.appendChild(statButton)
-      
+getPlayers(players)
 
-      console.log(player.name);
-    });
-    console.log(data);
-  });
-};
+let addNewStatButton = document.querySelector('.addStatButton')
+let newStatInput = document.querySelector('.newStatInput')
 
-getPlayers(players);
+addNewStatButton.addEventListener('click', () =>{
+  console.log(newStatInput.value.toUpperCase())
+  let response = addSpecialStat(newStatInput.value.toUpperCase(), 0).then( ()=> {
+    console.log(response)
+    alert(`Message: ${response}`)
+    $('#addNewStat').modal('toggle')
+  })
+  
+})
+
+newStatInput.addEventListener("keydown", (event) => {
+  if (event.keyCode === 13) {
+    console.log(newStatInput.value.toUpperCase())
+    addSpecialStat(newStatInput.value, 0)
+    $('#addNewStat').modal('toggle')
+  }
+});

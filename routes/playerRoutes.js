@@ -12,6 +12,7 @@ router.post("/", (req, res) => {
     Player.create(
       {
         name: req.body.name,
+        teamName: req.body.teamName,
         number: req.body.number,
         height: req.body.height,
         weight: req.body.weight,
