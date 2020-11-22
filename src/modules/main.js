@@ -25,6 +25,5 @@ import addStatGlobal from './addGlobalStat.js'
 const players = "../players";
 const stats = "../stats"
 
-
 getPlayers(players)
 addStatGlobal()

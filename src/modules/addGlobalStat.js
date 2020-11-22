@@ -6,7 +6,11 @@ let addStatText = document.querySelector('.modalText')
 let closer = document.querySelector('.closer')
 let closer2 = document.querySelector('.closer2')
 
+
+
 export default function addStatGlobal()  {
+    
+
     closer.addEventListener('click', () => {
         addStatText.textContent = "Add a new stat to all players (defaults to zero)."
         addNewStatButton.style.display = 'block'; 
@@ -27,6 +31,10 @@ export default function addStatGlobal()  {
             addStatText.textContent = `Stat ${newStatInput.value.toUpperCase()} added to players.`;
             addNewStatButton.style.display = 'none';
             newStatInputBody.style.opacity = 0; 
+            $("#addNewStat").modal({
+                backdrop: 'static',
+                keyboard: false
+              });
           } else {
             addStatText.textContent = `Sorry, it looks like an error occured.`
           }  
@@ -43,6 +51,10 @@ export default function addStatGlobal()  {
               addStatText.textContent = `Stat ${newStatInput.value.toUpperCase()} added to all players.`;
               addNewStatButton.style.display = 'none';
               newStatInputBody.style.opacity = 0; 
+              $("#addNewStat").modal({
+                backdrop: 'static',
+                keyboard: false
+              });
             } else {
               addStatText.textContent = `Sorry, it looks like an error occured.`
             }  
