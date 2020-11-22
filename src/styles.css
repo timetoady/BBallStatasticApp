@@ -80,6 +80,9 @@ header h3{
     }
   } */
 
+  .spinner-border{
+      display: none;
+  }
 
 /* Player card styles */
 

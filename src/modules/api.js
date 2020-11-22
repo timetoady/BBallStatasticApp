@@ -1,5 +1,15 @@
 //API Methods
 
+export function hideSpinner() { 
+  document.querySelector('.spinner-border') 
+          .style.display = 'none'; 
+}  
+
+export function showSpinner() { 
+  document.querySelector('.spinner-border') 
+          .style.display = 'block'; 
+}  
+
 //General method
 export async function useAPIData(URL, method, modifier = " ") {
     try {
@@ -79,6 +89,7 @@ export async function useAPIData(URL, method, modifier = " ") {
         method: "PUT",
       });
       const data = await response;
+      if (response) hideSpinner()
       return data;
     } catch (error) {
       console.error(error);
