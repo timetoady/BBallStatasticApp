@@ -187,3 +187,47 @@ header h3{
     cursor: pointer;
 }
 
+/* Add/edit player pages styles */
+
+.editButtons{
+    display: flex;
+    justify-content: space-between;
+    
+}
+.editButtons button{
+    display: none;
+    font-family: 'Open Sans', sans-serif;
+    background-color: #cc5500;
+    border: 2px solid black;
+    font-weight: 700;
+    cursor: pointer;
+}
+
+.confirmRemovePlayer{
+    font-family: 'Open Sans', sans-serif;
+    background-color: #cc5500;
+    border: 2px solid black;
+    font-weight: 700;
+    border-radius: 4px;
+    margin: .25rem .75rem;
+}
+
+.playerPic{
+    max-width: 400px;
+}
+
+.editInputs{
+    border-top:    none;
+    border-right:  none;
+    border-bottom: 1px solid  black;
+    border-left:   none;
+}
+
+.editInputs::placeholder{
+    color: black;
+}
+
+#nameInput {
+    font-size: 2rem;
+    border: none;
+}
