@@ -2,6 +2,7 @@ import getAPIData, {showSpinner, hideSpinner} from "./api.js";
 
 
 const playerArea = document.querySelector("#playerArea")
+const playerStats = document.querySelector("#playerStats")
 const stats = "../stats"
 
 
@@ -9,7 +10,7 @@ export default function newPlayer() {
     
     let topDiv = document.createElement("div")
         playerArea.appendChild(topDiv)
-    let picDiv = document.createElement("div")
+        let picDiv = document.createElement("div")
         picDiv.setAttribute("class", "picDiv")
         topDiv.appendChild(picDiv)
         let playerPic = document.createElement('img')
@@ -20,7 +21,7 @@ export default function newPlayer() {
         let playerInfoDiv = document.createElement("div")
             playerInfoDiv.setAttribute("class", "playerInfoDiv")
             topDiv.appendChild(playerInfoDiv)
-            topDiv.setAttribute("class", "topDiv")
+            topDiv.setAttribute("class", "upperDiv")
             let nameAndNumberDiv = document.createElement("div")
                 nameAndNumberDiv.setAttribute("class", "nameAndNumberDiv")
                 playerInfoDiv.appendChild(nameAndNumberDiv)
@@ -32,7 +33,7 @@ export default function newPlayer() {
                     nameAndNumberDiv.appendChild(nameInput)
                 let number = document.createElement("input")
                     number.type = "text"
-                    number.placeholder = "Number"
+                    number.placeholder = "Num"
                     number.setAttribute('class', 'editInputs')
                     number.setAttribute('id', 'numberInput')
                     nameAndNumberDiv.appendChild(number)
@@ -43,7 +44,7 @@ export default function newPlayer() {
                         heightDiv.setAttribute("class", "heightDiv")
                         detailsDiv.appendChild(heightDiv)
                             let heightLabel = document.createElement("label")
-                                heightLabel.for = "height"
+                                heightLabel.setAttribute("for", "height")
                                 heightLabel.textContent = "Height:"
                                 heightDiv.appendChild(heightLabel)
                             let height = document.createElement("input")
@@ -54,7 +55,7 @@ export default function newPlayer() {
                         weightDiv.setAttribute("class", "weightDiv")
                         detailsDiv.appendChild(weightDiv)
                             let weightLabel = document.createElement("label")
-                                weightLabel.for = "weight"
+                                weightLabel.setAttribute("for", "weight")
                                 weightLabel.textContent = "Weight:"
                                 weightDiv.appendChild(weightLabel)
                             let weight = document.createElement("input")
@@ -64,7 +65,7 @@ export default function newPlayer() {
                     let positionDiv = document.createElement("div")
                         detailsDiv.appendChild(positionDiv)
                             let positionLabel = document.createElement("label")
-                                positionLabel.for = "position"
+                                positionLabel.setAttribute("for", "position")
                                 positionLabel.textContent = "Position:"
                                 positionDiv.appendChild(positionLabel)
                             let position = document.createElement("input")
@@ -74,7 +75,7 @@ export default function newPlayer() {
                     let classDiv = document.createElement("div")
                         detailsDiv.appendChild(classDiv)
                             let classLabel = document.createElement("label")
-                                classLabel.for = "class"
+                                classLabel.setAttribute("for", "classYear")
                                 classLabel.textContent = "Class:"
                                 classDiv.appendChild(classLabel)
                             let classYear = document.createElement("input")
@@ -84,7 +85,7 @@ export default function newPlayer() {
                     let hometownDiv = document.createElement("div")
                         detailsDiv.appendChild(hometownDiv)
                             let hometownLabel = document.createElement("label")
-                                hometownLabel.for = "hometown"
+                                hometownLabel.setAttribute("for", "hometown")
                                 hometownLabel.textContent = "Hometown:"
                                 hometownDiv.appendChild(hometownLabel)
                             let hometown = document.createElement("input")
@@ -94,7 +95,7 @@ export default function newPlayer() {
                     let rosterSeasonDiv = document.createElement("div")
                         detailsDiv.appendChild(rosterSeasonDiv)
                             let rosterSeasonLabel = document.createElement("label")
-                                rosterSeasonLabel.for = "rosterSeason"
+                                rosterSeasonLabel.setAttribute("for", "rosterSeason")
                                 rosterSeasonLabel.textContent = "Roster Season:"
                                 rosterSeasonDiv.appendChild(rosterSeasonLabel)
                             let rosterSeason = document.createElement("input")
@@ -104,7 +105,7 @@ export default function newPlayer() {
                     let roleDiv = document.createElement("div")
                         detailsDiv.appendChild(roleDiv)
                             let roleLabel = document.createElement("label")
-                                roleLabel.for = "role"
+                                roleLabel.setAttribute("for", "role")
                                 roleLabel.textContent = "Role:"
                                 roleDiv.appendChild(roleLabel)
                             let role = document.createElement("input")
@@ -113,66 +114,66 @@ export default function newPlayer() {
                                 roleDiv.appendChild(role)        
                     let starterDiv = document.createElement("div")
                         detailsDiv.appendChild(starterDiv)
+                            starterDiv.setAttribute("class", "starterDiv")
                             let starterLabel = document.createElement("label")
-                                starterLabel.for = "role"
+                                starterLabel.setAttribute("for", "starter")
                                 starterLabel.textContent = "Starter:"
                                 starterDiv.appendChild(starterLabel)
                             let starter = document.createElement("select")
                                 starter.textContent = "Starter"
                                 starterDiv.appendChild(starter)
-                                let starterYes = document.createElement("option")
-                                    starterYes.textContent = "Yes"
-                                    starterYes.value = true
-                                    starter.appendChild(starterYes)
                                 let starterNo = document.createElement("option")
                                     starterNo.textContent = "No"
                                     starterNo.value = false
                                     starter.appendChild(starterNo)
+                                let starterYes = document.createElement("option")
+                                    starterYes.textContent = "Yes"
+                                    starterYes.value = true
+                                    starter.appendChild(starterYes)
                                 starter.id = "starter"
+
                                 // starter.setAttribute('class', "editInputs")
                         
     let statsDiv = document.createElement("div")
-        playerArea.appendChild(statsDiv)
-        const statsTitle = document.createElement("h2")
-            statsTitle.textContent = "STATS"
-            statsDiv.appendChild(statsTitle)
+        statsDiv.setAttribute("class", "statsDiv")
+        playerStats.appendChild(statsDiv)
+         
         let spinner = document.createElement("div")
             spinner.class = "spinner-border"
             spinner.role = "status"
             spinner.innerHTML = (
-                
                 '<span class="sr-only">Loading...</span>'
-             
             )
-            statsDiv.appendChild(spinner)
+            const statTitle = document.querySelector(".statTitle")
+            statTitle.appendChild(spinner)
             showSpinner()
         getAPIData(stats).then((data) =>{
             hideSpinner()
-            console.log(data[0])
             for (const stat in data[0]){
                 if (stat !== "otherStats") {
+                    const extraStatDiv = document.createElement("div")
+                    extraStatDiv.setAttribute("class", `a${stat}Div`)
+                    statsDiv.appendChild(extraStatDiv)
                     let statLabel = document.createElement("label")
-                    statLabel.for = `${stat}`
-                    statLabel.textContent = `${stat}`
-                    statsDiv.appendChild(statLabel)
+                    statLabel.setAttribute('for', `${stat}Input`)
+                    statLabel.textContent = `${stat.toUpperCase()}:`
+                    extraStatDiv.appendChild(statLabel)
                     let aStat = document.createElement("input")
-                    aStat.id = `${stat}`
-                    aStat.setAttribute('class', "editInputs")
-                    statsDiv.appendChild(aStat)
+                    aStat.id = `${stat}Input`
+                    extraStatDiv.appendChild(aStat)
                 }
             }
             
             data[0]["otherStats"].forEach(extraStat => {
-                let count = 1
-                console.log(...Object.keys(extraStat))
-                console.log(count++)
+                const extraStatDiv2 = document.createElement("div")
+                statsDiv.appendChild(extraStatDiv2)
                 let statLabel = document.createElement("label")
-                statLabel.for = Object.keys(extraStat)
+                statLabel.setAttribute('for', `${Object.keys(extraStat)}Input`)
                 statLabel.textContent = Object.keys(extraStat)
-                statsDiv.appendChild(statLabel)
+                extraStatDiv2.appendChild(statLabel)
                 let aStat = document.createElement("input")
-                aStat.setAttribute('class', "editInputs")
-                statsDiv.appendChild(aStat)
+                aStat.id = `${Object.keys(extraStat)}Input`
+                extraStatDiv2.appendChild(aStat)
             })
         })
     }

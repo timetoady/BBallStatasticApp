@@ -1,26 +1,45 @@
-html, body{
+html,
+body {
     margin: 0;
     padding: 0;
+    line-height: 1;
 }
 
-.container{
-padding: .25rem;
-
+.container {
+    padding: .25rem;
+    margin: 0 auto !important;
+    align-items: center;
 }
 
-header h1{
+#container2 {
+    padding: .8rem;
+    margin: 0 auto;
+    max-width: 1200px;
+}
+
+header a {
+    text-decoration: none;
+    color: black;
+}
+
+header a:hover{
+    text-decoration: none;
+    color: black;
+}
+
+header h1 {
     font-size: 3rem;
     font-family: 'Lato', sans-serif;
     margin: .2rem 0 0 0;
 }
 
-header h3{
+header h3 {
     font-size: 1.28rem;
     font-family: 'Open Sans', sans-serif;
     margin-top: 0;
 }
 
-.addStatButton{
+.addStatButton {
     font-family: 'Open Sans', sans-serif;
     background-color: #cc5500;
     border: 2px solid black;
@@ -32,18 +51,18 @@ header h3{
     margin: .25rem .75rem;
 }
 
-.teamTitle{
+.teamTitle {
     text-align: center;
     font-family: 'Lato', sans-serif;
 }
 
-.indexButtons{
+.indexButtons {
     display: flex;
     flex-direction: column;
 
 }
 
-.indexButtons button{
+.indexButtons button {
     font-family: 'Open Sans', sans-serif;
     background-color: #cc5500;
     padding: .5rem;
@@ -56,90 +75,82 @@ header h3{
 
 }
 
-.indexButtons select{
+.indexButtons select {
     padding: .5rem;
     font-size: 1rem;
 }
 
-/* Modal styles */
-
-/* #addNewStat{
-    transition: all .3s ease-in;
-    animation: switchViews2 .3s ease-in-out;
+.spinner-border {
+    display: none;
 }
-
-@keyframes switchViews2 {
-    0% {
-      opacity:0;
-      transform: translateY(-100%) scale(1.5);
-  
-    }
-    100%{
-      opacity:1;
-      transform: translateY(0) scale(1.0);
-    }
-  } */
-
-  .spinner-border{
-      display: none;
-  }
 
 /* Player card styles */
 
-#team{
+#team {
     display: grid;
     gap: .8rem;
     margin-top: 1rem;
 }
 
+/* #playerStats{
+    max-width: 1300px;
+} */
+
 @media screen and (min-width: 503px) {
-    .container{
+    .container {
         max-width: 1200px;
         margin: 0 auto;
-        
-        }
-    #team{
+
+    }
+
+    #team {
         grid-template-columns: 1fr 1fr 1fr 1fr 1fr;
         max-width: 100%;
     }
-    .indexButtons button, .indexButtons select{
+
+    .indexButtons button,
+    .indexButtons select {
         font-size: 1.6rem;
     }
-    .bottomDiv{
+
+    .bottomDiv {
         max-width: 100%;
     }
-    .bottomDiv button{
+
+    .bottomDiv button {
         margin: .2rem 4% !important;
         width: 92%;
     }
-    .indexButtons{
+
+    .indexButtons {
         flex-direction: row;
         justify-content: space-evenly;
         align-items: center;
     }
+
     .bottomDiv p {
         font-size: smaller;
     }
 }
 
-.playerDiv{
+.playerDiv {
     display: flex;
     flex-direction: column;
     padding: .2rem;
     max-width: 92vw;
-    
+
 }
 
-.topDiv{
+.topDiv {
     display: flex;
     justify-content: space-between;
     align-items: center;
     padding: 1rem 0rem;
-    
+
 
 }
 
-.topDiv button{
+.topDiv button {
     font-family: 'Open Sans', sans-serif;
     background-color: #cc5500;
     border: 2px solid black;
@@ -152,7 +163,7 @@ header h3{
 
 }
 
-.topDiv h3{
+.topDiv h3 {
     padding: .3rem 1rem;
     border: 2px black solid;
     font-family: 'Open Sans', sans-serif;
@@ -160,20 +171,20 @@ header h3{
     margin: 0;
 }
 
-.bottomDiv{
+.bottomDiv {
     border: black 2px solid;
 }
 
-.bottomDiv img{
+.bottomDiv img {
     max-width: 100%;
-    
+
 }
 
 .bottomDiv p {
     margin: .25rem .75rem;
 }
 
-.bottomDiv button{
+.bottomDiv button {
     font-family: 'Open Sans', sans-serif;
     background-color: #cc5500;
     border: 2px solid black;
@@ -189,12 +200,13 @@ header h3{
 
 /* Add/edit player pages styles */
 
-.editButtons{
+.editButtons {
     display: flex;
     justify-content: space-between;
-    
+
 }
-.editButtons button{
+
+.editButtons button {
     display: none;
     font-family: 'Open Sans', sans-serif;
     background-color: #cc5500;
@@ -203,7 +215,7 @@ header h3{
     cursor: pointer;
 }
 
-.confirmRemovePlayer{
+.confirmRemovePlayer {
     font-family: 'Open Sans', sans-serif;
     background-color: #cc5500;
     border: 2px solid black;
@@ -212,22 +224,168 @@ header h3{
     margin: .25rem .75rem;
 }
 
-.playerPic{
-    max-width: 400px;
+.playerPic {
+    max-width: 375px;
+    padding-right: 1rem;
 }
 
-.editInputs{
-    border-top:    none;
-    border-right:  none;
-    border-bottom: 1px solid  black;
-    border-left:   none;
+.editInputs {
+    border-top: none;
+    border-right: none;
+    border-bottom: 1px solid black;
+    border-left: none;
 }
 
-.editInputs::placeholder{
+.editInputs::placeholder {
     color: black;
 }
 
 #nameInput {
     font-size: 2rem;
     border: none;
+}
+
+#numberInput {
+    border: 1px gray solid;
+    max-width: 5rem;
+    text-align: center;
+    font-size: 2rem;
+}
+
+/* Player Info Top Grid */
+
+.upperDiv {
+    display: flex;
+    margin-bottom: 1rem;
+}
+
+.nameAndNumberDiv {
+    display: flex;
+    justify-content: space-between;
+    margin-bottom: .75rem;
+}
+
+.statTitle{
+    display: flex;
+    justify-content: space-between;
+}
+
+.detailsDiv {
+    display: grid;
+    gap: .05rem 2rem;
+    grid-template-columns: 1fr 1fr;
+}
+
+.detailsDiv div{
+    display: flex;
+    max-width: 100%;
+    justify-content: space-between;
+
+}
+
+.starterDiv{
+    padding-top: .4rem;
+}
+
+.detailsDiv input{
+    width: 50%;
+    line-height: 1;
+    font-size: 1rem;
+    padding: .1rem;
+}
+
+.detailsDiv label{
+    margin: 0;
+    font-size: 1.2rem;
+}
+
+#starter{
+    font-family: 'Open Sans', sans-serif;
+    background-color: #cc5500;
+    border: 2px solid black;
+    font-weight: 700;
+    border-radius: 4px;
+}
+
+/* Player Info Bottom Grid */
+
+.statsDiv{
+    display: grid;
+    gap: .05rem 2rem;
+    grid-template-columns: 1fr 1fr 1fr;
+
+}
+
+
+.statsDiv input{
+    max-width: 20%;
+    font-size: .8rem;
+    padding: .1rem;
+    line-height: 1;
+}
+
+.statsDiv label{
+    margin: 0;
+    line-height: 1;
+}
+
+.statsDiv div{
+    display: flex;
+    max-width: 60%;
+    justify-content: space-between;
+
+}
+
+@media screen and (max-width: 769px) {
+    .upperDiv {
+        display: block;
+        margin: 1rem auto !important;
+
+    }
+
+    .statsDiv{
+        display: grid;
+        gap: .05rem 1rem;
+        grid-template-columns: 100% !important;
+    
+    }
+
+.playerPic{
+    max-width: 100%;
+    padding: .5rem;
+}
+    #nameInput {
+        font-size: 1.5rem;
+        max-width: 70%;
+    }
+
+    #numberInput {
+        border: 1px gray solid;
+        font-size: 1.5rem;
+        max-width: 30%;
+    }
+    .playerInfoDiv {
+        padding: .5rem;
+    }
+    .detailsDiv {
+        grid-template-columns: 1fr !important;
+    }
+    .statsDiv{
+        grid-template-columns: 1fr !important;
+        
+    }
+    .statsDiv div{
+        max-width: 100%;
+        padding: .5rem 0;
+    }
+    .statsDiv input{
+        max-width: 3rem;
+        font-size: 1.5rem;
+      
+        
+    }
+    .statsDiv label{
+        font-size: 2rem;
+    }
+    
 }
