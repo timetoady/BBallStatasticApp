@@ -92,9 +92,7 @@ header h3 {
     margin-top: 1rem;
 }
 
-/* #playerStats{
-    max-width: 1300px;
-} */
+
 
 @media screen and (min-width: 503px) {
     .container {
@@ -199,6 +197,17 @@ header h3 {
 }
 
 /* Add/edit player pages styles */
+
+.rejectDupMessage{
+    border-color: red;
+    background-color: rgba(214, 161, 161, 0.609);
+}
+
+.rejectDupMessage::placeholder {
+    color: red;
+    font-weight: 600;
+    
+}
 
 .editButtons {
     display: flex;

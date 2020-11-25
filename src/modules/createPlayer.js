@@ -5,6 +5,30 @@ const playerArea = document.querySelector("#playerArea")
 const playerStats = document.querySelector("#playerStats")
 const stats = "../stats"
 
+const itIsRequired = (input) => {
+input.addEventListener('blur', () => {
+    console.log("Blurred!")
+    console.log(input.value)
+    console.log(`It is: ${input.value.trim()}`)
+    if (input.value === null || input.value.trim() === ""){
+        
+        console.log("Input was empty!")
+        input.placeholder = "Required."
+        input.classList.remove("rejectDupMessage");
+        void input.offsetWidth;
+        input.classList.add("rejectDupMessage");
+        input.value = null;    
+}})
+
+input.addEventListener('focus', () => {
+    input.classList.remove("rejectDupMessage");
+    input.style.color = "black"
+    input.placeholder = ""
+})
+
+}
+
+
 
 export default function newPlayer() {
     
@@ -27,15 +51,17 @@ export default function newPlayer() {
                 playerInfoDiv.appendChild(nameAndNumberDiv)
                 let nameInput = document.createElement("input")
                     nameInput.type = "text"
-                    nameInput.placeholder = "Player Name"
+                    nameInput.placeholder = "Player Name*"
                     nameInput.setAttribute('class', 'editInputs')
                     nameInput.setAttribute('id', 'nameInput')
                     nameAndNumberDiv.appendChild(nameInput)
+                    itIsRequired(nameInput)
                 let number = document.createElement("input")
                     number.type = "text"
-                    number.placeholder = "Num"
+                    number.placeholder = "Num*"
                     number.setAttribute('class', 'editInputs')
                     number.setAttribute('id', 'numberInput')
+                    itIsRequired(number)
                     nameAndNumberDiv.appendChild(number)
             let detailsDiv = document.createElement("div")
                 detailsDiv.setAttribute("class", "detailsDiv")
@@ -45,11 +71,12 @@ export default function newPlayer() {
                         detailsDiv.appendChild(heightDiv)
                             let heightLabel = document.createElement("label")
                                 heightLabel.setAttribute("for", "height")
-                                heightLabel.textContent = "Height:"
+                                heightLabel.textContent = "Height:*"
                                 heightDiv.appendChild(heightLabel)
                             let height = document.createElement("input")
                                 height.id = "height"
                                 height.setAttribute('class', "editInputs")
+                                itIsRequired(height)
                                 heightDiv.appendChild(height)
                     let weightDiv = document.createElement("div")
                         weightDiv.setAttribute("class", "weightDiv")

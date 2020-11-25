@@ -3,7 +3,7 @@ const Schema = mongoose.Schema;
 
 let Player = new Schema({
     name: {type: String, required: true},
-    teamName: {type: String, min: 1, max: 50, required: true},
+    teamName: {type: String, min: 1, max: 50},
     imgURL: {type: String, default: "https://pixabay.com/vectors/blank-profile-picture-mystery-man-973460/"},
     number: {type: Number, min: 0, required: true},
     height: {type: String, required: true},
