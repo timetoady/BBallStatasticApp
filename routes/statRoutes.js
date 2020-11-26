@@ -164,4 +164,18 @@ router.put("/updateUniqueStat/:statID/:statName/:newValue", (req, res) => {
   );
 });
 
+//Add set of unique stats
+router.put("/updateUniqueStats/:statID/", (req, res) => {
+    newStats = req.body
+   Stats.updateOne(
+    { _id: statID },
+    { $addToSet: { newStats } },
+    function (err, stats) {
+      err
+        ? res.send(`Error, captain! ${err}`)
+        : res.send(`Updated ${statName} for ID ${statID} to ${newValue}.`);
+    }
+  );
+});
+
 module.exports = router;

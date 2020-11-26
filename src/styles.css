@@ -17,6 +17,8 @@ body {
     max-width: 1200px;
 }
 
+
+
 header a {
     text-decoration: none;
     color: black;
@@ -199,12 +201,12 @@ header h3 {
 /* Add/edit player pages styles */
 
 .rejectDupMessage{
-    border-color: red;
-    background-color: rgba(214, 161, 161, 0.609);
+    outline: 2px solid red !important;
+    background-color: pink;
 }
 
 .rejectDupMessage::placeholder {
-    color: red;
+    color: red !important;
     font-weight: 600;
     
 }
@@ -224,6 +226,37 @@ header h3 {
     cursor: pointer;
 }
 
+
+
+#submit{
+    text-align: right;
+}
+
+.submitButtonActive{
+    font-family: 'Open Sans', sans-serif;
+    background-color: #cc5500;
+    padding: .5rem;
+    font-size: 1rem;
+    font-weight: 700;
+    margin: .4rem 0;
+    border: 2px solid black;
+    border-radius: 8px;
+    cursor: pointer;
+}
+
+.submitButtonDisabled{
+    font-family: 'Open Sans', sans-serif;
+    background-color: gray;
+    padding: .5rem;
+    font-size: 1rem;
+    font-weight: 700;
+    margin: .4rem 0;
+    border: 2px solid black;
+    border-radius: 8px;
+    cursor: not-allowed !important;
+
+}
+
 .confirmRemovePlayer {
     font-family: 'Open Sans', sans-serif;
     background-color: #cc5500;
@@ -231,6 +264,12 @@ header h3 {
     font-weight: 700;
     border-radius: 4px;
     margin: .25rem .75rem;
+}
+
+.playerTeamName{
+    font-size: 3rem;
+    border: none;
+    margin: 1rem 0;
 }
 
 .playerPic {
@@ -318,7 +357,7 @@ header h3 {
 
 /* Player Info Bottom Grid */
 
-.statsDiv{
+.statsForm, .extraStatsForm{
     display: grid;
     gap: .05rem 2rem;
     grid-template-columns: 1fr 1fr 1fr;
@@ -326,19 +365,19 @@ header h3 {
 }
 
 
-.statsDiv input{
-    max-width: 20%;
+.statsForm input, .extraStatsForm input{
+    max-width: 30%;
     font-size: .8rem;
     padding: .1rem;
     line-height: 1;
 }
 
-.statsDiv label{
+.statsForm label, .extraStatsForm label{
     margin: 0;
     line-height: 1;
 }
 
-.statsDiv div{
+.statsForm div, .extraStatsForm div{
     display: flex;
     max-width: 60%;
     justify-content: space-between;
@@ -346,16 +385,24 @@ header h3 {
 }
 
 @media screen and (max-width: 769px) {
+
+    .playerTeamName{
+        font-size: 2rem;
+        max-width: 100% !important;
+    }
+    /* .teamNameDiv{
+        
+    } */
     .upperDiv {
         display: block;
         margin: 1rem auto !important;
 
     }
 
-    .statsDiv{
+    .statsForm, .extraStatsForm{
         display: grid;
         gap: .05rem 1rem;
-        grid-template-columns: 100% !important;
+        grid-template-columns: 1fr !important;
     
     }
 
@@ -379,21 +426,18 @@ header h3 {
     .detailsDiv {
         grid-template-columns: 1fr !important;
     }
-    .statsDiv{
-        grid-template-columns: 1fr !important;
-        
-    }
-    .statsDiv div{
+
+    .statsForm div, .extraStatsForm div{
         max-width: 100%;
         padding: .5rem 0;
     }
-    .statsDiv input{
+    .statsForm input, .extraStatsForm input{
         max-width: 3rem;
         font-size: 1.5rem;
       
         
     }
-    .statsDiv label{
+    .statsForm label, .extraStatsForm label{
         font-size: 2rem;
     }
     
