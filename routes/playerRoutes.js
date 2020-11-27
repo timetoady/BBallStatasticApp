@@ -24,10 +24,10 @@ router.post("/", (req, res) => {
         starter: req.body.starter,
 
       },
-      (err) => {
+      (err, player) => {
         err
           ? res.send(`Sorry, looks like we've got an Error: ${err}`)
-          : Player.find((err, stats) => {
+          : Player.find({ _id: player._id },(err, stats) => {
               checkError(err, res);
             }).sort({number: 1})
               .populate("stats")

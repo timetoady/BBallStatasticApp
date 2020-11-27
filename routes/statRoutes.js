@@ -20,6 +20,7 @@ router.get("/", (req, res) => {
 });
 
 router.post("/", (req, res) => {
+  // const { playerID } = req.params
   Stats.create(
     {
       player: req.body.player,
@@ -149,7 +150,7 @@ router.put("/updateUniqueStat/:statID/:statName/:newValue", (req, res) => {
 });
 
 //Add one unique stat
-router.put("/updateUniqueStat/:statID/:statName/:newValue", (req, res) => {
+router.put("/addUniqueStat/:statID/:statName/:newValue", (req, res) => {
   const { statID, statName, newValue } = req.params;
   data = { [statName]: { $gte: 0 } };
   newData = { [statName]: newValue };

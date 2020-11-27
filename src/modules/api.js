@@ -39,7 +39,7 @@ export async function useAPIData(URL, method, modifier = " ") {
   }
   
   //POST method
-  export async function sendAPIData(URL, upload = {}) {
+  export async function sendAPIData(URL, upload) {
     try {
       const response = await fetch(URL, {
         method: "POST",
@@ -50,12 +50,33 @@ export async function useAPIData(URL, method, modifier = " ") {
         body: JSON.stringify(upload),
       });
       const data = await response.json();
+      console.log(data)
       return data;
     } catch (error) {
       console.error(error);
     }
   }
   
+  export async function sendAPIStatData(URL, upload) {
+    try {
+      const response = await fetch(URL, {
+        method: "POST",
+        headers: {
+          //Accept: "application/json",
+          "Content-type": "application/json",
+        },
+        body: JSON.stringify(upload),
+      });
+      const data = await response.json();
+      console.log("Here's the data:")
+      console.log(data)
+      return data;
+    } catch (error) {
+      console.error(error);
+    }
+  }
+
+
   //DELETE method
   export async function deleteAPIData(URL, ID) {
     try {

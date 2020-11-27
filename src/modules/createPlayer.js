@@ -1,11 +1,39 @@
-import getAPIData, {showSpinner, hideSpinner} from "./api.js";
+import getAPIData, {showSpinner, hideSpinner, sendAPIData, sendAPIStatData} from "./api.js";
 
 
 const playerArea = document.querySelector("#playerArea")
 const baseStats = document.querySelector(".baseStats")
 const submitButton = document.querySelector(".submitButton")
 const stats = "../stats"
+const players = "../players"
 
+export const buildJsonFormData = (form) => {
+    const jsonFormData = {}
+    for (const pair of new FormData(form)) {
+        jsonFormData[pair[0]] = pair[1]
+     }
+return jsonFormData
+}
+
+const onChange = (objToWatch, onChangeFunction) => { 
+    const handler = {
+      get(target, property, receiver) {
+        onChangeFunction();
+        return Reflect.get(target, property, receiver);
+      },
+      set(target, property, value) {
+        onChangeFunction();
+        return Reflect.set(target, property, value);
+      },
+      deleteProperty(target, property) {
+        onChangeFunction();
+        return Reflect.deleteProperty(target, property);
+      }
+    };
+  return new Proxy(objToWatch, handler);
+  };
+
+  const logger = () => console.log('I was called');
 
 //Checks on blur if field is empty. Gives warning if set input is required.
 const itIsRequired = (input) => {
@@ -43,6 +71,10 @@ export default function newPlayer() {
     let teamNameDiv = document.createElement("div")
         teamNameDiv.setAttribute("class", "teamNameDiv")
     let teamName = document.createElement("input")
+    getAPIData(players)
+    
+    .then((data) => {
+        teamName.value = data[0].teamName})
     teamName.placeholder = "Team Name*"
     teamName.setAttribute("class", "playerTeamName")
     teamName.name = "teamName"
@@ -116,7 +148,10 @@ export default function newPlayer() {
                                             submitButton.title = "Click to save player."
                                             $('[data-toggle="tooltip"]').tooltip('hide')
                                             .attr('data-original-title', 'Click to save new player.')
-                                            .tooltip('show');
+                                            
+                                            submitButton.addEventListener("click", () => {
+                                                submitData()
+                                            })
                                         }
                                     })
                                 }
@@ -278,6 +313,29 @@ export default function newPlayer() {
             })
         })
     
-
+ 
+    const submitData = () => {
+        logger()
+        let playerForm = document.querySelector("#playerInfo")
+        let baseStatsForm = document.querySelector(".statsForm")
+        let extraStatsForm = document.querySelector(".extraStatsForm")
+        let playerData = buildJsonFormData(playerForm)
+        let baseStatData = buildJsonFormData(baseStatsForm)
+        let extraStatData = buildJsonFormData(extraStatsForm)
+        console.log(extraStatData)
+        onChange(baseStatData, logger)
+        sendAPIData(players, playerData).then( (player) =>{
+            const playerID = player[0]._id
+            console.log(player[0]._id)
+            baseStatData["player"] = playerID
+            console.log(baseStatData)
+        })
     
+        
+
+        //sendAPIStatData(stats, baseStatData)
+
+    }
+ 
+
     }
