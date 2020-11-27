@@ -114,6 +114,9 @@ export default function newPlayer() {
                                             void submitButton.offsetWidth;
                                             submitButton.classList.add("submitButtonActive");
                                             submitButton.title = "Click to save player."
+                                            $('[data-toggle="tooltip"]').tooltip('hide')
+                                            .attr('data-original-title', 'Click to save new player.')
+                                            .tooltip('show');
                                         }
                                     })
                                 }
