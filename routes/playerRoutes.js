@@ -13,6 +13,7 @@ router.post("/", (req, res) => {
       {
         name: req.body.name,
         teamName: req.body.teamName,
+        img: req.body.img,
         number: req.body.number,
         height: req.body.height,
         weight: req.body.weight,

@@ -304,6 +304,7 @@ export default function newPlayer() {
         console.log(extraStatData)
      
         sendAPIStatDataChain(players, playerData, baseStatData)
+        //do then here to send for each extra stat if extraStat exists
 
     }
  
