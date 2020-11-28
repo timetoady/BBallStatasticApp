@@ -39,7 +39,7 @@ export async function useAPIData(URL, method, modifier = " ") {
   }
   
   //POST method
-  export async function sendAPIData(URL, upload) {
+  export async function sendAPIData(URL, upload, followup) {
     try {
       const response = await fetch(URL, {
         method: "POST",
@@ -57,23 +57,35 @@ export async function useAPIData(URL, method, modifier = " ") {
     }
   }
   
-  export async function sendAPIStatData(URL, upload) {
-    try {
-      const response = await fetch(URL, {
+  export async function sendAPIStatDataChain(URL, playerInfo, stats, extraStats = {}) {
+    
+     fetch(URL, {
         method: "POST",
         headers: {
           //Accept: "application/json",
           "Content-type": "application/json",
         },
-        body: JSON.stringify(upload),
-      });
-      const data = await response.json();
-      console.log("Here's the data:")
-      console.log(data)
-      return data;
-    } catch (error) {
-      console.error(error);
-    }
+        body: JSON.stringify(playerInfo),
+      }).then(response => response.json())
+      .then((reply) =>{
+        console.log(reply)
+        let playerID = reply[0]._id
+        stats["player"] = playerID
+        console.log(stats)
+      }).then(() => {
+        fetch("../stats", {
+          method: "POST",
+          headers: {
+            //Accept: "application/json",
+            "Content-type": "application/json",
+          },
+          body: JSON.stringify(stats)})
+      }).then(response => console.log(response))
+      .then((reply2) => {
+        console.log(reply2)
+      })
+      .catch (error => console.error(error));
+    
   }
 
 

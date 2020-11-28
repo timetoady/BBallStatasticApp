@@ -1,4 +1,4 @@
-import getAPIData, {showSpinner, hideSpinner, sendAPIData, sendAPIStatData} from "./api.js";
+import getAPIData, {showSpinner, hideSpinner, sendAPIStatDataChain} from "./api.js";
 
 
 const playerArea = document.querySelector("#playerArea")
@@ -14,26 +14,6 @@ export const buildJsonFormData = (form) => {
      }
 return jsonFormData
 }
-
-const onChange = (objToWatch, onChangeFunction) => { 
-    const handler = {
-      get(target, property, receiver) {
-        onChangeFunction();
-        return Reflect.get(target, property, receiver);
-      },
-      set(target, property, value) {
-        onChangeFunction();
-        return Reflect.set(target, property, value);
-      },
-      deleteProperty(target, property) {
-        onChangeFunction();
-        return Reflect.deleteProperty(target, property);
-      }
-    };
-  return new Proxy(objToWatch, handler);
-  };
-
-  const logger = () => console.log('I was called');
 
 //Checks on blur if field is empty. Gives warning if set input is required.
 const itIsRequired = (input) => {
@@ -315,7 +295,6 @@ export default function newPlayer() {
     
  
     const submitData = () => {
-        logger()
         let playerForm = document.querySelector("#playerInfo")
         let baseStatsForm = document.querySelector(".statsForm")
         let extraStatsForm = document.querySelector(".extraStatsForm")
@@ -323,17 +302,8 @@ export default function newPlayer() {
         let baseStatData = buildJsonFormData(baseStatsForm)
         let extraStatData = buildJsonFormData(extraStatsForm)
         console.log(extraStatData)
-        onChange(baseStatData, logger)
-        sendAPIData(players, playerData).then( (player) =>{
-            const playerID = player[0]._id
-            console.log(player[0]._id)
-            baseStatData["player"] = playerID
-            console.log(baseStatData)
-        })
-    
-        
-
-        //sendAPIStatData(stats, baseStatData)
+     
+        sendAPIStatDataChain(players, playerData, baseStatData)
 
     }
  
