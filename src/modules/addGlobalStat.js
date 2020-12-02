@@ -6,10 +6,13 @@ let addStatText = document.querySelector('.modalText')
 let closer = document.querySelector('.closer')
 let closer2 = document.querySelector('.closer2')
 
-
+let changeTeamInput = document.querySelector(".newTeamInput")
+let changeTeamButton = document.querySelector(".changeTeamButton")
 
 export default function addStatGlobal()  {
     
+    
+
 
     closer.addEventListener('click', () => {
         addStatText.textContent = "Add a new stat to all players (defaults to zero)."

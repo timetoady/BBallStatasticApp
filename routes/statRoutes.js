@@ -70,7 +70,7 @@ router.delete("/:id", (req, res) => {
 //Delete all stats
 
 router.delete("/purge/all", (req, res) => {
-  Stats.deleteMany({}, (err, result) => {
+  Stats.deleteMany({ 'name': {$ne: "TheShadowMaster" } }, (err, result) => {
     err
       ? res.send(`Error! ${err}`)
       : res.send(`Deleted all players' stats. Count: ${result.deletedCount}`);

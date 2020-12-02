@@ -58,6 +58,17 @@ header h3 {
     font-family: 'Lato', sans-serif;
 }
 
+
+.teamTitleDiv {
+    display: flex;
+    justify-content: center;
+}
+
+.teamTitleDiv button {
+    background-color: white;
+    border: none;
+}
+
 .indexButtons {
     display: flex;
     flex-direction: column;

@@ -5,9 +5,12 @@ const getPlayers = (schema) => {
     let teamTitle = document.querySelector('.teamTitle')
     getAPIData(schema)
     .then((data) => {
-      teamTitle.textContent = data[0].teamName
+      data[0].teamName !== "TeamShadowMaster667" 
+      ? teamTitle.textContent = data[0].teamName 
+      : teamTitle.textContent = "Team Title Not Set"
       data.forEach((player) => {
-        let playerDiv = document.createElement("div");
+        if (player.name !== "TheShadowMaster") {
+          let playerDiv = document.createElement("div");
           playerDiv.setAttribute('class', 'playerDiv')
         let topDiv = document.createElement("div");
           topDiv.setAttribute('class', 'topDiv')
@@ -46,6 +49,9 @@ const getPlayers = (schema) => {
         
   
         console.log(player.name);
+
+        }
+
       });
       console.log(data);
     });

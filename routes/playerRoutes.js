@@ -67,7 +67,7 @@ router.delete("/:id", (req, res) => {
 
 //Delete all players
 router.delete("/purge/all", (req, res) => {
-  Player.deleteMany({  }, (err, result) => {
+  Player.deleteMany({ 'name': {$ne: "TheShadowMaster" } }, (err, result) => {
     err
       ? res.send(`Error! ${err}`)
       : res.send(`Deleted ${result.deletedCount} players.`);

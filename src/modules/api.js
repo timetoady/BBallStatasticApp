@@ -17,7 +17,6 @@ export async function useAPIData(URL, method, modifier = " ") {
         method: method,
       });
       const data = await response.json();
-  
       return data;
     } catch (error) {
       console.error(error);
@@ -39,7 +38,7 @@ export async function useAPIData(URL, method, modifier = " ") {
   }
   
   //POST method
-  export async function sendAPIData(URL, upload, followup) {
+  export async function sendAPIData(URL, upload) {
     try {
       const response = await fetch(URL, {
         method: "POST",
@@ -58,7 +57,6 @@ export async function useAPIData(URL, method, modifier = " ") {
   }
   
   export async function sendAPIStatDataChain(URL, playerInfo, stats, extraStats = {}) {
-    
      fetch(URL, {
         method: "POST",
         headers: {

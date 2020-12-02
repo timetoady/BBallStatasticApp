@@ -18,11 +18,7 @@ return jsonFormData
 //Checks on blur if field is empty. Gives warning if set input is required.
 const itIsRequired = (input) => {
 input.addEventListener('blur', () => {
-    console.log("Blurred!")
-    console.log(input.value)
-    console.log(`It is: ${input.value.trim()}`)
     if (input.value === null || input.value.trim() === ""){
-        
         console.log("Input was empty!")
         input.placeholder = "Required."
         input.classList.remove("rejectDupMessage");

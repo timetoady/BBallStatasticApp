@@ -43,14 +43,51 @@
                   </div>
                 </div>
                 <div class="modal-footer">
-                  <button type="button" class="btn btn-secondary closer2" data-dismiss="modal">Close</button>
+                  <button type="button" class="btn btn-secondary closer2" data-dismiss="modal">CANCEL</button>
                   <button type="button" class="btn addStatButton">ADD</button>
                 </div>
               </div>
             </div>
           </div>
 
-        <h1 class="teamTitle">Title of Team</h1>
+          <div class="modal fade "  data-backdrop="static" data-keyboard="false" id="changeTeamTitle" tabindex="-1">
+            <div class="modal-dialog">
+              <div class="modal-content">
+                <div class="modal-header">
+                  <h5 class="modal-title">CHANGE TEAM TITLE</h5>
+                  <button type="button" class="close closer3" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                  </button>
+                </div>
+                <div class="modal-body">
+                  <p class="modalText">Select a new team title.</p>
+                  <div class="d-flex justify-content-center">
+                    <div class="spinner-border" role="status">
+                      <span class="sr-only">Loading...</span>
+                    </div>
+                  </div>
+                  <div class="input-group input-group-lg">
+                    <div class="input-group-prepend">
+                      <span class="input-group-text" id="inputGroup-sizing-lg">Team name:</span>
+                    </div>
+                    <input type="text" class="form-control newTeamInput" required aria-label="Sizing example input" aria-describedby="inputGroup-sizing-lg">
+                  </div>
+                </div>
+                <div class="modal-footer">
+                  <button type="button" class="btn btn-secondary closer4" data-dismiss="modal">CANCEL</button>
+                  <button type="button" class="btn changeTeamButton">CHANGE</button>
+                </div>
+              </div>
+            </div>
+          </div>
+
+          <div class="teamTitleDiv">
+            <button data-toggle="modal" data-target="#changeTeamTitle">
+              <h1 class="teamTitle">Title of Team</h1>
+            </button>
+          </div>
+
+        
         <div class="indexButtons">
             <button class="addPlayerButton"> ADD PLAYER</button>
             <button data-toggle="modal" data-target="#addNewStat">ADD NEW STAT</button>
