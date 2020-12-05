@@ -130,6 +130,7 @@ export default function newPlayer() {
                                             && height.value) {
                                             const setUpSubmit = () => {
                                                 console.log("added submit listener")
+                                                submitButton.removeEventListener("click", console.log("Removed submit listener!"))
                                                 submitButton.classList.remove("showHidden");
                                                 submitButton.classList.remove("submitButtonDisabled");
                                                 void submitButton.offsetWidth;
@@ -343,6 +344,7 @@ export default function newPlayer() {
         let playerForm = document.querySelector("#playerInfoForm")
         let baseStatsForm = document.querySelector(".statsForm")
         let extraStatsForm = document.querySelector(".extraStatsForm")
+        console.log(extraStatsForm.value)
         let playerData = buildJsonFormData(playerForm)
         let baseStatData = buildJsonFormDataStats(baseStatsForm)
         let extraStatData = buildJsonFormDataStats(extraStatsForm)

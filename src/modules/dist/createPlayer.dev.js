@@ -184,6 +184,7 @@ function newPlayer() {
       if (teamName.value && nameInput.value && number.value && height.value) {
         var setUpSubmit = function setUpSubmit() {
           console.log("added submit listener");
+          submitButton.removeEventListener("click", console.log("Removed submit listener!"));
           submitButton.classList.remove("showHidden");
           submitButton.classList.remove("submitButtonDisabled");
           void submitButton.offsetWidth;
@@ -380,6 +381,7 @@ function newPlayer() {
     var playerForm = document.querySelector("#playerInfoForm");
     var baseStatsForm = document.querySelector(".statsForm");
     var extraStatsForm = document.querySelector(".extraStatsForm");
+    console.log(extraStatsForm.value);
     var playerData = buildJsonFormData(playerForm);
     var baseStatData = buildJsonFormDataStats(baseStatsForm);
     var extraStatData = buildJsonFormDataStats(extraStatsForm);

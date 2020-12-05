@@ -167,8 +167,8 @@ function sendAPIStatDataChain(URL, playerInfo, stats) {
             console.log(reply);
             playerID = reply[0]._id;
             stats["player"] = playerID;
-            console.log(stats);
-            console.log(JSON.stringify(stats));
+            console.log("Stats are:", stats);
+            console.log("JSON.stringify stats", JSON.stringify(stats));
             fetch("../stats", {
               method: "POST",
               headers: {
@@ -181,7 +181,7 @@ function sendAPIStatDataChain(URL, playerInfo, stats) {
             }).then(function (reply) {
               statsID = reply.stats[0];
               console.log("Stats ID is showing as ".concat(statsID));
-              console.log(extraStats, JSON.stringify(extraStats));
+              console.log(JSON.stringify(extraStats));
               fetch("../stats/updateUniqueStats/".concat(statsID), {
                 method: "PUT",
                 headers: {
@@ -190,10 +190,10 @@ function sendAPIStatDataChain(URL, playerInfo, stats) {
                 },
                 body: JSON.stringify(extraStats)
               }).then(function (response) {
-                return response.json();
-              }).then(function (reply2) {
-                console.log("Final reply", reply2);
-              });
+                return console.log(response);
+              }); // .then((reply2) => {
+              //   console.log("Final reply", reply2);
+              // });
             });
           })["catch"](function (error) {
             return console.error(error);

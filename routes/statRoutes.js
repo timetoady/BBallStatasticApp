@@ -168,17 +168,27 @@ router.put("/addUniqueStat/:statID/:statName/:newValue", (req, res) => {
 router.put("/updateUniqueStats/:statID", (req, res) => {
     const { statID } = req.params
     newStats = req.body
+    console.log(newStats)
+    const newArray = []
+    //console.log(statID)
+  for (const [key, value] of Object.entries(newStats)) {
+    newField = {}
+    newField[key] = value
+    newArray.push(newField)
     
-    console.log(statID, [newStats])
-   Stats.updateOne(
-    { _id: statID },
-    { $addToSet: { otherStats: newStats } },
-    function (err, stats) {
-      err
-        ? res.send(`Error, sir! ${err}`)
-        : res.send(`Updated all unique stats for ID ${statID}.`);
-    }
-  );
+    
+
+  }
+    console.log(...newArray)
+    Stats.updateOne(
+      { _id: statID },
+      { $addToSet: { otherStats: [...newArray] } },
+      function (err, stats) {
+        err
+          ? res.send(`Error, sir! ${err}`)
+          : res.send(`Updated all unique stats for ID ${statID}.`);
+      }
+    );
 });
 
 //Add set of unique stats
