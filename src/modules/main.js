@@ -23,15 +23,13 @@ Module 3:
 import getPlayers from './getPlayerData.js'
 import addStatGlobal from './addGlobalStat.js'
 import newPlayer from "./createPlayer.js";
+import teamNameChanger from "./changeTeamTitle.js"
 
 const players = "../players";
 const stats = "../stats"
 
 
 const addPlayerButton = document.querySelector('.addPlayerButton')
-// const playerTeamTitle = document.querySelector(".playerTeamTitle")
-// const playerArea = document.querySelector("#playerArea")
-// const editButtons = document.querySelector("#editButtons")
 
 if (window.location.href.indexOf("player") > -1) {
     if (window.location.href.indexOf("playerNew") > -1) {
@@ -40,6 +38,7 @@ if (window.location.href.indexOf("player") > -1) {
 } else {
     getPlayers(players)
     addStatGlobal()
+    teamNameChanger()
     addPlayerButton.addEventListener('click', () => {
         window.location.href = "/playerNew.html"
         

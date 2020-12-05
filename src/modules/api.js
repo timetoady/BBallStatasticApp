@@ -56,6 +56,7 @@ export async function useAPIData(URL, method, modifier = " ") {
     }
   }
   
+  //POST chain for new Player/stats
   export async function sendAPIStatDataChain(URL, playerInfo, stats, extraStats = {}) {
      fetch(URL, {
         method: "POST",
