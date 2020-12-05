@@ -1,13 +1,18 @@
 import getAPIData from "./api.js";
 const teamDisplay = document.querySelector("#team");
+const rosterDiv = document.querySelector("#rosterDiv");
 
 const getPlayers = (schema) => {
     let teamTitle = document.querySelector('.teamTitle')
+    rosterDiv.remove()
     getAPIData(schema)
     .then((data) => {
-      data[0].teamName !== "TeamShadowMaster667" 
-      ? teamTitle.textContent = data[0].teamName 
-      : teamTitle.textContent = "Team Title Not Set"
+     // data[0].name === "TheShadowMaster" 
+      teamTitle.textContent = data[0].teamName 
+      //: null;
+      let rosterDiv = document.createElement("div");
+      rosterDiv.setAttribute("id", "rosterDiv")
+      teamDisplay.appendChild(rosterDiv)
       data.forEach((player) => {
         if (player.name !== "TheShadowMaster") {
           let playerDiv = document.createElement("div");
@@ -23,7 +28,7 @@ const getPlayers = (schema) => {
           let playerPic = document.createElement("img");
               player.imgURL === 'https://pixabay.com/vectors/blank-profile-picture-mystery-man-973460/' 
                   ? playerPic.src = './assets/blankProfile.png'
-                  : playerPic.src = player.imgURL;
+                  : playerPic.src = player.img;
           let playerName = document.createElement("p");
               playerName.textContent = `Name: ${player.name}`
           let playerHeight = document.createElement("p");
@@ -35,7 +40,7 @@ const getPlayers = (schema) => {
           let statButton = document.createElement("button");
               statButton.textContent = "SEE STATS"
   
-        teamDisplay.appendChild(playerDiv)
+        rosterDiv.appendChild(playerDiv)
           playerDiv.appendChild(topDiv)
               topDiv.appendChild(editButton)
               topDiv.appendChild(numberPlaque)

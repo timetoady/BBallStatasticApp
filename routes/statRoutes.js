@@ -24,7 +24,6 @@ router.post("/", (req, res) => {
   Stats.create(
     {
       player: req.body.player,
-      imgURL: req.body.imgURL,
       minutes: req.body.minutes,
       gp: req.body.gp,
       points: req.body.points,
@@ -70,7 +69,7 @@ router.delete("/:id", (req, res) => {
 //Delete all stats
 
 router.delete("/purge/all", (req, res) => {
-  Stats.deleteMany({ 'name': {$ne: "TheShadowMaster" } }, (err, result) => {
+  Stats.deleteMany({ '_id': {$ne: "5fcb6087eceb1569ac393437" } }, (err, result) => {
     err
       ? res.send(`Error! ${err}`)
       : res.send(`Deleted all players' stats. Count: ${result.deletedCount}`);
@@ -166,17 +165,34 @@ router.put("/addUniqueStat/:statID/:statName/:newValue", (req, res) => {
 });
 
 //Add set of unique stats
-router.put("/updateUniqueStats/:statID/", (req, res) => {
+router.put("/updateUniqueStats/:statID", (req, res) => {
+    const { statID } = req.params
     newStats = req.body
+    
+    console.log(statID, [newStats])
    Stats.updateOne(
     { _id: statID },
-    { $addToSet: { newStats } },
+    { $addToSet: { otherStats: newStats } },
     function (err, stats) {
       err
-        ? res.send(`Error, captain! ${err}`)
-        : res.send(`Updated ${statName} for ID ${statID} to ${newValue}.`);
+        ? res.send(`Error, sir! ${err}`)
+        : res.send(`Updated all unique stats for ID ${statID}.`);
     }
   );
+});
+
+//Add set of unique stats
+router.put("/updateUniqueStatsbyPlayer/:playerID/", (req, res) => {
+  newStats = req.body
+ Stats.updateOne(
+  { _id: statID },
+  { $addToSet: { newStats } },
+  function (err, stats) {
+    err
+      ? res.send(`Error, captain! ${err}`)
+      : res.send(`Updated ${statName} for ID ${statID} to ${newValue}.`);
+  }
+);
 });
 
 module.exports = router;

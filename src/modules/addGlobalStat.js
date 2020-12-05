@@ -6,20 +6,21 @@ let addStatText = document.querySelector(".modalText");
 let closer = document.querySelector(".closer");
 let closer2 = document.querySelector(".closer2");
 
+const resetModal = () => {
+  addStatText.textContent = "Add a new stat to all players (defaults to zero).";
+  addNewStatButton.style.display = "block";
+  newStatInputBody.style.opacity = 1;
+  closer2.textContent= "CANCEL"
+};
+
 export default function addStatGlobal() {
   //Close listeners to reset add global stat modal.
   closer.addEventListener("click", () => {
-    addStatText.textContent =
-      "Add a new stat to all players (defaults to zero).";
-    addNewStatButton.style.display = "block";
-    newStatInputBody.style.opacity = 1;
+    resetModal()
   });
 
   closer2.addEventListener("click", () => {
-    addStatText.textContent =
-      "Add a new stat to all players (defaults to zero).";
-    addNewStatButton.style.display = "block";
-    newStatInputBody.style.opacity = 1;
+    resetModal()
   });
 
   //Listeners to govern add global stat
@@ -31,10 +32,7 @@ export default function addStatGlobal() {
         addStatText.textContent = `Stat ${newStatInput.value.toUpperCase()} added to players.`;
         addNewStatButton.style.display = "none";
         newStatInputBody.style.opacity = 0;
-        $("#addNewStat").modal({
-          backdrop: "static",
-          keyboard: false,
-        });
+        closer2.textContent= "CLOSE"
       } else {
         addStatText.textContent = `Sorry, it looks like an error occured.`;
       }
@@ -50,6 +48,7 @@ export default function addStatGlobal() {
           addStatText.textContent = `Stat ${newStatInput.value.toUpperCase()} added to all players.`;
           addNewStatButton.style.display = "none";
           newStatInputBody.style.opacity = 0;
+          closer2.textContent= "CLOSE"
           $("#addNewStat").modal({
             backdrop: "static",
             keyboard: false,

@@ -41,7 +41,7 @@ header h3 {
     margin-top: 0;
 }
 
-.addStatButton {
+.addStatButton, .changeTeamButton {
     font-family: 'Open Sans', sans-serif;
     background-color: #cc5500;
     border: 2px solid black;
@@ -99,7 +99,7 @@ header h3 {
 
 /* Player card styles */
 
-#team {
+#rosterDiv {
     display: grid;
     gap: .8rem;
     margin-top: 1rem;
@@ -114,7 +114,7 @@ header h3 {
 
     }
 
-    #team {
+    #rosterDiv {
         grid-template-columns: 1fr 1fr 1fr 1fr 1fr;
         max-width: 100%;
     }

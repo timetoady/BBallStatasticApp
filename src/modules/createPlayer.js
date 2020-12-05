@@ -1,9 +1,10 @@
-import getAPIData, {showSpinner, hideSpinner, sendAPIStatDataChain} from "./api.js";
+import getAPIData, {showSpinner, hideSpinner, sendAPIStatDataChain, sendAPIStatDataChain2, addSpecialStatsToOne} from "./api.js";
 
 
 const playerArea = document.querySelector("#playerArea")
 const baseStats = document.querySelector(".baseStats")
-const submitButton = document.querySelector(".submitButton")
+const submitButton = document.querySelector("#submitButton")
+
 const stats = "../stats"
 const players = "../players"
 
@@ -11,6 +12,14 @@ export const buildJsonFormData = (form) => {
     const jsonFormData = {}
     for (const pair of new FormData(form)) {
         jsonFormData[pair[0]] = pair[1]
+     }
+return jsonFormData
+}
+
+export const buildJsonFormDataStats = (form) => {
+    const jsonFormData = {}
+    for (const pair of new FormData(form)) {
+        jsonFormData[pair[0]] = parseFloat(pair[1])
      }
 return jsonFormData
 }
@@ -42,7 +51,7 @@ $(function () {
 
 export default function newPlayer() {
     const playerInfoForm = document.createElement('form')
-        playerInfoForm.id = "playerInfo"
+        playerInfoForm.setAttribute("id", "playerInfoForm")
         playerArea.appendChild(playerInfoForm)
     let teamNameDiv = document.createElement("div")
         teamNameDiv.setAttribute("class", "teamNameDiv")
@@ -88,6 +97,7 @@ export default function newPlayer() {
                 let number = document.createElement("input")
                     number.type = "number"
                     number.name = "number"
+                    number.setAttribute("min", "0")
                     number.required
                     number.placeholder = "Num*"
                     number.setAttribute('class', 'editInputs')
@@ -119,7 +129,7 @@ export default function newPlayer() {
                                             && number.value 
                                             && height.value) {
                                             const setUpSubmit = () => {
-
+                                                console.log("added submit listener")
                                                 submitButton.classList.remove("showHidden");
                                                 submitButton.classList.remove("submitButtonDisabled");
                                                 void submitButton.offsetWidth;
@@ -129,32 +139,35 @@ export default function newPlayer() {
                                                 .attr('data-original-title', 'Click to save new player.')
                                                 
                                                 submitButton.addEventListener("click", () => {
+                                                    
                                                     submitData()
                                                 })
                                             }
                                             setUpSubmit()
+                                        } else {
+                                            submitButton.removeEventListener("click", console.log("Removed submit listener!"))
                                         }
                                     
                                     })
-                                    window.addEventListener("wheel", () =>{
-                                        if (teamName.value 
-                                            && nameInput.value 
-                                            && number.value 
-                                            && height.value) {
-                                                console.log("wheel!")
-                                                submitButton.classList.remove("showHidden");
-                                                submitButton.classList.remove("submitButtonDisabled");
-                                                void submitButton.offsetWidth;
-                                                submitButton.classList.add("submitButtonActive");
-                                                submitButton.title = "Click to save player."
-                                                $('[data-toggle="tooltip"]').tooltip('hide')
-                                                .attr('data-original-title', 'Click to save new player.')
+                                    // window.addEventListener("wheel", () =>{
+                                    //     if (teamName.value 
+                                    //         && nameInput.value 
+                                    //         && number.value 
+                                    //         && height.value) {
+                                    //             console.log("wheel!")
+                                    //             submitButton.classList.remove("showHidden");
+                                    //             submitButton.classList.remove("submitButtonDisabled");
+                                    //             void submitButton.offsetWidth;
+                                    //             submitButton.classList.add("submitButtonActive");
+                                    //             submitButton.title = "Click to save player."
+                                    //             $('[data-toggle="tooltip"]').tooltip('hide')
+                                    //             .attr('data-original-title', 'Click to save new player.')
                                                 
-                                                submitButton.addEventListener("click", () => {
-                                                    submitData()
-                                                })
-                                            }
-                                        }, {once: true})
+                                    //             submitButton.addEventListener("click", () => {
+                                    //                 submitData()
+                                    //             })
+                                    //         }
+                                    //     }, {once: true})
                                 }
                                 checkIfRequiredMet(teamName)
                                 checkIfRequiredMet(nameInput)
@@ -291,40 +304,52 @@ export default function newPlayer() {
                     aStat.id = `${stat}Input`
                     aStat.name = `${stat}`
                     aStat.type = "number"
+                    aStat.value = 0
+                    aStat.placeholder = 0
+                    aStat.setAttribute("min", "0")
                     extraStatDiv.appendChild(aStat)
                 }
             }
-            const extraStatDiv = document.querySelector(".extraStats")
+            const extraStatDiv = document.querySelector("#extraStats")
             let extraStatsForm = document.createElement("form")
             extraStatsForm.setAttribute("class", "extraStatsForm")
             extraStatDiv.appendChild(extraStatsForm)
 
-            data[0]["otherStats"].forEach(extraStat => {
-                const extraStatDiv2 = document.createElement("div")
-                extraStatsForm.appendChild(extraStatDiv2)
-                let statLabel = document.createElement("label")
-                statLabel.setAttribute('for', `${Object.keys(extraStat)}Input`)
-                statLabel.textContent = `${Object.keys(extraStat)}:`
-                extraStatDiv2.appendChild(statLabel)
-                let aStat = document.createElement("input")
-                aStat.id = `${Object.keys(extraStat)}Input`
-                aStat.name = `${Object.keys(extraStat)}`
-                aStat.type = "number"
-                extraStatDiv2.appendChild(aStat)
-            })
+
+            if (data[0]["otherStats"].length !== 0) {
+                data[0]["otherStats"].forEach(extraStat => {
+                    const extraStatDiv2 = document.createElement("div")
+                    extraStatsForm.appendChild(extraStatDiv2)
+                    let statLabel = document.createElement("label")
+                    statLabel.setAttribute('for', `${Object.keys(extraStat)}Input`)
+                    statLabel.textContent = `${Object.keys(extraStat)}:`
+                    extraStatDiv2.appendChild(statLabel)
+                    let aStat = document.createElement("input")
+                    aStat.id = `${Object.keys(extraStat)}Input`
+                    aStat.name = `${Object.keys(extraStat)}`
+                    aStat.type = "number"
+                    aStat.value = 0
+                    aStat.placeholder = 0
+                    aStat.setAttribute("min", "0")
+                    extraStatDiv2.appendChild(aStat)
+                })
+
+            }
+
         })
     
  
     const submitData = () => {
-        let playerForm = document.querySelector("#playerInfo")
+        let playerForm = document.querySelector("#playerInfoForm")
         let baseStatsForm = document.querySelector(".statsForm")
         let extraStatsForm = document.querySelector(".extraStatsForm")
         let playerData = buildJsonFormData(playerForm)
-        let baseStatData = buildJsonFormData(baseStatsForm)
-        let extraStatData = buildJsonFormData(extraStatsForm)
+        let baseStatData = buildJsonFormDataStats(baseStatsForm)
+        let extraStatData = buildJsonFormDataStats(extraStatsForm)
+        console.log(baseStatData)
         console.log(extraStatData)
-     
-        sendAPIStatDataChain(players, playerData, baseStatData)
+        showSpinner()
+        sendAPIStatDataChain(players, playerData, baseStatData, extraStatData)
         //do then here to send for each extra stat if extraStat exists
 
     }

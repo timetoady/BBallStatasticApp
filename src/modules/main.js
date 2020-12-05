@@ -27,6 +27,7 @@ import teamNameChanger from "./changeTeamTitle.js"
 
 const players = "../players";
 const stats = "../stats"
+let playerID = ""
 
 
 const addPlayerButton = document.querySelector('.addPlayerButton')

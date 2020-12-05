@@ -7,6 +7,7 @@ let changeTeamText = document.querySelector(".changeTeamText");
 let closer3 = document.querySelector(".closer3");
 let closer4 = document.querySelector(".closer4");
 let changeTeamInputBody = document.querySelector(".input-group");
+const rosterDiv = document.querySelector("#rosterDiv");
 
 const teamNameChanger = async () => {
   try {
