@@ -48,14 +48,15 @@ export default function newPlayer() {
         teamNameDiv.setAttribute("class", "teamNameDiv")
     let teamName = document.createElement("input")
     getAPIData(players)
-    
     .then((data) => {
-        teamName.value = data[0].teamName})
-    teamName.placeholder = "Team Name*"
+        teamName.value = data[0].teamName
+        teamName.textContent = data[0].teamName
+        console.log(`Team name value is ${teamName.value}`)
+    }).catch((error) => console.error(error))
     teamName.setAttribute("class", "playerTeamName")
     teamName.name = "teamName"
     itIsRequired(teamName)
-    teamName.required
+    teamName.readOnly = true
     playerInfoForm.appendChild(teamNameDiv)
     teamNameDiv.appendChild(teamName)
     let topDiv = document.createElement("div")
@@ -117,19 +118,43 @@ export default function newPlayer() {
                                             && nameInput.value 
                                             && number.value 
                                             && height.value) {
-                                            submitButton.classList.remove("showHidden");
-                                            submitButton.classList.remove("submitButtonDisabled");
-                                            void submitButton.offsetWidth;
-                                            submitButton.classList.add("submitButtonActive");
-                                            submitButton.title = "Click to save player."
-                                            $('[data-toggle="tooltip"]').tooltip('hide')
-                                            .attr('data-original-title', 'Click to save new player.')
-                                            
-                                            submitButton.addEventListener("click", () => {
-                                                submitData()
-                                            })
+                                            const setUpSubmit = () => {
+
+                                                submitButton.classList.remove("showHidden");
+                                                submitButton.classList.remove("submitButtonDisabled");
+                                                void submitButton.offsetWidth;
+                                                submitButton.classList.add("submitButtonActive");
+                                                submitButton.title = "Click to save player."
+                                                $('[data-toggle="tooltip"]').tooltip('hide')
+                                                .attr('data-original-title', 'Click to save new player.')
+                                                
+                                                submitButton.addEventListener("click", () => {
+                                                    submitData()
+                                                })
+                                            }
+                                            setUpSubmit()
                                         }
+                                    
                                     })
+                                    window.addEventListener("wheel", () =>{
+                                        if (teamName.value 
+                                            && nameInput.value 
+                                            && number.value 
+                                            && height.value) {
+                                                console.log("wheel!")
+                                                submitButton.classList.remove("showHidden");
+                                                submitButton.classList.remove("submitButtonDisabled");
+                                                void submitButton.offsetWidth;
+                                                submitButton.classList.add("submitButtonActive");
+                                                submitButton.title = "Click to save player."
+                                                $('[data-toggle="tooltip"]').tooltip('hide')
+                                                .attr('data-original-title', 'Click to save new player.')
+                                                
+                                                submitButton.addEventListener("click", () => {
+                                                    submitData()
+                                                })
+                                            }
+                                        }, {once: true})
                                 }
                                 checkIfRequiredMet(teamName)
                                 checkIfRequiredMet(nameInput)

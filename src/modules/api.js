@@ -83,7 +83,7 @@ export async function useAPIData(URL, method, modifier = " ") {
       .then((reply2) => {
         console.log(reply2)
       })
-      .catch (error => console.error(error));
+      .catch(error => console.error(error));
     
   }
 
