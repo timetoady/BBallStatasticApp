@@ -148,7 +148,8 @@ router.put("/updateUniqueStat/:statID/:statName/:newValue", (req, res) => {
   );
 });
 
-//Add one unique stat
+
+//Add one unique stat to a player
 router.put("/addUniqueStat/:statID/:statName/:newValue", (req, res) => {
   const { statID, statName, newValue } = req.params;
   data = { [statName]: { $gte: 0 } };
@@ -164,7 +165,7 @@ router.put("/addUniqueStat/:statID/:statName/:newValue", (req, res) => {
   );
 });
 
-//Add set of unique stats
+//Add set of unique stats to one player
 router.put("/updateUniqueStats/:statID", (req, res) => {
     const { statID } = req.params
     newStats = req.body
@@ -175,8 +176,6 @@ router.put("/updateUniqueStats/:statID", (req, res) => {
     newField = {}
     newField[key] = value
     newArray.push(newField)
-    
-    
 
   }
     console.log(...newArray)

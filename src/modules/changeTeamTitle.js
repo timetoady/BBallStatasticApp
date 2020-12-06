@@ -1,4 +1,4 @@
-import { showSpinner, hideSpinner, updateAPIData } from "./api.js";
+import getAPIData, { showSpinner, hideSpinner, updateTeamNameForAll } from "./api.js";
 import getPlayers from "./getPlayerData.js";
 const players = "../players";
 let changeTeamInput = document.querySelector(".newTeamInput");
@@ -7,24 +7,27 @@ let changeTeamText = document.querySelector(".changeTeamText");
 let closer3 = document.querySelector(".closer3");
 let closer4 = document.querySelector(".closer4");
 let changeTeamInputBody = document.querySelector(".input-group");
-const rosterDiv = document.querySelector("#rosterDiv");
 
 const teamNameChanger = async () => {
   try {
     changeTeamInput.value === null || changeTeamInput.value.trim() === ""
       ? (changeTeamText.textContent =
           "Please put in a valid, non-empty team name.")
-      : updateAPIData(
-          players,
-          "5fc739722364be364460032b",
-          "teamName",
-          changeTeamInput.value.trim()
-        ).then((response) => {
-          changeTeamText.textContent = `Team name updated to ${response.teamName}.`;
-          changeTeamButton.style.display = "none";
-          changeTeamInputBody.style.opacity = 0;
-          closer4.textContent = "CLOSE";
-          hideSpinner();
+      : getAPIData(players).then((response) => {
+          const teamName = response[0].teamName;
+          updateTeamNameForAll(
+            players,
+            "teamName",
+            teamName,
+            changeTeamInput.value.trim()
+          ).then((response) => {
+            console.log("Change all response", response);
+            changeTeamText.textContent = `Team name updated to ${changeTeamInput.value.trim()}.`;
+            changeTeamButton.style.display = "none";
+            changeTeamInputBody.style.opacity = 0;
+            closer4.textContent = "CLOSE";
+            hideSpinner();
+          }).catch((error) => console.error(error));
         });
   } catch (error) {
     hideSpinner();
@@ -37,6 +40,7 @@ const resetModal = () => {
   changeTeamButton.style.display = "block";
   changeTeamInputBody.style.opacity = 1;
   closer4.textContent = "CANCEL";
+  hideSpinner();
   getPlayers(players);
 };
 
@@ -56,8 +60,7 @@ export default function changeTeamTitle() {
     teamNameChanger();
   });
 
-  changeTeamButton.addEventListener("keydown", (event) => {
-    showSpinner();
+  changeTeamInput.addEventListener("keydown", (event) => {
     if (event.keyCode === 13) {
       showSpinner();
       teamNameChanger();

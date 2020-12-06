@@ -9,9 +9,9 @@ exports.useAPIData = useAPIData;
 exports["default"] = getAPIData;
 exports.sendAPIData = sendAPIData;
 exports.sendAPIStatDataChain = sendAPIStatDataChain;
-exports.sendAPIStatDataChain2 = sendAPIStatDataChain2;
 exports.deleteAPIData = deleteAPIData;
 exports.updateAPIData = updateAPIData;
+exports.updateTeamNameForAll = updateTeamNameForAll;
 exports.addSpecialStat = addSpecialStat;
 exports.addSpecialStatsToOne = addSpecialStatsToOne;
 //API Methods
@@ -205,57 +205,60 @@ function sendAPIStatDataChain(URL, playerInfo, stats) {
       }
     }
   });
-}
-
-function sendAPIStatDataChain2(URL, playerInfo, stats) {
-  var extraStats,
-      _args5 = arguments;
-  return regeneratorRuntime.async(function sendAPIStatDataChain2$(_context5) {
-    while (1) {
-      switch (_context5.prev = _context5.next) {
-        case 0:
-          extraStats = _args5.length > 3 && _args5[3] !== undefined ? _args5[3] : {};
-
-          try {
-            fetch(URL, {
-              method: "POST",
-              headers: {
-                //Accept: "application/json",
-                "Content-type": "application/json"
-              },
-              body: JSON.stringify(playerInfo)
-            }).then(function (response) {
-              console.log(response);
-            });
-          } catch (error) {
-            console.error(error);
-          }
-
-        case 2:
-        case "end":
-          return _context5.stop();
-      }
-    }
-  });
 } //DELETE method
 
 
 function deleteAPIData(URL, ID) {
   var response, data;
-  return regeneratorRuntime.async(function deleteAPIData$(_context6) {
+  return regeneratorRuntime.async(function deleteAPIData$(_context5) {
     while (1) {
-      switch (_context6.prev = _context6.next) {
+      switch (_context5.prev = _context5.next) {
         case 0:
-          _context6.prev = 0;
-          _context6.next = 3;
+          _context5.prev = 0;
+          _context5.next = 3;
           return regeneratorRuntime.awrap(fetch(URL + "/".concat(ID), {
             method: "DELETE"
           }));
 
         case 3:
+          response = _context5.sent;
+          _context5.next = 6;
+          return regeneratorRuntime.awrap(response.text());
+
+        case 6:
+          data = _context5.sent;
+          return _context5.abrupt("return", data);
+
+        case 10:
+          _context5.prev = 10;
+          _context5.t0 = _context5["catch"](0);
+          console.error(_context5.t0);
+
+        case 13:
+        case "end":
+          return _context5.stop();
+      }
+    }
+  }, null, null, [[0, 10]]);
+} //PUT method
+
+
+function updateAPIData(URL, id, key, value) {
+  var response, data;
+  return regeneratorRuntime.async(function updateAPIData$(_context6) {
+    while (1) {
+      switch (_context6.prev = _context6.next) {
+        case 0:
+          _context6.prev = 0;
+          _context6.next = 3;
+          return regeneratorRuntime.awrap(fetch(URL + "/".concat(id, "/").concat(key, "/").concat(value), {
+            method: "PUT"
+          }));
+
+        case 3:
           response = _context6.sent;
           _context6.next = 6;
-          return regeneratorRuntime.awrap(response.text());
+          return regeneratorRuntime.awrap(response.json());
 
         case 6:
           data = _context6.sent;
@@ -272,18 +275,18 @@ function deleteAPIData(URL, ID) {
       }
     }
   }, null, null, [[0, 10]]);
-} //PUT method
+} //PUT method for editing field of all players
 
 
-function updateAPIData(URL, id, key, value) {
+function updateTeamNameForAll(URL, key, oldValue, newValue) {
   var response, data;
-  return regeneratorRuntime.async(function updateAPIData$(_context7) {
+  return regeneratorRuntime.async(function updateTeamNameForAll$(_context7) {
     while (1) {
       switch (_context7.prev = _context7.next) {
         case 0:
           _context7.prev = 0;
           _context7.next = 3;
-          return regeneratorRuntime.awrap(fetch(URL + "/".concat(id, "/").concat(key, "/").concat(value), {
+          return regeneratorRuntime.awrap(fetch(URL + "/editTeamForAll/".concat(key, "/").concat(oldValue, "/").concat(newValue), {
             method: "PUT"
           }));
 

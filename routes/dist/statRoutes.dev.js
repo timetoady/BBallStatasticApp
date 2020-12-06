@@ -153,7 +153,7 @@ router.put("/updateUniqueStat/:statID/:statName/:newValue", function (req, res) 
       err ? res.send("Error, captain! ".concat(err)) : res.send("Updated ".concat(statName, " for ID ").concat(statID, " to ").concat(newValue, "."));
     });
   });
-}); //Add one unique stat
+}); //Add one unique stat to a player
 
 router.put("/addUniqueStat/:statID/:statName/:newValue", function (req, res) {
   var _req$params4 = req.params,
@@ -173,7 +173,7 @@ router.put("/addUniqueStat/:statID/:statName/:newValue", function (req, res) {
   }, function (err, stats) {
     err ? res.send("Error, captain! ".concat(err)) : res.send("Updated ".concat(statName, " for ID ").concat(statID, " to ").concat(newValue, "."));
   });
-}); //Add set of unique stats
+}); //Add set of unique stats to one player
 
 router.put("/updateUniqueStats/:statID", function (req, res) {
   var _console;

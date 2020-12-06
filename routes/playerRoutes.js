@@ -75,7 +75,7 @@ router.delete("/purge/all", (req, res) => {
 });
 
 //Find and change Player key's value by id via direct params
-router.put("/:id/:key/:value", (req, res) => {
+router.put("/editFieldForOne/:id/:key/:value", (req, res) => {
   const { id, key, value } = req.params;
   data = { [key]: value };
   Player.findByIdAndUpdate(id, data, { new: true }, function (
@@ -83,6 +83,26 @@ router.put("/:id/:key/:value", (req, res) => {
     player
   ) {
     err ? res.send(`Put method says: Error! ${err}`) : res.json(player);
+  });
+});
+
+// Edit/update a global field for all players
+router.put("/editTeamForAll/:key/:oldValue/:newValue", (req, res) => {
+  const { key, oldValue, newValue } = req.params;
+  console.log(key, newValue)
+  data = { [key]: newValue };
+  console.log(data)
+  Player.updateMany({ [key]: oldValue }, { [key]: newValue }, function (
+    err,
+    result
+  ) {
+    let status = "";
+    result.ok === 0 ? (status = false) : (status = true);
+    err
+      ? res.send(`Stat to all method says: Error! ${err}`)
+      : res.send(
+          `Successful: ${status}! Matches found: ${result.n}. Matches changed: ${result.nModified}`
+        );
   });
 });
 

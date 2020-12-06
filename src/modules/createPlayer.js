@@ -1,4 +1,4 @@
-import getAPIData, {showSpinner, hideSpinner, sendAPIStatDataChain, sendAPIStatDataChain2, addSpecialStatsToOne} from "./api.js";
+import getAPIData, {showSpinner, hideSpinner, sendAPIStatDataChain } from "./api.js";
 
 
 const playerArea = document.querySelector("#playerArea")

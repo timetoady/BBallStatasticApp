@@ -108,28 +108,6 @@ export async function sendAPIStatDataChain(
     .catch((error) => console.error(error));
 }
 
-export async function sendAPIStatDataChain2(
-  URL,
-  playerInfo,
-  stats,
-  extraStats = {}
-) {
-  try {
-    fetch(URL, {
-      method: "POST",
-      headers: {
-        //Accept: "application/json",
-        "Content-type": "application/json",
-      },
-      body: JSON.stringify(playerInfo),
-    }).then((response) => {
-      console.log(response);
-    });
-  } catch (error) {
-    console.error(error);
-  }
-}
-
 //DELETE method
 export async function deleteAPIData(URL, ID) {
   try {
@@ -147,6 +125,19 @@ export async function deleteAPIData(URL, ID) {
 export async function updateAPIData(URL, id, key, value) {
   try {
     const response = await fetch(URL + `/${id}/${key}/${value}`, {
+      method: "PUT",
+    });
+    const data = await response.json();
+    return data;
+  } catch (error) {
+    console.error(error);
+  }
+}
+
+//PUT method for editing field of all players
+export async function updateTeamNameForAll(URL, key, oldValue, newValue) {
+  try {
+    const response = await fetch(URL + `/editTeamForAll/${key}/${oldValue}/${newValue}`, {
       method: "PUT",
     });
     const data = await response.json();
