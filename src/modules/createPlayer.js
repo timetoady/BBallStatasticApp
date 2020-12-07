@@ -407,22 +407,27 @@ export default function newPlayer() {
         // console.log(extraStatData)
 
         showSpinner()
-     //   $('#finishCreatePlayer').modal('toggle')
+       $('#finishCreatePlayer').modal('toggle')
         const response = await sendAPIStatDataChain(
             players, playerData, baseStatData, extraStatData).then((reply)=>{
-            const data = response
-            console.log("Data shows", data)
-               if (reply) {
-                hideSpinner()
-                console.log("dataChain reply", reply)
-                console.log("dataChain response", response)
-                console.log("Final responce in create", finalResponse)
+            setTimeout( () => {
+                if (finalResponse) {
+                    hideSpinner()
+                    console.log("dataChain reply", reply)
+                    console.log("Final responce in create", finalResponse.response)
+                }
+                
+            finalResponse.response.ok 
+            ? playerSaveModal()
+            : errorModal(finalResponse.status)
 
-               }
+            }, 1500)
+            
+               
 
-               response.ok 
-                 ? playerSaveModal()
-                 : errorModal(response.status)
+
+               
+
                   
            })
         .catch ((err) => {
