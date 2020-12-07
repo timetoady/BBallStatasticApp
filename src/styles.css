@@ -330,6 +330,15 @@ header h3 {
     margin-bottom: 1rem;
 }
 
+.picDiv {
+    max-width: 359px;
+}
+
+.picInput{
+    width: 100%;
+    margin-top: .5rem;
+}
+
 .nameAndNumberDiv {
     display: flex;
     justify-content: space-between;
@@ -408,6 +417,14 @@ header h3 {
 }
 
 @media screen and (max-width: 769px) {
+    .picDiv {
+        max-width: 100%;
+    }
+    .picInput{
+        padding: 1rem .2rem;
+        text-align: center;
+        
+    }
 
     .playerTeamName{
         font-size: 2rem;
@@ -431,7 +448,7 @@ header h3 {
 
 .playerPic{
     max-width: 100%;
-    padding: .5rem;
+    padding: .5rem 0;
 }
     #nameInput {
         font-size: 1.5rem;
@@ -444,7 +461,7 @@ header h3 {
         max-width: 30%;
     }
     .playerInfoDiv {
-        padding: .5rem;
+        padding: .75rem 0;
     }
     .detailsDiv {
         grid-template-columns: 1fr !important;

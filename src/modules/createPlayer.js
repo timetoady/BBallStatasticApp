@@ -1,3 +1,4 @@
+
 import getAPIData, 
 {showSpinner, hideSpinner, sendAPIStatDataChain, finalResponse } 
 from "./api.js";
@@ -126,6 +127,12 @@ export default function newPlayer() {
             playerPic.alt = "Player photo"
             playerPic.setAttribute("class", "playerPic")
             picDiv.appendChild(playerPic)
+        let picInput = document.createElement("input")
+            picInput.type = "text"
+            picInput.name = "img"
+            picInput.placeholder= "Paste image URL here."
+            picInput.setAttribute("class", "picInput")
+            picDiv.appendChild(picInput)
         let playerInfoDiv = document.createElement("div")
             playerInfoDiv.setAttribute("class", "playerInfoDiv")
             topDiv.appendChild(playerInfoDiv)
