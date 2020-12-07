@@ -14,9 +14,12 @@ exports.updateAPIData = updateAPIData;
 exports.updateTeamNameForAll = updateTeamNameForAll;
 exports.addSpecialStat = addSpecialStat;
 exports.addSpecialStatsToOne = addSpecialStatsToOne;
+exports.finalResponse = void 0;
 //API Methods
 var playerID = "";
 var statsID = "";
+var finalResponse = {};
+exports.finalResponse = finalResponse;
 
 function hideSpinner() {
   document.querySelector(".spinner-border").style.display = "none";
@@ -190,11 +193,12 @@ function sendAPIStatDataChain(URL, playerInfo, stats) {
                 },
                 body: JSON.stringify(extraStats)
               }).then(function (response) {
-                return console.log(response);
-              }); // .then((reply2) => {
-              //   console.log("Final reply", reply2);
-              // });
+                finalResponse["response"] = response;
+                console.log("Final response", response);
+              });
             });
+            console.log("Final from API", finalResponse);
+            return finalResponse;
           })["catch"](function (error) {
             return console.error(error);
           });

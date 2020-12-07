@@ -64,6 +64,7 @@ var resetModal = function resetModal() {
   closer4.textContent = "CANCEL";
   (0, _api.hideSpinner)();
   (0, _getPlayerData["default"])(players);
+  location.reload();
 };
 
 function changeTeamTitle() {

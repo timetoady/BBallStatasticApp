@@ -1,6 +1,7 @@
 //API Methods
 let playerID = "";
 let statsID = "";
+export let finalResponse = {}
 
 export function hideSpinner() {
   document.querySelector(".spinner-border").style.display = "none";
@@ -63,7 +64,7 @@ export async function sendAPIStatDataChain(
   stats,
   extraStats = {}
 ) {
-  fetch(URL, {
+   fetch(URL, {
     method: "POST",
     headers: {
       //Accept: "application/json",
@@ -99,11 +100,15 @@ export async function sendAPIStatDataChain(
             },
             body: JSON.stringify(extraStats),
           })
-            .then((response) => console.log(response))
-            // .then((reply2) => {
-            //   console.log("Final reply", reply2);
-            // });
+            .then((response) => {
+              finalResponse["response"] = response
+              console.log("Final response", response)
+              
+            })
+
         });
+        console.log("Final from API", finalResponse)
+        return finalResponse
     })
     .catch((error) => console.error(error));
 }

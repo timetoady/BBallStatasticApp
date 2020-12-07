@@ -237,6 +237,18 @@ header h3 {
     cursor: pointer;
 }
 
+.editButtons2 button{
+    font-family: 'Open Sans', sans-serif;
+    background-color: #cc5500;
+    border: 2px solid black;
+    font-weight: 700;
+    cursor: pointer;
+
+}
+
+.returnToRoster, .addAnother {
+    display: none;
+}
 
 
 #submit{

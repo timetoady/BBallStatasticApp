@@ -5,158 +5,38 @@ function _typeof(obj) { if (typeof Symbol === "function" && typeof Symbol.iterat
 Object.defineProperty(exports, "__esModule", {
   value: true
 });
-exports["default"] = newPlayer;
-exports.buildJsonFormDataStats = exports.buildJsonFormData = void 0;
+exports["default"] = viewPlayer;
 
 var _api = _interopRequireWildcard(require("./api.js"));
+
+var _createPlayer = require("./createPlayer.js");
 
 function _getRequireWildcardCache() { if (typeof WeakMap !== "function") return null; var cache = new WeakMap(); _getRequireWildcardCache = function _getRequireWildcardCache() { return cache; }; return cache; }
 
 function _interopRequireWildcard(obj) { if (obj && obj.__esModule) { return obj; } if (obj === null || _typeof(obj) !== "object" && typeof obj !== "function") { return { "default": obj }; } var cache = _getRequireWildcardCache(); if (cache && cache.has(obj)) { return cache.get(obj); } var newObj = {}; var hasPropertyDescriptor = Object.defineProperty && Object.getOwnPropertyDescriptor; for (var key in obj) { if (Object.prototype.hasOwnProperty.call(obj, key)) { var desc = hasPropertyDescriptor ? Object.getOwnPropertyDescriptor(obj, key) : null; if (desc && (desc.get || desc.set)) { Object.defineProperty(newObj, key, desc); } else { newObj[key] = obj[key]; } } } newObj["default"] = obj; if (cache) { cache.set(obj, newObj); } return newObj; }
 
-var playerArea = document.querySelector("#playerArea");
+var playerArea = document.querySelector("#playerView");
 var baseStats = document.querySelector(".baseStats");
-var submitButton = document.querySelector("#submitButton");
-var finishModalTitle = document.querySelector(".finishTitle");
-var finishModalText = document.querySelector(".saveCompleteModal");
-var returnToRosterButton = document.querySelector(".returnToRoster");
-var addAnotherPlayerButton = document.querySelector(".addAnother");
-var theError = "";
+var editButton = document.querySelector("#editButton");
 var stats = "../stats";
 var players = "../players";
 
-var buildJsonFormData = function buildJsonFormData(form) {
-  var jsonFormData = {};
-  var _iteratorNormalCompletion = true;
-  var _didIteratorError = false;
-  var _iteratorError = undefined;
-
-  try {
-    for (var _iterator = new FormData(form)[Symbol.iterator](), _step; !(_iteratorNormalCompletion = (_step = _iterator.next()).done); _iteratorNormalCompletion = true) {
-      var pair = _step.value;
-      jsonFormData[pair[0]] = pair[1];
-    }
-  } catch (err) {
-    _didIteratorError = true;
-    _iteratorError = err;
-  } finally {
-    try {
-      if (!_iteratorNormalCompletion && _iterator["return"] != null) {
-        _iterator["return"]();
-      }
-    } finally {
-      if (_didIteratorError) {
-        throw _iteratorError;
-      }
-    }
-  }
-
-  return jsonFormData;
-};
-
-exports.buildJsonFormData = buildJsonFormData;
-
-var buildJsonFormDataStats = function buildJsonFormDataStats(form) {
-  var jsonFormData = {};
-  var _iteratorNormalCompletion2 = true;
-  var _didIteratorError2 = false;
-  var _iteratorError2 = undefined;
-
-  try {
-    for (var _iterator2 = new FormData(form)[Symbol.iterator](), _step2; !(_iteratorNormalCompletion2 = (_step2 = _iterator2.next()).done); _iteratorNormalCompletion2 = true) {
-      var pair = _step2.value;
-      jsonFormData[pair[0]] = parseFloat(pair[1]);
-    }
-  } catch (err) {
-    _didIteratorError2 = true;
-    _iteratorError2 = err;
-  } finally {
-    try {
-      if (!_iteratorNormalCompletion2 && _iterator2["return"] != null) {
-        _iterator2["return"]();
-      }
-    } finally {
-      if (_didIteratorError2) {
-        throw _iteratorError2;
-      }
-    }
-  }
-
-  return jsonFormData;
-}; //Checks on blur if field is empty. Gives warning if set input is required.
-
-
-exports.buildJsonFormDataStats = buildJsonFormDataStats;
-
-var itIsRequired = function itIsRequired(input) {
-  input.addEventListener('blur', function () {
-    if (input.value === null || input.value.trim() === "") {
-      console.log("Input was empty!");
-      input.placeholder = "Required.";
-      input.classList.remove("rejectDupMessage");
-      void input.offsetWidth;
-      input.classList.add("rejectDupMessage");
-      input.value = null;
-    }
-  });
-  input.addEventListener('focus', function () {
-    input.classList.remove("rejectDupMessage");
-    input.style.color = "black";
-    input.placeholder = "";
-  });
-};
-
-$(function () {
-  $('[data-toggle="tooltip"]').tooltip();
-});
-
-function newPlayer() {
-  returnToRosterButton.addEventListener("click", function () {
-    resetModel();
-    window.location.href = "/";
-  });
-  addAnotherPlayerButton.addEventListener("click", function () {
-    resetModel();
-    location.reload();
-  });
-
-  var resetModel = function resetModel() {
-    returnToRosterButton.style.display = "none";
-    addAnotherPlayerButton.style.display = "none";
-    finishModalText.textContent = "Please wait a moment.";
-    finishModalTitle.textContent = "SAVING PLAYER...";
-  };
-
-  var playerSaveModal = function playerSaveModal() {
-    returnToRosterButton.style.display = "block";
-    addAnotherPlayerButton.style.display = "block";
-    finishModalText.textContent = "New player added to your roster.";
-    finishModalTitle.textContent = "PLAYER SAVED!";
-  };
-
-  var errorModal = function errorModal(error) {
-    returnToRosterButton.style.display = "none";
-    addAnotherPlayerButton.style.display = "none";
-    finishModalText.textContent = "Uh oh, that looks like an error: ".concat(error);
-    finishModalTitle.textContent = "ERROR";
-  };
-
+function viewPlayer(playerID) {
   var playerInfoForm = document.createElement('form');
   playerInfoForm.setAttribute("id", "playerInfoForm");
   playerArea.appendChild(playerInfoForm);
   var teamNameDiv = document.createElement("div");
   teamNameDiv.setAttribute("class", "teamNameDiv");
   var teamName = document.createElement("input");
-  (0, _api["default"])(players).then(function (data) {
-    teamName.value = data[0].teamName;
-    teamName.textContent = data[0].teamName;
+  (0, _api["default"])(players, playerID).then(function (data) {
+    teamName.value = data.teamName;
+    teamName.textContent = data.teamName;
     console.log("Team name value is ".concat(teamName.value));
   })["catch"](function (error) {
     return console.error(error);
   });
   teamName.setAttribute("class", "playerTeamName");
   teamName.name = "teamName";
-  itIsRequired(teamName);
   teamName.readOnly = true;
   playerInfoForm.appendChild(teamNameDiv);
   teamNameDiv.appendChild(teamName);
@@ -185,7 +65,6 @@ function newPlayer() {
   nameInput.setAttribute('class', 'editInputs');
   nameInput.setAttribute('id', 'nameInput');
   nameAndNumberDiv.appendChild(nameInput);
-  itIsRequired(nameInput);
   var number = document.createElement("input");
   number.type = "number";
   number.name = "number";
@@ -194,7 +73,6 @@ function newPlayer() {
   number.placeholder = "Num*";
   number.setAttribute('class', 'editInputs');
   number.setAttribute('id', 'numberInput');
-  itIsRequired(number);
   nameAndNumberDiv.appendChild(number);
   var detailsDiv = document.createElement("div");
   detailsDiv.setAttribute("class", "detailsDiv");
@@ -211,54 +89,7 @@ function newPlayer() {
   height.name = "height";
   height.required;
   height.setAttribute('class', "editInputs");
-  itIsRequired(height);
   heightDiv.appendChild(height);
-
-  var checkIfRequiredMet = function checkIfRequiredMet(input) {
-    input.addEventListener("blur", function () {
-      if (teamName.value && nameInput.value && number.value && height.value) {
-        var setUpSubmit = function setUpSubmit() {
-          console.log("added submit listener");
-          submitButton.removeEventListener("click", console.log("Removed submit listener!"));
-          submitButton.classList.remove("showHidden");
-          submitButton.classList.remove("submitButtonDisabled");
-          void submitButton.offsetWidth;
-          submitButton.classList.add("submitButtonActive");
-          submitButton.title = "Click to save player.";
-          $('[data-toggle="tooltip"]').tooltip('hide').attr('data-original-title', 'Click to save new player.');
-          submitButton.addEventListener("click", function () {
-            submitData();
-          });
-        };
-
-        setUpSubmit();
-      } else {
-        submitButton.removeEventListener("click", console.log("Removed submit listener!"));
-      }
-    }); // window.addEventListener("wheel", () =>{
-    //     if (teamName.value 
-    //         && nameInput.value 
-    //         && number.value 
-    //         && height.value) {
-    //             console.log("wheel!")
-    //             submitButton.classList.remove("showHidden");
-    //             submitButton.classList.remove("submitButtonDisabled");
-    //             void submitButton.offsetWidth;
-    //             submitButton.classList.add("submitButtonActive");
-    //             submitButton.title = "Click to save player."
-    //             $('[data-toggle="tooltip"]').tooltip('hide')
-    //             .attr('data-original-title', 'Click to save new player.')
-    //             submitButton.addEventListener("click", () => {
-    //                 submitData()
-    //             })
-    //         }
-    //     }, {once: true})
-  };
-
-  checkIfRequiredMet(teamName);
-  checkIfRequiredMet(nameInput);
-  checkIfRequiredMet(number);
-  checkIfRequiredMet(height);
   var weightDiv = document.createElement("div");
   weightDiv.setAttribute("class", "weightDiv");
   detailsDiv.appendChild(weightDiv);
@@ -413,47 +244,16 @@ function newPlayer() {
   });
 
   var submitData = function submitData() {
-    var playerForm, baseStatsForm, extraStatsForm, playerData, baseStatData, extraStatData, response;
-    return regeneratorRuntime.async(function submitData$(_context) {
-      while (1) {
-        switch (_context.prev = _context.next) {
-          case 0:
-            playerForm = document.querySelector("#playerInfoForm");
-            baseStatsForm = document.querySelector(".statsForm");
-            extraStatsForm = document.querySelector(".extraStatsForm"); //console.log(extraStatsForm.value)
-
-            playerData = buildJsonFormData(playerForm);
-            baseStatData = buildJsonFormDataStats(baseStatsForm);
-            extraStatData = buildJsonFormDataStats(extraStatsForm); // console.log(baseStatData)
-            // console.log(extraStatData)
-
-            (0, _api.showSpinner)(); //   $('#finishCreatePlayer').modal('toggle')
-
-            _context.next = 9;
-            return regeneratorRuntime.awrap((0, _api.sendAPIStatDataChain)(players, playerData, baseStatData, extraStatData).then(function (reply) {
-              var data = response;
-              console.log("Data shows", data);
-
-              if (reply) {
-                (0, _api.hideSpinner)();
-                console.log("dataChain reply", reply);
-                console.log("dataChain response", response);
-                console.log("Final responce in create", _api.finalResponse);
-              }
-
-              response.ok ? playerSaveModal() : errorModal(response.status);
-            })["catch"](function (err) {
-              console.error(err);
-            }));
-
-          case 9:
-            response = _context.sent;
-
-          case 10:
-          case "end":
-            return _context.stop();
-        }
-      }
-    });
+    var playerForm = document.querySelector("#playerInfoForm");
+    var baseStatsForm = document.querySelector(".statsForm");
+    var extraStatsForm = document.querySelector(".extraStatsForm");
+    console.log(extraStatsForm.value);
+    var playerData = (0, _createPlayer.buildJsonFormData)(playerForm);
+    var baseStatData = (0, _createPlayer.buildJsonFormDataStats)(baseStatsForm);
+    var extraStatData = (0, _createPlayer.buildJsonFormDataStats)(extraStatsForm);
+    console.log(baseStatData);
+    console.log(extraStatData);
+    (0, _api.showSpinner)();
+    (0, _api.sendAPIStatDataChain)(players, playerData, baseStatData, extraStatData); //do then here to send for each extra stat if extraStat exists
   };
 }

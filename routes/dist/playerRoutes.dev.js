@@ -46,6 +46,15 @@ router.get("/", function (req, res) {
   }).populate("stats").exec(function (err, player) {
     err ? res.send("Oops! There was an error: ".concat(err)) : res.json(player);
   });
+}); //Get all current players
+
+router.get("/:id", function (req, res) {
+  var id = req.params.id;
+  Player.findById(id, function (err, player) {
+    checkError(err, res);
+  }).populate("stats").exec(function (err, player) {
+    err ? res.send("Oops! There was an error: ".concat(err)) : res.json(player);
+  });
 }); //Delete a player by id
 
 router["delete"]("/:id", function (req, res) {

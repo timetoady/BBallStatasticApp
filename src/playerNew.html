@@ -21,6 +21,31 @@
           </a>
         </header>
 
+        <div class="modal fade " id="finishCreatePlayer" tabindex="-1">
+          <div class="modal-dialog">
+            <div class="modal-content">
+              <div class="modal-header">
+                <h5 class="modal-title finishTitle">SAVING PLAYER...</h5>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                  <span aria-hidden="true">&times;</span>
+                </button>
+              </div>
+              <div class="modal-body">
+                <p class="modalText saveCompleteModal">Please wait a moment.</p>
+                <div class="d-flex justify-content-center">
+                  <div class="spinner-border" role="status">
+                    <span class="sr-only">Loading...</span>
+                  </div>
+                </div>
+              </div>
+              <div class="modal-footer">
+                <button type="button" class="btn btn-secondary addAnother" data-dismiss="modal">ADD ANOTHER</button>
+                <button type="button" class="btn returnToRoster">RETURN TO ROSTER</button>
+              </div>
+            </div>
+          </div>
+        </div>
+
         <div class="modal fade "   id="removePlayer" tabindex="-1">
             <div class="modal-dialog">
               <div class="modal-content">

@@ -1,16 +1,17 @@
 import getAPIData from "./api.js";
 const teamDisplay = document.querySelector("#team");
-const rosterDiv = document.querySelector("#rosterDiv");
+const rosterDiv1 = document.querySelector("#rosterDiv");
 
 const getPlayers = (schema) => {
     let teamTitle = document.querySelector('.teamTitle')
-    rosterDiv.remove()
+    rosterDiv1.remove()
     getAPIData(schema)
     .then((data) => {
      // data[0].name === "TheShadowMaster" 
       teamTitle.textContent = data[0].teamName 
       //: null;
       let rosterDiv = document.createElement("div");
+      rosterDiv1.replaceWith(rosterDiv)
       rosterDiv.setAttribute("id", "rosterDiv")
       teamDisplay.appendChild(rosterDiv)
       data.forEach((player) => {

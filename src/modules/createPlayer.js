@@ -1,9 +1,19 @@
-import getAPIData, {showSpinner, hideSpinner, sendAPIStatDataChain } from "./api.js";
+import getAPIData, 
+{showSpinner, hideSpinner, sendAPIStatDataChain, finalResponse } 
+from "./api.js";
 
 
 const playerArea = document.querySelector("#playerArea")
 const baseStats = document.querySelector(".baseStats")
 const submitButton = document.querySelector("#submitButton")
+const finishModalTitle = document.querySelector(".finishTitle")
+const finishModalText = document.querySelector(".saveCompleteModal")
+const returnToRosterButton = document.querySelector(".returnToRoster")
+const addAnotherPlayerButton = document.querySelector(".addAnother")
+const theError = ""
+
+
+
 
 const stats = "../stats"
 const players = "../players"
@@ -50,6 +60,44 @@ $(function () {
 
 
 export default function newPlayer() {
+
+    returnToRosterButton.addEventListener("click", () =>{
+        resetModel()
+        window.location.href = "/"
+        
+    
+    })
+    
+    addAnotherPlayerButton.addEventListener("click", () => {
+        resetModel()
+        location.reload();
+        
+    })
+    
+    const resetModel = () => {
+        returnToRosterButton.style.display = "none"
+        addAnotherPlayerButton.style.display = "none"
+        finishModalText.textContent = "Please wait a moment."
+        finishModalTitle.textContent = "SAVING PLAYER..."
+    }
+    
+    const playerSaveModal = () => {
+        returnToRosterButton.style.display = "block"
+        addAnotherPlayerButton.style.display = "block"
+        finishModalText.textContent = "New player added to your roster."
+        finishModalTitle.textContent = "PLAYER SAVED!"
+    }
+    
+    const errorModal = (error) => {
+        returnToRosterButton.style.display = "none"
+        addAnotherPlayerButton.style.display = "none"
+        finishModalText.textContent = `Uh oh, that looks like an error: ${error}`
+        finishModalTitle.textContent = "ERROR"
+    
+    }
+
+
+
     const playerInfoForm = document.createElement('form')
         playerInfoForm.setAttribute("id", "playerInfoForm")
         playerArea.appendChild(playerInfoForm)
@@ -316,7 +364,7 @@ export default function newPlayer() {
             extraStatsForm.setAttribute("class", "extraStatsForm")
             extraStatDiv.appendChild(extraStatsForm)
 
-
+            
             if (data[0]["otherStats"].length !== 0) {
                 data[0]["otherStats"].forEach(extraStat => {
                     const extraStatDiv2 = document.createElement("div")
@@ -340,18 +388,42 @@ export default function newPlayer() {
         })
     
  
-    const submitData = () => {
+    const submitData = async () => {
         let playerForm = document.querySelector("#playerInfoForm")
         let baseStatsForm = document.querySelector(".statsForm")
         let extraStatsForm = document.querySelector(".extraStatsForm")
-        console.log(extraStatsForm.value)
+        //console.log(extraStatsForm.value)
         let playerData = buildJsonFormData(playerForm)
         let baseStatData = buildJsonFormDataStats(baseStatsForm)
         let extraStatData = buildJsonFormDataStats(extraStatsForm)
-        console.log(baseStatData)
-        console.log(extraStatData)
+        // console.log(baseStatData)
+        // console.log(extraStatData)
+
         showSpinner()
-        sendAPIStatDataChain(players, playerData, baseStatData, extraStatData)
+     //   $('#finishCreatePlayer').modal('toggle')
+        const response = await sendAPIStatDataChain(
+            players, playerData, baseStatData, extraStatData).then((reply)=>{
+            const data = response
+            console.log("Data shows", data)
+               if (reply) {
+                hideSpinner()
+                console.log("dataChain reply", reply)
+                console.log("dataChain response", response)
+                console.log("Final responce in create", finalResponse)
+
+               }
+
+               response.ok 
+                 ? playerSaveModal()
+                 : errorModal(response.status)
+                  
+           })
+        .catch ((err) => {
+            console.error(err)
+        })
+       
+        
+        
         //do then here to send for each extra stat if extraStat exists
 
     }

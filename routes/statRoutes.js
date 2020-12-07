@@ -7,7 +7,7 @@ const checkError = (err, res) => {
   err && res.send(`Looks like we've got an Error: ${err}`);
 };
 
-//Get all current manufacterers
+//Get all current stats
 router.get("/", (req, res) => {
   Stats.find((err, stats) => {
     checkError(err, res);

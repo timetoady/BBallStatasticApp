@@ -52,6 +52,18 @@ router.get("/", (req, res) => {
       });
   });
 
+    //Get all current players
+router.get("/:id", (req, res) => {
+  const { id } = req.params
+  Player.findById(id, (err, player) => {
+    checkError(err, res);
+  })
+    .populate("stats")
+    .exec(function (err, player) {
+      err ? res.send(`Oops! There was an error: ${err}`) : res.json(player);
+    });
+});
+
 
 //Delete a player by id
 router.delete("/:id", (req, res) => {

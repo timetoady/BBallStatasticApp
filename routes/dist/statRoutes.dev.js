@@ -20,7 +20,7 @@ var Stats = require("../schema/stats");
 
 var checkError = function checkError(err, res) {
   err && res.send("Looks like we've got an Error: ".concat(err));
-}; //Get all current manufacterers
+}; //Get all current stats
 
 
 router.get("/", function (req, res) {

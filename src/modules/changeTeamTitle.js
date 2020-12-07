@@ -42,6 +42,7 @@ const resetModal = () => {
   closer4.textContent = "CANCEL";
   hideSpinner();
   getPlayers(players);
+  location.reload();
 };
 
 export default function changeTeamTitle() {
