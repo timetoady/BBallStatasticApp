@@ -1,0 +1,1 @@
+//make callable to receive player ID and remove from db

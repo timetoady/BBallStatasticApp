@@ -339,6 +339,10 @@ header h3 {
     margin-top: .5rem;
 }
 
+.playerInfoDiv {
+    padding: 0 0 0 1rem;
+}
+
 .nameAndNumberDiv {
     display: flex;
     justify-content: space-between;

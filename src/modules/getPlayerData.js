@@ -40,6 +40,8 @@ const getPlayers = (schema) => {
               playerPosition.textContent =`Position: ${player.position}`
           let statButton = document.createElement("button");
               statButton.textContent = "SEE STATS"
+              statButton.value = player._id
+              //add event listener here to launch view stats page
   
         rosterDiv.appendChild(playerDiv)
           playerDiv.appendChild(topDiv)
