@@ -21,7 +21,7 @@ var finishModalTitle = document.querySelector(".finishTitle");
 var finishModalText = document.querySelector(".saveCompleteModal");
 var returnToRosterButton = document.querySelector(".returnToRoster");
 var addAnotherPlayerButton = document.querySelector(".addAnother");
-var theError = "";
+var viewMode = "view";
 var stats = "../stats";
 var players = "../players";
 
@@ -170,6 +170,12 @@ function newPlayer() {
   playerPic.alt = "Player photo";
   playerPic.setAttribute("class", "playerPic");
   picDiv.appendChild(playerPic);
+  var picInput = document.createElement("input");
+  picInput.type = "text";
+  picInput.name = "img";
+  picInput.placeholder = "Paste image URL here.";
+  picInput.setAttribute("class", "picInput");
+  picDiv.appendChild(picInput);
   var playerInfoDiv = document.createElement("div");
   playerInfoDiv.setAttribute("class", "playerInfoDiv");
   topDiv.appendChild(playerInfoDiv);
@@ -427,29 +433,27 @@ function newPlayer() {
             extraStatData = buildJsonFormDataStats(extraStatsForm); // console.log(baseStatData)
             // console.log(extraStatData)
 
-            (0, _api.showSpinner)(); //   $('#finishCreatePlayer').modal('toggle')
-
-            _context.next = 9;
+            (0, _api.showSpinner)();
+            $('#finishCreatePlayer').modal('toggle');
+            _context.next = 10;
             return regeneratorRuntime.awrap((0, _api.sendAPIStatDataChain)(players, playerData, baseStatData, extraStatData).then(function (reply) {
-              var data = response;
-              console.log("Data shows", data);
+              setTimeout(function () {
+                if (_api.finalResponse) {
+                  (0, _api.hideSpinner)();
+                  console.log("dataChain reply", reply);
+                  console.log("Final responce in create", _api.finalResponse.response);
+                }
 
-              if (reply) {
-                (0, _api.hideSpinner)();
-                console.log("dataChain reply", reply);
-                console.log("dataChain response", response);
-                console.log("Final responce in create", _api.finalResponse);
-              }
-
-              response.ok ? playerSaveModal() : errorModal(response.status);
+                _api.finalResponse.response.ok ? playerSaveModal() : errorModal(_api.finalResponse.status);
+              }, 1300);
             })["catch"](function (err) {
               console.error(err);
             }));
 
-          case 9:
+          case 10:
             response = _context.sent;
 
-          case 10:
+          case 11:
           case "end":
             return _context.stop();
         }

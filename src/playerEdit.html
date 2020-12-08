@@ -16,8 +16,10 @@
 
   <div class="container">
     <header>
+      <a href="index.html">
       <h1>Stat-tastic</h1>
       <h3>Basketball Stat Tracker</h3>
+    </a>
     </header>
 
     <div class="modal fade " id="removePlayer" tabindex="-1">
@@ -53,7 +55,16 @@
     </div>
 
     <section id="playerView">
+      <div class="playerInfoView">
 
+      </div>
+      <div class="baseStatsView">
+        <h2>STATS:</h2>
+      </div>
+     
+      <div id="extraStatsView">
+        <h2 >EXTRA STATS:</h2>
+      </div>   
 
 
     </section>
@@ -62,6 +73,7 @@
   </div>
 
   <script type=module src="./modules/main.js"></script>
+  <script type=module src="./modules/viewPlayer.js"></script>
   <script src="https://code.jquery.com/jquery-3.5.1.slim.min.js"
     integrity="sha384-DfXdz2htPH0lsSSs5nCTpuj/zy4C+OGpamoFVy38MVBnE+IbbVYUew+OrCXaRkfj" crossorigin="anonymous">
   </script>

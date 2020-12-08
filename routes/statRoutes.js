@@ -19,6 +19,18 @@ router.get("/", (req, res) => {
     });
 });
 
+//Get stats by ID
+router.get("/:id", (req, res) => {
+  const { id } = req.params;
+  Stats.findById(id, (err, player) => {
+    checkError(err, res);
+  })
+    .populate("player", "name")
+    .exec(function (err, player) {
+      err ? res.send(`Oops! There was an error: ${err}`) : res.json(player);
+    });
+});
+
 router.post("/", (req, res) => {
   // const { playerID } = req.params
   Stats.create(
@@ -69,11 +81,14 @@ router.delete("/:id", (req, res) => {
 //Delete all stats
 
 router.delete("/purge/all", (req, res) => {
-  Stats.deleteMany({ '_id': {$ne: "5fcb6087eceb1569ac393437" } }, (err, result) => {
-    err
-      ? res.send(`Error! ${err}`)
-      : res.send(`Deleted all players' stats. Count: ${result.deletedCount}`);
-  }).then(Player.updateMany({}, { stats: " " }), (err) => {
+  Stats.deleteMany(
+    { _id: { $ne: "5fcb6087eceb1569ac393437" } },
+    (err, result) => {
+      err
+        ? res.send(`Error! ${err}`)
+        : res.send(`Deleted all players' stats. Count: ${result.deletedCount}`);
+    }
+  ).then(Player.updateMany({}, { stats: " " }), (err) => {
     err
       ? res.send(`Error here! ${err}`)
       : res.send(`Added single blank category.`);
@@ -93,18 +108,19 @@ router.put("/changeBaseStat/:id/:key/:value", (req, res) => {
 router.put("/addUniqueStatToAll/:key/:value", (req, res) => {
   const { key, value } = req.params;
   data = { [key]: value };
-  Stats.updateMany({}, { $addToSet: { otherStats: data } }, function (
-    err,
-    stats
-  ) {
-    let status = "";
-    stats.ok === 0 ? (status = false) : (status = true);
-    err
-      ? res.send(`Stat to all method says: Error! ${err}`)
-      : res.send(
-          `Successful: ${status}. Matches found: ${stats.n}. Matches changed: ${stats.nModified}`
-        );
-  });
+  Stats.updateMany(
+    {},
+    { $addToSet: { otherStats: data } },
+    function (err, stats) {
+      let status = "";
+      stats.ok === 0 ? (status = false) : (status = true);
+      err
+        ? res.send(`Stat to all method says: Error! ${err}`)
+        : res.send(
+            `Successful: ${status}. Matches found: ${stats.n}. Matches changed: ${stats.nModified}`
+          );
+    }
+  );
 });
 
 //Edit/update all players by removing a global Stat category
@@ -148,7 +164,6 @@ router.put("/updateUniqueStat/:statID/:statName/:newValue", (req, res) => {
   );
 });
 
-
 //Add one unique stat to a player
 router.put("/addUniqueStat/:statID/:statName/:newValue", (req, res) => {
   const { statID, statName, newValue } = req.params;
@@ -167,41 +182,40 @@ router.put("/addUniqueStat/:statID/:statName/:newValue", (req, res) => {
 
 //Add set of unique stats to one player
 router.put("/updateUniqueStats/:statID", (req, res) => {
-    const { statID } = req.params
-    newStats = req.body
-    console.log(newStats)
-    const newArray = []
-    //console.log(statID)
+  const { statID } = req.params;
+  newStats = req.body;
+  console.log(newStats);
+  const newArray = [];
+  //console.log(statID)
   for (const [key, value] of Object.entries(newStats)) {
-    newField = {}
-    newField[key] = value
-    newArray.push(newField)
-
+    newField = {};
+    newField[key] = value;
+    newArray.push(newField);
   }
-    console.log(...newArray)
-    Stats.updateOne(
-      { _id: statID },
-      { $addToSet: { otherStats: [...newArray] } },
-      function (err, stats) {
-        err
-          ? res.send(`Error, sir! ${err}`)
-          : res.send(`Updated all unique stats for ID ${statID}.`);
-      }
-    );
+  console.log(...newArray);
+  Stats.updateOne(
+    { _id: statID },
+    { $addToSet: { otherStats: [...newArray] } },
+    function (err, stats) {
+      err
+        ? res.send(`Error, sir! ${err}`)
+        : res.send(`Updated all unique stats for ID ${statID}.`);
+    }
+  );
 });
 
 //Add set of unique stats
 router.put("/updateUniqueStatsbyPlayer/:playerID/", (req, res) => {
-  newStats = req.body
- Stats.updateOne(
-  { _id: statID },
-  { $addToSet: { newStats } },
-  function (err, stats) {
-    err
-      ? res.send(`Error, captain! ${err}`)
-      : res.send(`Updated ${statName} for ID ${statID} to ${newValue}.`);
-  }
-);
+  newStats = req.body;
+  Stats.updateOne(
+    { _id: statID },
+    { $addToSet: { newStats } },
+    function (err, stats) {
+      err
+        ? res.send(`Error, captain! ${err}`)
+        : res.send(`Updated ${statName} for ID ${statID} to ${newValue}.`);
+    }
+  );
 });
 
 module.exports = router;

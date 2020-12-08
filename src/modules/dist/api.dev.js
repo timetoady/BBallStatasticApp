@@ -81,7 +81,7 @@ function getAPIData(URL) {
           modifier = _args2.length > 1 && _args2[1] !== undefined ? _args2[1] : " ";
           _context2.prev = 1;
           _context2.next = 4;
-          return regeneratorRuntime.awrap(fetch(URL + "".concat(modifier), {
+          return regeneratorRuntime.awrap(fetch(URL + "/".concat(modifier), {
             method: "GET"
           }));
 

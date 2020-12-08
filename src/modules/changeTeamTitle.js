@@ -27,6 +27,7 @@ const teamNameChanger = async () => {
             changeTeamInputBody.style.opacity = 0;
             closer4.textContent = "CLOSE";
             hideSpinner();
+            
           }).catch((error) => console.error(error));
         });
   } catch (error) {
@@ -42,7 +43,10 @@ const resetModal = () => {
   closer4.textContent = "CANCEL";
   hideSpinner();
   getPlayers(players);
-  location.reload();
+  if(closer4.textContent === "CLOSE") {
+    location.reload();
+  }
+  
 };
 
 export default function changeTeamTitle() {

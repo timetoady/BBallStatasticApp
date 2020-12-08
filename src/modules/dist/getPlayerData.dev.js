@@ -7,6 +7,8 @@ exports["default"] = void 0;
 
 var _api = _interopRequireDefault(require("./api.js"));
 
+var _viewPlayer = _interopRequireDefault(require("./viewPlayer.js"));
+
 function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { "default": obj }; }
 
 var teamDisplay = document.querySelector("#team");
@@ -14,7 +16,11 @@ var rosterDiv1 = document.querySelector("#rosterDiv");
 
 var getPlayers = function getPlayers(schema) {
   var teamTitle = document.querySelector('.teamTitle');
-  rosterDiv1.remove();
+
+  if (rosterDiv1) {
+    rosterDiv1.remove();
+  }
+
   (0, _api["default"])(schema).then(function (data) {
     // data[0].name === "TheShadowMaster" 
     teamTitle.textContent = data[0].teamName; //: null;
@@ -47,6 +53,13 @@ var getPlayers = function getPlayers(schema) {
         playerPosition.textContent = "Position: ".concat(player.position);
         var statButton = document.createElement("button");
         statButton.textContent = "SEE STATS";
+        statButton.value = player._id;
+        statButton.addEventListener("click", function () {
+          localStorage.setItem('playerID', player._id);
+          localStorage.setItem('edit', false), localStorage.setItem("statID", player.stats[0]._id);
+          window.location.href = "/playerEdit.html";
+        }); //add event listener here to launch view stats page
+
         rosterDiv.appendChild(playerDiv);
         playerDiv.appendChild(topDiv);
         topDiv.appendChild(editButton);

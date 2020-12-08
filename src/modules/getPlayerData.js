@@ -1,10 +1,11 @@
 import getAPIData from "./api.js";
+import viewPlayer from "./viewPlayer.js";
 const teamDisplay = document.querySelector("#team");
 const rosterDiv1 = document.querySelector("#rosterDiv");
 
 const getPlayers = (schema) => {
     let teamTitle = document.querySelector('.teamTitle')
-    rosterDiv1.remove()
+    if (rosterDiv1) {rosterDiv1.remove()}
     getAPIData(schema)
     .then((data) => {
      // data[0].name === "TheShadowMaster" 
@@ -41,6 +42,15 @@ const getPlayers = (schema) => {
           let statButton = document.createElement("button");
               statButton.textContent = "SEE STATS"
               statButton.value = player._id
+              
+              statButton.addEventListener("click", () =>{
+                localStorage.setItem('playerID', player._id)
+                localStorage.setItem('edit', false),
+
+                localStorage.setItem("statID", player.stats[0]._id)
+                window.location.href = "/playerEdit.html"
+
+              })
               //add event listener here to launch view stats page
   
         rosterDiv.appendChild(playerDiv)

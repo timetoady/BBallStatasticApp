@@ -46,7 +46,7 @@ router.get("/", function (req, res) {
   }).populate("stats").exec(function (err, player) {
     err ? res.send("Oops! There was an error: ".concat(err)) : res.json(player);
   });
-}); //Get all current players
+}); //Get player by ID
 
 router.get("/:id", function (req, res) {
   var id = req.params.id;

@@ -29,6 +29,15 @@ router.get("/", function (req, res) {
   }).sort("number").populate("player", "name").exec(function (err, stats) {
     err ? res.send("Oops! There was an error: ".concat(err)) : res.json(stats);
   });
+}); //Get stats by ID
+
+router.get("/:id", function (req, res) {
+  var id = req.params.id;
+  Stats.findById(id, function (err, player) {
+    checkError(err, res);
+  }).populate("player", "name").exec(function (err, player) {
+    err ? res.send("Oops! There was an error: ".concat(err)) : res.json(player);
+  });
 });
 router.post("/", function (req, res) {
   // const { playerID } = req.params
@@ -70,7 +79,7 @@ router["delete"]("/:id", function (req, res) {
 
 router["delete"]("/purge/all", function (req, res) {
   Stats.deleteMany({
-    '_id': {
+    _id: {
       $ne: "5fcb6087eceb1569ac393437"
     }
   }, function (err, result) {

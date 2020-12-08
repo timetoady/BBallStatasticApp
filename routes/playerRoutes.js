@@ -52,7 +52,7 @@ router.get("/", (req, res) => {
       });
   });
 
-    //Get all current players
+    //Get player by ID
 router.get("/:id", (req, res) => {
   const { id } = req.params
   Player.findById(id, (err, player) => {

@@ -27,7 +27,7 @@ export async function useAPIData(URL, method, modifier = " ") {
 //Get by ID method
 export default async function getAPIData(URL, modifier = " ") {
   try {
-    const response = await fetch(URL + `${modifier}`, {
+    const response = await fetch(URL + `/${modifier}`, {
       method: "GET",
     });
     const data = await response.json();

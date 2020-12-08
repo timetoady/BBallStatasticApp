@@ -4,6 +4,7 @@ import getAPIData,
 from "./api.js";
 
 
+
 const playerArea = document.querySelector("#playerArea")
 const baseStats = document.querySelector(".baseStats")
 const submitButton = document.querySelector("#submitButton")
@@ -11,7 +12,7 @@ const finishModalTitle = document.querySelector(".finishTitle")
 const finishModalText = document.querySelector(".saveCompleteModal")
 const returnToRosterButton = document.querySelector(".returnToRoster")
 const addAnotherPlayerButton = document.querySelector(".addAnother")
-const theError = ""
+let viewMode = "view"
 
 
 
@@ -421,7 +422,7 @@ export default function newPlayer() {
             ? playerSaveModal()
             : errorModal(finalResponse.status)
 
-            }, 1500)
+            }, 1300)
             
                
 
