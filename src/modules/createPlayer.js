@@ -423,7 +423,7 @@ export default function newPlayer() {
             ? playerSaveModal()
             : errorModal(finalResponse.status)
 
-            }, 1300)
+            }, 500)
             
                
 

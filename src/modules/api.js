@@ -17,7 +17,7 @@ export async function useAPIData(URL, method, modifier = " ") {
     const response = await fetch(URL + `/${modifier}`, {
       method: method,
     });
-    const data = await response.json();
+    const data = await response;
     return data;
   } catch (error) {
     console.error(error);

@@ -49,7 +49,7 @@ function useAPIData(URL, method) {
         case 4:
           response = _context.sent;
           _context.next = 7;
-          return regeneratorRuntime.awrap(response.json());
+          return regeneratorRuntime.awrap(response);
 
         case 7:
           data = _context.sent;

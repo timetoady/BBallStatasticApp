@@ -446,7 +446,7 @@ function newPlayer() {
                 }
 
                 _api.finalResponse.response.ok ? playerSaveModal() : errorModal(_api.finalResponse.status);
-              }, 1300);
+              }, 500);
             })["catch"](function (err) {
               console.error(err);
             }));

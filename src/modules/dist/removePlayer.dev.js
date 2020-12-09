@@ -28,11 +28,13 @@ function removePlayer(playerId, playerName) {
   var method = "DELETE";
   (0, _api.showSpinner)();
   (0, _api.useAPIData)(players, method, playerId).then(function (reply) {
-    console.log(reply); //removalModalText.textContent = 
-
-    (0, _api.hideSpinner)();
-    removalModalText.textContent = "Player Removed.";
-    confirmRemoval.style.display = "none";
+    if (reply.ok) {
+      (0, _api.hideSpinner)();
+      removalModalText.textContent = "Player Removed.";
+      confirmRemoval.style.display = "none";
+    } else {
+      removalModalText.textContent = "There was an error: ".concat(reply.statusText);
+    }
   });
   closeButton.textContent = "CLOSE";
   closeButton.addEventListener("click", function () {

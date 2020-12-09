@@ -22,11 +22,13 @@ export default function removePlayer(playerId, playerName){
     const method = "DELETE"
     showSpinner()
     useAPIData(players, method, playerId).then((reply) => {
-        console.log(reply)
-        //removalModalText.textContent = 
-        hideSpinner()
-        removalModalText.textContent = "Player Removed."
-        confirmRemoval.style.display = "none"
+        if (reply.ok) {
+            hideSpinner()
+            removalModalText.textContent = "Player Removed."
+            confirmRemoval.style.display = "none"
+        } else {
+            removalModalText.textContent = `There was an error: ${reply.statusText}`
+        }
     })
     closeButton.textContent = "CLOSE"
     closeButton.addEventListener("click", () => {
