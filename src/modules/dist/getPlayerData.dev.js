@@ -37,6 +37,11 @@ var getPlayers = function getPlayers(schema) {
         topDiv.setAttribute('class', 'topDiv');
         var editButton = document.createElement("button");
         editButton.textContent = "EDIT";
+        editButton.addEventListener("click", function () {
+          localStorage.setItem('playerID', player._id);
+          localStorage.setItem('edit', true), localStorage.setItem("statID", player.stats[0]._id);
+          window.location.href = "/playerEdit.html";
+        });
         var numberPlaque = document.createElement("h3");
         numberPlaque.textContent = "#".concat(player.number);
         var bottomDiv = document.createElement("div");
@@ -57,7 +62,7 @@ var getPlayers = function getPlayers(schema) {
         statButton.addEventListener("click", function () {
           localStorage.setItem('playerID', player._id);
           localStorage.setItem('edit', false), localStorage.setItem("statID", player.stats[0]._id);
-          window.location.href = "/playerEdit.html";
+          window.location.href = "/playerView.html";
         }); //add event listener here to launch view stats page
 
         rosterDiv.appendChild(playerDiv);

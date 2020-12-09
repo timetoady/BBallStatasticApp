@@ -23,6 +23,13 @@ const getPlayers = (schema) => {
           topDiv.setAttribute('class', 'topDiv')
           let editButton = document.createElement("button");
               editButton.textContent = "EDIT"
+              editButton.addEventListener("click", () =>{
+                localStorage.setItem('playerID', player._id)
+                localStorage.setItem('edit', true),
+                localStorage.setItem("statID", player.stats[0]._id)
+                window.location.href = "/playerEdit.html"
+
+              })
           let numberPlaque = document.createElement("h3");
               numberPlaque.textContent = `#${player.number}`
         let bottomDiv = document.createElement("div");
@@ -46,9 +53,9 @@ const getPlayers = (schema) => {
               statButton.addEventListener("click", () =>{
                 localStorage.setItem('playerID', player._id)
                 localStorage.setItem('edit', false),
-
                 localStorage.setItem("statID", player.stats[0]._id)
-                window.location.href = "/playerEdit.html"
+                
+                window.location.href = "/playerView.html"
 
               })
               //add event listener here to launch view stats page

@@ -5,17 +5,17 @@ const playerViewArea = document.querySelector("#playerView")
 const baseStats = document.querySelector(".baseStatsView")
 const playerID = localStorage.getItem('playerID')
 const playerInfoView = document.querySelector(".playerInfoView")
-console.log("Stats id:", localStorage.getItem('statsID'))
-
-//const extraStats = document.querySelector("#extraStatsView")
-//const editButton = document.querySelector("#editButton")
+const canEditPlayer = localStorage.getItem('edit')
+const viewPageTitle = document.querySelector(".pageTitle")
+const editButton = document.querySelector("#editButton")
 
 const stats = "../stats"
 const players = "../players"
-console.log("player id from localStorage in view", playerID)
+
 
 export default function viewPlayer() {
-    
+    console.log("viewPlayer called!")
+    console.log(`Player ID: ${playerID}. Can edit? ${canEditPlayer}`)
     const playerInfoForm = document.createElement('form')
         playerInfoForm.setAttribute("id", "playerInfoForm")
         playerInfoView.appendChild(playerInfoForm)
@@ -27,6 +27,11 @@ export default function viewPlayer() {
     getAPIData(players, playerID)
     .then((player) => {
         console.log(`Player to view is ${player.name}`)
+        viewPageTitle.textContent = `Basketball Stat-tastic - View Player ${player.name}`
+        editButton.addEventListener("click", () => {
+            localStorage.setItem("edit",  true)
+            window.location.href = "/playerEdit.html"
+        })
         teamName.value = player.teamName
         teamName.textContent = player.teamName
         teamName.readOnly = true

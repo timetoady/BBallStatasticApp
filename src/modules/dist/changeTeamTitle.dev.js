@@ -58,16 +58,13 @@ var teamNameChanger = function teamNameChanger() {
 };
 
 var resetModal = function resetModal() {
+  location.reload();
   changeTeamText.textContent = "Change the team name?";
   changeTeamButton.style.display = "block";
   changeTeamInputBody.style.opacity = 1;
   closer4.textContent = "CANCEL";
   (0, _api.hideSpinner)();
   (0, _getPlayerData["default"])(players);
-
-  if (closer4.textContent === "CLOSE") {
-    location.reload();
-  }
 };
 
 function changeTeamTitle() {

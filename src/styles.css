@@ -237,12 +237,20 @@ header h3 {
     cursor: pointer;
 }
 
+.editButtons2{
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
+}
+
 .editButtons2 button{
     font-family: 'Open Sans', sans-serif;
     background-color: #cc5500;
     border: 2px solid black;
     font-weight: 700;
     cursor: pointer;
+    
+
 
 }
 

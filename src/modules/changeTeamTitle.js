@@ -37,15 +37,16 @@ const teamNameChanger = async () => {
 };
 
 const resetModal = () => {
+  
+    location.reload();
+  
   changeTeamText.textContent = "Change the team name?";
   changeTeamButton.style.display = "block";
   changeTeamInputBody.style.opacity = 1;
   closer4.textContent = "CANCEL";
   hideSpinner();
   getPlayers(players);
-  if(closer4.textContent === "CLOSE") {
-    location.reload();
-  }
+
   
 };
 

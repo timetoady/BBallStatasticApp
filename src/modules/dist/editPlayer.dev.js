@@ -5,7 +5,7 @@ function _typeof(obj) { if (typeof Symbol === "function" && typeof Symbol.iterat
 Object.defineProperty(exports, "__esModule", {
   value: true
 });
-exports["default"] = viewPlayer;
+exports["default"] = editPlayer;
 
 var _api = _interopRequireWildcard(require("./api.js"));
 
@@ -22,18 +22,17 @@ function _iterableToArray(iter) { if (Symbol.iterator in Object(iter) || Object.
 function _arrayWithoutHoles(arr) { if (Array.isArray(arr)) { for (var i = 0, arr2 = new Array(arr.length); i < arr.length; i++) { arr2[i] = arr[i]; } return arr2; } }
 
 //import { buildJsonFormData, buildJsonFormDataStats} from "./createPlayer.js"
-var playerViewArea = document.querySelector("#playerView");
 var baseStats = document.querySelector(".baseStatsView");
 var playerID = localStorage.getItem('playerID');
 var playerInfoView = document.querySelector(".playerInfoView");
 var canEditPlayer = localStorage.getItem('edit');
 var viewPageTitle = document.querySelector(".pageTitle");
-var editButton = document.querySelector("#editButton");
+var switchToViewButton = document.querySelector("#viewButton");
 var stats = "../stats";
 var players = "../players";
 
-function viewPlayer() {
-  console.log("viewPlayer called!");
+function editPlayer() {
+  console.log("Edit player called!");
   console.log("Player ID: ".concat(playerID, ". Can edit? ").concat(canEditPlayer));
   var playerInfoForm = document.createElement('form');
   playerInfoForm.setAttribute("id", "playerInfoForm");
@@ -46,11 +45,11 @@ function viewPlayer() {
   (0, _api["default"])(players, playerID).then(function (player) {
     var _console;
 
-    console.log("Player to view is ".concat(player.name));
-    viewPageTitle.textContent = "Basketball Stat-tastic - View Player ".concat(player.name);
-    editButton.addEventListener("click", function () {
-      localStorage.setItem("edit", true);
-      window.location.href = "/playerEdit.html";
+    console.log("Player to edit is ".concat(player.name));
+    viewPageTitle.textContent = "Basketball Stat-tastic - Edit Player ".concat(player.name);
+    switchToViewButton.addEventListener("click", function () {
+      localStorage.setItem("edit", false);
+      window.location.href = "/playerView.html";
     });
     teamName.value = player.teamName;
     teamName.textContent = player.teamName;
@@ -70,10 +69,8 @@ function viewPlayer() {
     var picInput = document.createElement("input");
     picInput.type = "text";
     picInput.name = "img";
-    picInput.textContent = "URL: ".concat(player.img);
+    picInput.placeholder = "URL: ".concat(player.img);
     picInput.setAttribute("class", "picInput");
-    picInput.readOnly = true;
-    picInput.style.display = "none";
     picDiv.appendChild(picInput);
     var playerInfoDiv = document.createElement("div");
     playerInfoDiv.setAttribute("class", "playerInfoDiv");
@@ -87,7 +84,7 @@ function viewPlayer() {
     nameInput.name = "name";
     nameInput.required; //nameInput.placeholder = "Player Name*"
 
-    nameInput.textContent = player.name;
+    nameInput.placeholder = player.name;
     nameInput.setAttribute('class', 'editInputs');
     nameInput.setAttribute('id', 'nameInput');
     nameAndNumberDiv.appendChild(nameInput);
@@ -97,7 +94,7 @@ function viewPlayer() {
     number.setAttribute("min", "0");
     number.required; //number.placeholder = "Num*"
 
-    number.textContent = player.number;
+    number.placeholder = player.number;
     number.setAttribute('class', 'infoDisplay');
     number.setAttribute('id', 'numberDisplay');
     nameAndNumberDiv.appendChild(number);
@@ -111,12 +108,12 @@ function viewPlayer() {
     heightLabel.setAttribute("for", "height");
     heightLabel.textContent = "Height:";
     heightDiv.appendChild(heightLabel);
-    var height = document.createElement("p");
+    var height = document.createElement("input");
     height.id = "height";
     height.name = "height";
     height.required;
     height.setAttribute('class', "infoDisplay");
-    height.textContent = player.height;
+    height.placeholder = player.height;
     heightDiv.appendChild(height);
     var weightDiv = document.createElement("div");
     weightDiv.setAttribute("class", "weightDiv");
@@ -125,10 +122,10 @@ function viewPlayer() {
     weightLabel.setAttribute("for", "weight");
     weightLabel.textContent = "Weight:";
     weightDiv.appendChild(weightLabel);
-    var weight = document.createElement("p");
+    var weight = document.createElement("input");
     weight.id = "weight";
     weight.name = "weight";
-    weight.textContent = player.weight;
+    weight.placeholder = player.weight;
     weight.setAttribute('class', "infoDisplay");
     weightDiv.appendChild(weight);
     var positionDiv = document.createElement("div");
@@ -137,10 +134,10 @@ function viewPlayer() {
     positionLabel.setAttribute("for", "position");
     positionLabel.textContent = "Position:";
     positionDiv.appendChild(positionLabel);
-    var position = document.createElement("p");
+    var position = document.createElement("input");
     position.id = "position";
     position.name = "position";
-    position.textContent = player.position;
+    position.placeholder = player.position;
     position.setAttribute('class', "infoDisplay");
     positionDiv.appendChild(position);
     var classDiv = document.createElement("div");
@@ -149,10 +146,10 @@ function viewPlayer() {
     classLabel.setAttribute("for", "classYear");
     classLabel.textContent = "Class:";
     classDiv.appendChild(classLabel);
-    var classYear = document.createElement("p");
+    var classYear = document.createElement("input");
     classYear.id = "classYear";
     classYear.name = "class";
-    classYear.textContent = player["class"];
+    classYear.placeholder = player["class"];
     classYear.setAttribute('class', "infoDisplay");
     classDiv.appendChild(classYear);
     var hometownDiv = document.createElement("div");
@@ -161,10 +158,10 @@ function viewPlayer() {
     hometownLabel.setAttribute("for", "hometown");
     hometownLabel.textContent = "Hometown:";
     hometownDiv.appendChild(hometownLabel);
-    var hometown = document.createElement("p");
+    var hometown = document.createElement("input");
     hometown.id = "hometown";
     hometown.name = "hometown";
-    hometown.textContent = player.hometown;
+    hometown.placeholder = player.hometown;
     hometown.setAttribute('class', "infoDisplay");
     hometownDiv.appendChild(hometown);
     var rosterSeasonDiv = document.createElement("div");
@@ -173,10 +170,10 @@ function viewPlayer() {
     rosterSeasonLabel.setAttribute("for", "rosterSeason");
     rosterSeasonLabel.textContent = "Roster Season:";
     rosterSeasonDiv.appendChild(rosterSeasonLabel);
-    var rosterSeason = document.createElement("p");
+    var rosterSeason = document.createElement("input");
     rosterSeason.id = "rosterSeason";
     rosterSeason.name = "rosterSeason";
-    rosterSeason.textContent = player.rosterSeason;
+    rosterSeason.placeholder = player.rosterSeason;
     rosterSeason.setAttribute('class', "infoDisplay");
     rosterSeasonDiv.appendChild(rosterSeason);
     var roleDiv = document.createElement("div");
@@ -185,10 +182,10 @@ function viewPlayer() {
     roleLabel.setAttribute("for", "role");
     roleLabel.textContent = "Role:";
     roleDiv.appendChild(roleLabel);
-    var role = document.createElement("p");
+    var role = document.createElement("input");
     role.id = "role";
     role.name = "role";
-    role.textContent = player.role;
+    role.placeholder = player.role;
     role.setAttribute('class', "infoDisplay");
     roleDiv.appendChild(role);
     var starterDiv = document.createElement("div");
@@ -198,21 +195,38 @@ function viewPlayer() {
     starterLabel.setAttribute("for", "starter");
     starterLabel.textContent = "Starter:";
     starterDiv.appendChild(starterLabel);
-    var starter = document.createElement("p");
-    starter.textContent = "Starter";
+    var starter = document.createElement("select");
+    starter.placeholder = "Starter";
     starter.id = "starter";
     starter.name = "starter";
-    player.starter === true ? starter.textContent = "Yes" : starter.textContent = "No";
-    starterDiv.appendChild(starter); // let starterNo = document.createElement("option")
-    //     starterNo.textContent = "No"
-    //     starterNo.value = false
-    //     starter.appendChild(starterNo)
-    // let starterYes = document.createElement("option")
-    //     starterYes.textContent = "Yes"
-    //     starterYes.value = true
-    //     starter.appendChild(starterYes)
-    // starter.setAttribute('class', "infoDisplay")
 
+    if (player.starter === true) {
+      // let starterYes = document.createElement("option")
+      var starterYes = document.createElement("option");
+      starterYes.textContent = "Yes";
+      starterYes.value = true;
+      starter.appendChild(starterYes);
+      var starterNo = document.createElement("option");
+      starterNo.textContent = "No";
+      starterNo.value = false;
+      starter.appendChild(starterNo);
+    } else {
+      var _starterNo = document.createElement("option"); // let starterNo = document.createElement("option")
+
+
+      _starterNo.textContent = "No";
+      _starterNo.value = false;
+      starter.appendChild(_starterNo);
+
+      var _starterYes = document.createElement("option");
+
+      _starterYes.textContent = "Yes";
+      _starterYes.value = true;
+      starter.appendChild(_starterYes);
+    }
+
+    starterDiv.appendChild(starter);
+    starter.setAttribute('class', "infoDisplay");
     var statsForm = document.createElement("form");
     statsForm.setAttribute("class", "statsForm");
     var statsDiv = document.createElement("div");
@@ -247,13 +261,13 @@ function viewPlayer() {
 
         _extraStatDiv.appendChild(statLabel);
 
-        var aStat = document.createElement("p");
+        var aStat = document.createElement("input");
         aStat.id = "".concat(stat[0], "p");
         aStat.name = "".concat(stat[0]);
         aStat.type = "number";
         aStat.readOnly = true;
         aStat.value = stat[1];
-        typeof stat[1] === "number" ? aStat.textContent = Math.round(stat[1] * 1000) / 1000 : aStat.textContent = stat[1];
+        typeof stat[1] === "number" ? aStat.placeholder = Math.round(stat[1] * 1000) / 1000 : aStat.placeholder = stat[1];
         aStat.setAttribute("min", "0");
 
         _extraStatDiv.appendChild(aStat);
@@ -277,12 +291,12 @@ function viewPlayer() {
         statLabel.setAttribute('for', "".concat(extraStatPair[0], "p"));
         statLabel.textContent = "".concat(extraStatPair[0][0], ":");
         extraStatDiv2.appendChild(statLabel);
-        var aStat = document.createElement("p");
+        var aStat = document.createElement("input");
         aStat.id = "".concat(extraStatPair[0][0], "p");
         aStat.name = "".concat(extraStatPair[0][0]); // aStat.type = "number"
 
         aStat.value = "".concat(extraStatPair[0][1]);
-        aStat.textContent = "".concat(extraStatPair[0][1]);
+        aStat.placeholder = "".concat(extraStatPair[0][1]);
         aStat.setAttribute("min", "0");
         extraStatDiv2.appendChild(aStat);
       });
