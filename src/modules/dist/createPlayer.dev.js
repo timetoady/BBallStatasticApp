@@ -175,6 +175,7 @@ function newPlayer() {
   picInput.name = "img";
   picInput.placeholder = "Paste image URL here.";
   picInput.setAttribute("class", "picInput");
+  picInput.value = "https://cdn.pixabay.com/photo/2015/10/05/22/37/blank-profile-picture-973460_960_720.png";
   picDiv.appendChild(picInput);
   var playerInfoDiv = document.createElement("div");
   playerInfoDiv.setAttribute("class", "playerInfoDiv");

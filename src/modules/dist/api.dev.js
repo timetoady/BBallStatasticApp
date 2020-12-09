@@ -42,7 +42,7 @@ function useAPIData(URL, method) {
           modifier = _args.length > 2 && _args[2] !== undefined ? _args[2] : " ";
           _context.prev = 1;
           _context.next = 4;
-          return regeneratorRuntime.awrap(fetch(URL + "".concat(modifier), {
+          return regeneratorRuntime.awrap(fetch(URL + "/".concat(modifier), {
             method: method
           }));
 

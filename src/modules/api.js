@@ -14,7 +14,7 @@ export function showSpinner() {
 //General method
 export async function useAPIData(URL, method, modifier = " ") {
   try {
-    const response = await fetch(URL + `${modifier}`, {
+    const response = await fetch(URL + `/${modifier}`, {
       method: method,
     });
     const data = await response.json();

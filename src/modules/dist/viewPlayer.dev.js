@@ -9,6 +9,10 @@ exports["default"] = viewPlayer;
 
 var _api = _interopRequireWildcard(require("./api.js"));
 
+var _removePlayer = _interopRequireDefault(require("./removePlayer.js"));
+
+function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { "default": obj }; }
+
 function _getRequireWildcardCache() { if (typeof WeakMap !== "function") return null; var cache = new WeakMap(); _getRequireWildcardCache = function _getRequireWildcardCache() { return cache; }; return cache; }
 
 function _interopRequireWildcard(obj) { if (obj && obj.__esModule) { return obj; } if (obj === null || _typeof(obj) !== "object" && typeof obj !== "function") { return { "default": obj }; } var cache = _getRequireWildcardCache(); if (cache && cache.has(obj)) { return cache.get(obj); } var newObj = {}; var hasPropertyDescriptor = Object.defineProperty && Object.getOwnPropertyDescriptor; for (var key in obj) { if (Object.prototype.hasOwnProperty.call(obj, key)) { var desc = hasPropertyDescriptor ? Object.getOwnPropertyDescriptor(obj, key) : null; if (desc && (desc.get || desc.set)) { Object.defineProperty(newObj, key, desc); } else { newObj[key] = obj[key]; } } } newObj["default"] = obj; if (cache) { cache.set(obj, newObj); } return newObj; }
@@ -21,7 +25,6 @@ function _iterableToArray(iter) { if (Symbol.iterator in Object(iter) || Object.
 
 function _arrayWithoutHoles(arr) { if (Array.isArray(arr)) { for (var i = 0, arr2 = new Array(arr.length); i < arr.length; i++) { arr2[i] = arr[i]; } return arr2; } }
 
-//import { buildJsonFormData, buildJsonFormDataStats} from "./createPlayer.js"
 var playerViewArea = document.querySelector("#playerView");
 var baseStats = document.querySelector(".baseStatsView");
 var playerID = localStorage.getItem('playerID');
@@ -29,6 +32,7 @@ var playerInfoView = document.querySelector(".playerInfoView");
 var canEditPlayer = localStorage.getItem('edit');
 var viewPageTitle = document.querySelector(".pageTitle");
 var editButton = document.querySelector("#editButton");
+var confirmRemoval = document.querySelector(".confirmRemovePlayer");
 var stats = "../stats";
 var players = "../players";
 
@@ -46,11 +50,15 @@ function viewPlayer() {
   (0, _api["default"])(players, playerID).then(function (player) {
     var _console;
 
+    var playerIDFromDB = player._id;
     console.log("Player to view is ".concat(player.name));
     viewPageTitle.textContent = "Basketball Stat-tastic - View Player ".concat(player.name);
     editButton.addEventListener("click", function () {
       localStorage.setItem("edit", true);
       window.location.href = "/playerEdit.html";
+    });
+    confirmRemoval.addEventListener("click", function () {
+      (0, _removePlayer["default"])(player._id);
     });
     teamName.value = player.teamName;
     teamName.textContent = player.teamName;

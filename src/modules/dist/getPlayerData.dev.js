@@ -33,6 +33,7 @@ var getPlayers = function getPlayers(schema) {
       if (player.name !== "TheShadowMaster") {
         var playerDiv = document.createElement("div");
         playerDiv.setAttribute('class', 'playerDiv');
+        if (player.starter) playerDiv.classList.add("starterAura");
         var topDiv = document.createElement("div");
         topDiv.setAttribute('class', 'topDiv');
         var editButton = document.createElement("button");
@@ -47,7 +48,7 @@ var getPlayers = function getPlayers(schema) {
         var bottomDiv = document.createElement("div");
         bottomDiv.setAttribute('class', 'bottomDiv');
         var playerPic = document.createElement("img");
-        player.imgURL === 'https://pixabay.com/vectors/blank-profile-picture-mystery-man-973460/' ? playerPic.src = './assets/blankProfile.png' : playerPic.src = player.img;
+        player.imgURL === 'https://cdn.pixabay.com/photo/2015/10/05/22/37/blank-profile-picture-973460_960_720.png' || player.imgURL === null ? playerPic.src = './assets/blankProfile.png' : playerPic.src = player.img;
         var playerName = document.createElement("p");
         playerName.textContent = "Name: ".concat(player.name);
         var playerHeight = document.createElement("p");

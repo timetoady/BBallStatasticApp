@@ -1,5 +1,6 @@
 import getAPIData, {showSpinner, hideSpinner } from "./api.js";
 //import { buildJsonFormData, buildJsonFormDataStats} from "./createPlayer.js"
+import removePlayer from "./removePlayer.js";
 
 const baseStats = document.querySelector(".baseStatsView")
 const playerID = localStorage.getItem('playerID')
@@ -7,6 +8,7 @@ const playerInfoView = document.querySelector(".playerInfoView")
 const canEditPlayer = localStorage.getItem('edit')
 const viewPageTitle = document.querySelector(".pageTitle")
 const switchToViewButton = document.querySelector("#viewButton")
+const confirmRemoval = document.querySelector(".confirmRemovePlayer")
 
 
 const stats = "../stats"
@@ -31,6 +33,9 @@ export default function editPlayer() {
         switchToViewButton.addEventListener("click", () => {
             localStorage.setItem("edit",  false)
             window.location.href = "/playerView.html"
+        })
+        confirmRemoval.addEventListener("click", () => {
+            removePlayer(player._id)
         })
         teamName.value = player.teamName
         teamName.textContent = player.teamName

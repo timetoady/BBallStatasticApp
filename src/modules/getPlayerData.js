@@ -19,6 +19,7 @@ const getPlayers = (schema) => {
         if (player.name !== "TheShadowMaster") {
           let playerDiv = document.createElement("div");
           playerDiv.setAttribute('class', 'playerDiv')
+          if (player.starter) playerDiv.classList.add("starterAura")
         let topDiv = document.createElement("div");
           topDiv.setAttribute('class', 'topDiv')
           let editButton = document.createElement("button");
@@ -35,7 +36,7 @@ const getPlayers = (schema) => {
         let bottomDiv = document.createElement("div");
           bottomDiv.setAttribute('class', 'bottomDiv')
           let playerPic = document.createElement("img");
-              player.imgURL === 'https://pixabay.com/vectors/blank-profile-picture-mystery-man-973460/' 
+              player.imgURL === 'https://cdn.pixabay.com/photo/2015/10/05/22/37/blank-profile-picture-973460_960_720.png' || player.imgURL === null 
                   ? playerPic.src = './assets/blankProfile.png'
                   : playerPic.src = player.img;
           let playerName = document.createElement("p");
