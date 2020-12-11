@@ -104,7 +104,21 @@ router.put("/editTeamForAll/:key/:oldValue/:newValue", function (req, res) {
   Player.updateMany(_defineProperty({}, key, oldValue), _defineProperty({}, key, newValue), function (err, result) {
     var status = "";
     result.ok === 0 ? status = false : status = true;
-    err ? res.send("Stat to all method says: Error! ".concat(err)) : res.send("Successful: ".concat(status, "! Matches found: ").concat(result.n, ". Matches changed: ").concat(result.nModified));
+    err ? res.send("Stat to all method says: Error! ".concat(err)) : res.send("Successful: ".concat(status, "! Matches found: ").concat(result.n, ". Matches changed: ").concat(result.nModified, "."));
+  });
+});
+router.put("/replaceViaEdit/:id", function (req, res) {
+  var id = req.params.id;
+  var update = req.body;
+  var options = {
+    omitUndefined: true,
+    "new": true
+  };
+  console.log(update);
+  Player.findOneAndReplace({
+    _id: id
+  }, update, options, function (err, result) {
+    err ? res.send(err) : res.send(result);
   });
 });
 module.exports = router;

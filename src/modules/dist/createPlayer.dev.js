@@ -21,11 +21,11 @@ var finishModalTitle = document.querySelector(".finishTitle");
 var finishModalText = document.querySelector(".saveCompleteModal");
 var returnToRosterButton = document.querySelector(".returnToRoster");
 var addAnotherPlayerButton = document.querySelector(".addAnother");
-var viewMode = "view";
 var stats = "../stats";
 var players = "../players";
 
 var buildJsonFormData = function buildJsonFormData(form) {
+  console.log("Form is:", form);
   var jsonFormData = {};
   var _iteratorNormalCompletion = true;
   var _didIteratorError = false;
@@ -57,6 +57,7 @@ var buildJsonFormData = function buildJsonFormData(form) {
 exports.buildJsonFormData = buildJsonFormData;
 
 var buildJsonFormDataStats = function buildJsonFormDataStats(form) {
+  console.log("Form is:", form);
   var jsonFormData = {};
   var _iteratorNormalCompletion2 = true;
   var _didIteratorError2 = false;
@@ -431,12 +432,12 @@ function newPlayer() {
 
             playerData = buildJsonFormData(playerForm);
             baseStatData = buildJsonFormDataStats(baseStatsForm);
-            extraStatData = buildJsonFormDataStats(extraStatsForm); // console.log(baseStatData)
-            // console.log(extraStatData)
-
+            extraStatData = buildJsonFormDataStats(extraStatsForm);
+            console.log("Create Forms sent as:", playerForm, baseStatData);
+            console.log(extraStatData);
             (0, _api.showSpinner)();
             $('#finishCreatePlayer').modal('toggle');
-            _context.next = 10;
+            _context.next = 12;
             return regeneratorRuntime.awrap((0, _api.sendAPIStatDataChain)(players, playerData, baseStatData, extraStatData).then(function (reply) {
               setTimeout(function () {
                 if (_api.finalResponse) {
@@ -451,10 +452,10 @@ function newPlayer() {
               console.error(err);
             }));
 
-          case 10:
+          case 12:
             response = _context.sent;
 
-          case 11:
+          case 13:
           case "end":
             return _context.stop();
         }

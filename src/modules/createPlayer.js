@@ -12,7 +12,7 @@ const finishModalTitle = document.querySelector(".finishTitle")
 const finishModalText = document.querySelector(".saveCompleteModal")
 const returnToRosterButton = document.querySelector(".returnToRoster")
 const addAnotherPlayerButton = document.querySelector(".addAnother")
-let viewMode = "view"
+
 
 
 
@@ -21,6 +21,7 @@ const stats = "../stats"
 const players = "../players"
 
 export const buildJsonFormData = (form) => {
+    console.log("Form is:", form)
     const jsonFormData = {}
     for (const pair of new FormData(form)) {
         jsonFormData[pair[0]] = pair[1]
@@ -29,6 +30,8 @@ return jsonFormData
 }
 
 export const buildJsonFormDataStats = (form) => {
+
+    console.log("Form is:", form)
     const jsonFormData = {}
     for (const pair of new FormData(form)) {
         jsonFormData[pair[0]] = parseFloat(pair[1])
@@ -405,8 +408,10 @@ export default function newPlayer() {
         let playerData = buildJsonFormData(playerForm)
         let baseStatData = buildJsonFormDataStats(baseStatsForm)
         let extraStatData = buildJsonFormDataStats(extraStatsForm)
-        // console.log(baseStatData)
-        // console.log(extraStatData)
+        
+        
+        console.log("Create Forms sent as:",playerForm, baseStatData)
+         console.log(extraStatData)
 
         showSpinner()
        $('#finishCreatePlayer').modal('toggle')

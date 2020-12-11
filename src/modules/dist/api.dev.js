@@ -11,6 +11,8 @@ exports.sendAPIData = sendAPIData;
 exports.sendAPIStatDataChain = sendAPIStatDataChain;
 exports.deleteAPIData = deleteAPIData;
 exports.updateAPIData = updateAPIData;
+exports.updatePlayerData = updatePlayerData;
+exports.updateAllPlayerInfo = updateAllPlayerInfo;
 exports.updateTeamNameForAll = updateTeamNameForAll;
 exports.addSpecialStat = addSpecialStat;
 exports.addSpecialStatsToOne = addSpecialStatsToOne;
@@ -279,25 +281,30 @@ function updateAPIData(URL, id, key, value) {
       }
     }
   }, null, null, [[0, 10]]);
-} //PUT method for editing field of all players
+} //PUT method for to update all info of a player
 
 
-function updateTeamNameForAll(URL, key, oldValue, newValue) {
+function updatePlayerData(URL, id, info) {
   var response, data;
-  return regeneratorRuntime.async(function updateTeamNameForAll$(_context7) {
+  return regeneratorRuntime.async(function updatePlayerData$(_context7) {
     while (1) {
       switch (_context7.prev = _context7.next) {
         case 0:
           _context7.prev = 0;
           _context7.next = 3;
-          return regeneratorRuntime.awrap(fetch(URL + "/editTeamForAll/".concat(key, "/").concat(oldValue, "/").concat(newValue), {
-            method: "PUT"
+          return regeneratorRuntime.awrap(fetch(URL + "/".concat(id), {
+            method: "PUT",
+            headers: {
+              //Accept: "application/json",
+              "Content-type": "application/json"
+            },
+            body: JSON.stringify(info)
           }));
 
         case 3:
           response = _context7.sent;
           _context7.next = 6;
-          return regeneratorRuntime.awrap(response.json());
+          return regeneratorRuntime.awrap(response);
 
         case 6:
           data = _context7.sent;
@@ -314,17 +321,138 @@ function updateTeamNameForAll(URL, key, oldValue, newValue) {
       }
     }
   }, null, null, [[0, 10]]);
+} //PUT method to update all info of a Player by chain
+//POST chain for new Player/stats
+
+
+function updateAllPlayerInfo(playerID, playerInfo, statID, stats) {
+  var extraStats,
+      response1,
+      response2,
+      response3,
+      data1,
+      data2,
+      data3,
+      _args8 = arguments;
+  return regeneratorRuntime.async(function updateAllPlayerInfo$(_context8) {
+    while (1) {
+      switch (_context8.prev = _context8.next) {
+        case 0:
+          extraStats = _args8.length > 4 && _args8[4] !== undefined ? _args8[4] : {};
+          _context8.prev = 1;
+          _context8.next = 4;
+          return regeneratorRuntime.awrap(fetch("../players/replaceViaEdit/".concat(playerID), {
+            method: "PUT",
+            headers: {
+              //Accept: "application/json",
+              "Content-type": "application/json"
+            },
+            body: JSON.stringify(playerInfo)
+          }));
+
+        case 4:
+          response1 = _context8.sent;
+          _context8.next = 7;
+          return regeneratorRuntime.awrap(fetch("../stats/replaceViaEdit/".concat(statID), {
+            method: "PUT",
+            headers: {
+              //Accept: "application/json",
+              "Content-type": "application/json"
+            },
+            body: JSON.stringify(stats)
+          }));
+
+        case 7:
+          response2 = _context8.sent;
+          _context8.next = 10;
+          return regeneratorRuntime.awrap(fetch("../stats/updateUniqueStats/".concat(statID), {
+            method: "PUT",
+            headers: {
+              //Accept: "application/json",
+              "Content-type": "application/json"
+            },
+            body: JSON.stringify(extraStats) //  });
+
+          }));
+
+        case 10:
+          response3 = _context8.sent;
+          _context8.next = 13;
+          return regeneratorRuntime.awrap(response1);
+
+        case 13:
+          data1 = _context8.sent;
+          _context8.next = 16;
+          return regeneratorRuntime.awrap(response2);
+
+        case 16:
+          data2 = _context8.sent;
+          _context8.next = 19;
+          return regeneratorRuntime.awrap(response3);
+
+        case 19:
+          data3 = _context8.sent;
+          console.log(data1, data2, data3);
+          _context8.next = 26;
+          break;
+
+        case 23:
+          _context8.prev = 23;
+          _context8.t0 = _context8["catch"](1);
+          console.error(_context8.t0);
+
+        case 26:
+        case "end":
+          return _context8.stop();
+      }
+    }
+  }, null, null, [[1, 23]]);
+} //PUT method for editing field of all players
+
+
+function updateTeamNameForAll(URL, key, oldValue, newValue) {
+  var response, data;
+  return regeneratorRuntime.async(function updateTeamNameForAll$(_context9) {
+    while (1) {
+      switch (_context9.prev = _context9.next) {
+        case 0:
+          _context9.prev = 0;
+          _context9.next = 3;
+          return regeneratorRuntime.awrap(fetch(URL + "/editTeamForAll/".concat(key, "/").concat(oldValue, "/").concat(newValue), {
+            method: "PUT"
+          }));
+
+        case 3:
+          response = _context9.sent;
+          _context9.next = 6;
+          return regeneratorRuntime.awrap(response.json());
+
+        case 6:
+          data = _context9.sent;
+          return _context9.abrupt("return", data);
+
+        case 10:
+          _context9.prev = 10;
+          _context9.t0 = _context9["catch"](0);
+          console.error(_context9.t0);
+
+        case 13:
+        case "end":
+          return _context9.stop();
+      }
+    }
+  }, null, null, [[0, 10]]);
 } //PUT Add new stat category to all players
 
 
 function addSpecialStat(key, value) {
   var response, data;
-  return regeneratorRuntime.async(function addSpecialStat$(_context8) {
+  return regeneratorRuntime.async(function addSpecialStat$(_context10) {
     while (1) {
-      switch (_context8.prev = _context8.next) {
+      switch (_context10.prev = _context10.next) {
         case 0:
-          _context8.prev = 0;
-          _context8.next = 3;
+          _context10.prev = 0;
+          _context10.next = 3;
           return regeneratorRuntime.awrap(fetch("../stats/addUniqueStatToAll" + "/".concat(key, "/").concat(value), {
             method: "PUT",
             headers: {
@@ -334,23 +462,23 @@ function addSpecialStat(key, value) {
           }));
 
         case 3:
-          response = _context8.sent;
-          _context8.next = 6;
+          response = _context10.sent;
+          _context10.next = 6;
           return regeneratorRuntime.awrap(response);
 
         case 6:
-          data = _context8.sent;
+          data = _context10.sent;
           if (response) hideSpinner();
-          return _context8.abrupt("return", data);
+          return _context10.abrupt("return", data);
 
         case 11:
-          _context8.prev = 11;
-          _context8.t0 = _context8["catch"](0);
-          console.error(_context8.t0);
+          _context10.prev = 11;
+          _context10.t0 = _context10["catch"](0);
+          console.error(_context10.t0);
 
         case 14:
         case "end":
-          return _context8.stop();
+          return _context10.stop();
       }
     }
   }, null, null, [[0, 11]]);
@@ -359,35 +487,35 @@ function addSpecialStat(key, value) {
 
 function addSpecialStatsToOne(statsID, upload) {
   var response, data;
-  return regeneratorRuntime.async(function addSpecialStatsToOne$(_context9) {
+  return regeneratorRuntime.async(function addSpecialStatsToOne$(_context11) {
     while (1) {
-      switch (_context9.prev = _context9.next) {
+      switch (_context11.prev = _context11.next) {
         case 0:
-          _context9.prev = 0;
-          _context9.next = 3;
+          _context11.prev = 0;
+          _context11.next = 3;
           return regeneratorRuntime.awrap(fetch("../stats/updateUniqueStats/".concat(statsID), {
             method: "PUT",
             body: JSON.stringify(upload)
           }));
 
         case 3:
-          response = _context9.sent;
-          _context9.next = 6;
+          response = _context11.sent;
+          _context11.next = 6;
           return regeneratorRuntime.awrap(response);
 
         case 6:
-          data = _context9.sent;
+          data = _context11.sent;
           if (response) hideSpinner();
-          return _context9.abrupt("return", data);
+          return _context11.abrupt("return", data);
 
         case 11:
-          _context9.prev = 11;
-          _context9.t0 = _context9["catch"](0);
-          console.error(_context9.t0);
+          _context11.prev = 11;
+          _context11.t0 = _context11["catch"](0);
+          console.error(_context11.t0);
 
         case 14:
         case "end":
-          return _context9.stop();
+          return _context11.stop();
       }
     }
   }, null, null, [[0, 11]]);

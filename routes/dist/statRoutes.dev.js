@@ -227,4 +227,20 @@ router.put("/updateUniqueStatsbyPlayer/:playerID/", function (req, res) {
     err ? res.send("Error, captain! ".concat(err)) : res.send("Updated ".concat(statName, " for ID ").concat(statID, " to ").concat(newValue, "."));
   });
 });
+router.put("/replaceViaEdit/:id", function (req, res) {
+  var id = req.params.id;
+  var update = req.body;
+  var options = {
+    omitUndefined: true,
+    "new": true
+  };
+  console.log(update);
+  Stats.findOneAndReplace({
+    _id: id
+  }, update, options, function (err, result) {
+    err ? res.send(err) //console.log(err)
+    : //console.log(result)
+    res.send(result);
+  });
+});
 module.exports = router;

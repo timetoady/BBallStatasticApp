@@ -113,10 +113,22 @@ router.put("/editTeamForAll/:key/:oldValue/:newValue", (req, res) => {
     err
       ? res.send(`Stat to all method says: Error! ${err}`)
       : res.send(
-          `Successful: ${status}! Matches found: ${result.n}. Matches changed: ${result.nModified}`
+          `Successful: ${status}! Matches found: ${result.n}. Matches changed: ${result.nModified}.`
         );
   });
 });
 
+
+router.put("/replaceViaEdit/:id", (req, res) => {
+  const { id } = req.params
+  const update = req.body
+  const options = {omitUndefined: true, new: true}
+  console.log(update)
+  Player.findOneAndReplace({_id: id}, update, options, (err, result) => {
+    err
+    ? res.send(err)
+    : res.send(result)
+  })
+})
 
   module.exports = router;

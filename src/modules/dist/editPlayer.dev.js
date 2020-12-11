@@ -9,6 +9,8 @@ exports["default"] = editPlayer;
 
 var _api = _interopRequireWildcard(require("./api.js"));
 
+var _createPlayer = require("./createPlayer.js");
+
 var _removePlayer = _interopRequireDefault(require("./removePlayer.js"));
 
 function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { "default": obj }; }
@@ -17,29 +19,22 @@ function _getRequireWildcardCache() { if (typeof WeakMap !== "function") return 
 
 function _interopRequireWildcard(obj) { if (obj && obj.__esModule) { return obj; } if (obj === null || _typeof(obj) !== "object" && typeof obj !== "function") { return { "default": obj }; } var cache = _getRequireWildcardCache(); if (cache && cache.has(obj)) { return cache.get(obj); } var newObj = {}; var hasPropertyDescriptor = Object.defineProperty && Object.getOwnPropertyDescriptor; for (var key in obj) { if (Object.prototype.hasOwnProperty.call(obj, key)) { var desc = hasPropertyDescriptor ? Object.getOwnPropertyDescriptor(obj, key) : null; if (desc && (desc.get || desc.set)) { Object.defineProperty(newObj, key, desc); } else { newObj[key] = obj[key]; } } } newObj["default"] = obj; if (cache) { cache.set(obj, newObj); } return newObj; }
 
-function _toConsumableArray(arr) { return _arrayWithoutHoles(arr) || _iterableToArray(arr) || _nonIterableSpread(); }
-
-function _nonIterableSpread() { throw new TypeError("Invalid attempt to spread non-iterable instance"); }
-
-function _iterableToArray(iter) { if (Symbol.iterator in Object(iter) || Object.prototype.toString.call(iter) === "[object Arguments]") return Array.from(iter); }
-
-function _arrayWithoutHoles(arr) { if (Array.isArray(arr)) { for (var i = 0, arr2 = new Array(arr.length); i < arr.length; i++) { arr2[i] = arr[i]; } return arr2; } }
-
 var baseStats = document.querySelector(".baseStatsView");
-var playerID = localStorage.getItem('playerID');
+var playerID = localStorage.getItem("playerID");
 var playerInfoView = document.querySelector(".playerInfoView");
-var canEditPlayer = localStorage.getItem('edit');
+var canEditPlayer = localStorage.getItem("edit");
 var viewPageTitle = document.querySelector(".pageTitle");
 var switchToViewButton = document.querySelector("#viewButton");
 var confirmRemoval = document.querySelector(".confirmRemovePlayer");
+var submitChangesButton = document.querySelector("#submitChangesButton");
 var stats = "../stats";
 var players = "../players";
 
 function editPlayer() {
   console.log("Edit player called!");
   console.log("Player ID: ".concat(playerID, ". Can edit? ").concat(canEditPlayer));
-  var playerInfoForm = document.createElement('form');
-  playerInfoForm.setAttribute("id", "playerInfoForm");
+  var playerInfoForm = document.createElement("form");
+  playerInfoForm.setAttribute("id", "playerInfoForm2");
   playerInfoView.appendChild(playerInfoForm);
   var playerTitle = document.createElement("h1");
   playerInfoView.appendChild(playerTitle);
@@ -47,10 +42,14 @@ function editPlayer() {
   teamNameDiv.setAttribute("class", "teamNameDiv");
   var teamName = document.createElement("input");
   (0, _api["default"])(players, playerID).then(function (player) {
-    var _console;
-
     console.log("Player to edit is ".concat(player.name));
     viewPageTitle.textContent = "Basketball Stat-tastic - Edit Player ".concat(player.name);
+    var hiddenStatID = document.createElement("input");
+    hiddenStatID.type = "hidden";
+    hiddenStatID.name = "stats";
+    hiddenStatID.value = localStorage.getItem('statID');
+    console.log("Hidden statID", hiddenStatID.value);
+    playerInfoForm.appendChild(hiddenStatID);
     switchToViewButton.addEventListener("click", function () {
       localStorage.setItem("edit", false);
       window.location.href = "/playerView.html";
@@ -68,7 +67,7 @@ function editPlayer() {
     var picDiv = document.createElement("div");
     picDiv.setAttribute("class", "picDiv");
     topDiv.appendChild(picDiv);
-    var playerPic = document.createElement('img');
+    var playerPic = document.createElement("img");
     playerPic.src = player.img;
     playerPic.alt = player.name;
     playerPic.setAttribute("class", "playerPic");
@@ -76,6 +75,7 @@ function editPlayer() {
     var picInput = document.createElement("input");
     picInput.type = "text";
     picInput.name = "img";
+    picInput.value = player.img;
     picInput.placeholder = "URL: ".concat(player.img);
     picInput.setAttribute("class", "picInput");
     picDiv.appendChild(picInput);
@@ -86,24 +86,24 @@ function editPlayer() {
     var nameAndNumberDiv = document.createElement("div");
     nameAndNumberDiv.setAttribute("class", "nameAndNumberDiv");
     playerInfoDiv.appendChild(nameAndNumberDiv);
-    var nameInput = document.createElement("h2"); //nameInput.type = "text"
-
+    var nameInput = document.createElement("input");
+    nameInput.type = "text";
     nameInput.name = "name";
-    nameInput.required; //nameInput.placeholder = "Player Name*"
-
+    nameInput.required;
+    nameInput.value = player.name;
     nameInput.placeholder = player.name;
-    nameInput.setAttribute('class', 'editInputs');
-    nameInput.setAttribute('id', 'nameInput');
+    nameInput.setAttribute("class", "editInputs");
+    nameInput.setAttribute("id", "nameInput");
     nameAndNumberDiv.appendChild(nameInput);
-    var number = document.createElement("h2"); //number.type = "number"
-
+    var number = document.createElement("input");
+    number.type = "number";
     number.name = "number";
     number.setAttribute("min", "0");
-    number.required; //number.placeholder = "Num*"
-
+    number.required;
     number.placeholder = player.number;
-    number.setAttribute('class', 'infoDisplay');
-    number.setAttribute('id', 'numberDisplay');
+    number.value = player.number;
+    number.setAttribute("class", "infoDisplay");
+    number.setAttribute("id", "numberDisplay");
     nameAndNumberDiv.appendChild(number);
     var detailsDiv = document.createElement("div");
     detailsDiv.setAttribute("class", "detailsDiv");
@@ -119,8 +119,9 @@ function editPlayer() {
     height.id = "height";
     height.name = "height";
     height.required;
-    height.setAttribute('class', "infoDisplay");
+    height.setAttribute("class", "infoDisplay");
     height.placeholder = player.height;
+    height.value = player.height;
     heightDiv.appendChild(height);
     var weightDiv = document.createElement("div");
     weightDiv.setAttribute("class", "weightDiv");
@@ -132,8 +133,9 @@ function editPlayer() {
     var weight = document.createElement("input");
     weight.id = "weight";
     weight.name = "weight";
+    weight.value = player.weight;
     weight.placeholder = player.weight;
-    weight.setAttribute('class', "infoDisplay");
+    weight.setAttribute("class", "infoDisplay");
     weightDiv.appendChild(weight);
     var positionDiv = document.createElement("div");
     detailsDiv.appendChild(positionDiv);
@@ -144,8 +146,9 @@ function editPlayer() {
     var position = document.createElement("input");
     position.id = "position";
     position.name = "position";
+    position.value = player.position;
     position.placeholder = player.position;
-    position.setAttribute('class', "infoDisplay");
+    position.setAttribute("class", "infoDisplay");
     positionDiv.appendChild(position);
     var classDiv = document.createElement("div");
     detailsDiv.appendChild(classDiv);
@@ -156,8 +159,9 @@ function editPlayer() {
     var classYear = document.createElement("input");
     classYear.id = "classYear";
     classYear.name = "class";
+    classYear.value = player["class"];
     classYear.placeholder = player["class"];
-    classYear.setAttribute('class', "infoDisplay");
+    classYear.setAttribute("class", "infoDisplay");
     classDiv.appendChild(classYear);
     var hometownDiv = document.createElement("div");
     detailsDiv.appendChild(hometownDiv);
@@ -168,8 +172,9 @@ function editPlayer() {
     var hometown = document.createElement("input");
     hometown.id = "hometown";
     hometown.name = "hometown";
+    hometown.value = player.hometown;
     hometown.placeholder = player.hometown;
-    hometown.setAttribute('class', "infoDisplay");
+    hometown.setAttribute("class", "infoDisplay");
     hometownDiv.appendChild(hometown);
     var rosterSeasonDiv = document.createElement("div");
     detailsDiv.appendChild(rosterSeasonDiv);
@@ -180,8 +185,9 @@ function editPlayer() {
     var rosterSeason = document.createElement("input");
     rosterSeason.id = "rosterSeason";
     rosterSeason.name = "rosterSeason";
+    rosterSeason.value = player.rosterSeason;
     rosterSeason.placeholder = player.rosterSeason;
-    rosterSeason.setAttribute('class', "infoDisplay");
+    rosterSeason.setAttribute("class", "infoDisplay");
     rosterSeasonDiv.appendChild(rosterSeason);
     var roleDiv = document.createElement("div");
     detailsDiv.appendChild(roleDiv);
@@ -192,8 +198,9 @@ function editPlayer() {
     var role = document.createElement("input");
     role.id = "role";
     role.name = "role";
+    role.value = player.role;
     role.placeholder = player.role;
-    role.setAttribute('class', "infoDisplay");
+    role.setAttribute("class", "infoDisplay");
     roleDiv.appendChild(role);
     var starterDiv = document.createElement("div");
     detailsDiv.appendChild(starterDiv);
@@ -208,7 +215,6 @@ function editPlayer() {
     starter.name = "starter";
 
     if (player.starter === true) {
-      // let starterYes = document.createElement("option")
       var starterYes = document.createElement("option");
       starterYes.textContent = "Yes";
       starterYes.value = true;
@@ -218,8 +224,7 @@ function editPlayer() {
       starterNo.value = false;
       starter.appendChild(starterNo);
     } else {
-      var _starterNo = document.createElement("option"); // let starterNo = document.createElement("option")
-
+      var _starterNo = document.createElement("option");
 
       _starterNo.textContent = "No";
       _starterNo.value = false;
@@ -233,37 +238,34 @@ function editPlayer() {
     }
 
     starterDiv.appendChild(starter);
-    starter.setAttribute('class', "infoDisplay");
+    starter.setAttribute("class", "infoDisplay"); //Stats forms
+
     var statsForm = document.createElement("form");
     statsForm.setAttribute("class", "statsForm");
+    statsForm.id = "statsEditForm";
     var statsDiv = document.createElement("div");
     statsDiv.setAttribute("class", "statsDiv");
     baseStats.appendChild(statsDiv);
     statsDiv.appendChild(statsForm);
     var spinner = document.createElement("div");
-    spinner["class"] = "spinner-border";
-    spinner.role = "status";
+    spinner.setAttribute("class", "spinner-border");
+    spinner.setAttribute("role", "status");
     spinner.innerHTML = '<span class="sr-only">Loading...</span>';
     baseStats.appendChild(spinner);
     (0, _api.showSpinner)();
-    var statsID = localStorage.getItem('statID');
-    console.log("Outgoing stats ID:", statsID);
+    var statsID = localStorage.getItem("statID");
+    console.log("Outgoing stats ID: ".concat(statsID, " for ").concat(player.name));
     (0, _api.hideSpinner)();
-    console.log("Stats incoming", player.stats[0]);
-    console.log("Incoming entries", Object.entries(player.stats[0]));
-
-    (_console = console).log.apply(_console, ["Other stats"].concat(_toConsumableArray(player.stats[0]["otherStats"])));
-
     Object.entries(player.stats[0]).forEach(function (stat) {
       //console.log(stat)
       if (stat[0] !== "otherStats" && stat[0] !== "player" && stat[0] !== "_id" && stat[0] !== "__v") {
         var _extraStatDiv = document.createElement("div");
 
-        _extraStatDiv.setAttribute("class", "a".concat(stat[0], "Div"));
+        _extraStatDiv.setAttribute("class", "".concat(stat[0], "Div"));
 
         statsForm.appendChild(_extraStatDiv);
         var statLabel = document.createElement("label");
-        statLabel.setAttribute('for', "".concat(stat[0], "p"));
+        statLabel.setAttribute("for", "".concat(stat[0], "p"));
         statLabel.textContent = "".concat(stat[0].toUpperCase(), ":");
 
         _extraStatDiv.appendChild(statLabel);
@@ -272,7 +274,6 @@ function editPlayer() {
         aStat.id = "".concat(stat[0], "p");
         aStat.name = "".concat(stat[0]);
         aStat.type = "number";
-        aStat.readOnly = true;
         aStat.value = stat[1];
         typeof stat[1] === "number" ? aStat.placeholder = Math.round(stat[1] * 1000) / 1000 : aStat.placeholder = stat[1];
         aStat.setAttribute("min", "0");
@@ -295,13 +296,13 @@ function editPlayer() {
         var extraStatDiv2 = document.createElement("div");
         extraStatsForm.appendChild(extraStatDiv2);
         var statLabel = document.createElement("label");
-        statLabel.setAttribute('for', "".concat(extraStatPair[0], "p"));
+        statLabel.setAttribute("for", "".concat(extraStatPair[0], "p"));
         statLabel.textContent = "".concat(extraStatPair[0][0], ":");
         extraStatDiv2.appendChild(statLabel);
         var aStat = document.createElement("input");
         aStat.id = "".concat(extraStatPair[0][0], "p");
-        aStat.name = "".concat(extraStatPair[0][0]); // aStat.type = "number"
-
+        aStat.name = "".concat(extraStatPair[0][0]);
+        aStat.type = "number";
         aStat.value = "".concat(extraStatPair[0][1]);
         aStat.placeholder = "".concat(extraStatPair[0][1]);
         aStat.setAttribute("min", "0");
@@ -313,18 +314,42 @@ function editPlayer() {
     return console.error(error);
   });
   teamName.setAttribute("class", "playerTeamName");
-  teamName.name = "teamName"; // const submitData = () => {
-  //     let playerForm = document.querySelector("#playerInfoForm")
-  //     let baseStatsForm = document.querySelector(".statsForm")
-  //     let extraStatsForm = document.querySelector(".extraStatsForm")
-  //     console.log(extraStatsForm.value)
-  //     let playerData = buildJsonFormData(playerForm)
-  //     let baseStatData = buildJsonFormDataStats(baseStatsForm)
-  //     let extraStatData = buildJsonFormDataStats(extraStatsForm)
-  //     console.log(baseStatData)
-  //     console.log(extraStatData)
-  //     showSpinner()
-  //     sendAPIStatDataChain(players, playerData, baseStatData, extraStatData)
-  //     //do then here to send for each extra stat if extraStat exists
-  // }
+  teamName.name = "teamName";
+
+  var submitData = function submitData() {
+    var statsID, playerForm, baseStatsForm, extraStatsForm, playerData, baseStatData, extraStatData;
+    return regeneratorRuntime.async(function submitData$(_context) {
+      while (1) {
+        switch (_context.prev = _context.next) {
+          case 0:
+            statsID = localStorage.getItem("statID");
+            playerForm = document.querySelector("#playerInfoForm2");
+            baseStatsForm = document.querySelector(".statsForm");
+            extraStatsForm = document.querySelector(".extraStatsForm"); //console.log(extraStatsForm.value)
+
+            playerData = (0, _createPlayer.buildJsonFormData)(playerForm);
+            baseStatData = (0, _createPlayer.buildJsonFormDataStats)(baseStatsForm);
+            extraStatData = (0, _createPlayer.buildJsonFormDataStats)(extraStatsForm);
+            console.log(playerData);
+            console.log(baseStatData);
+            console.log(extraStatData); //
+
+            (0, _api.showSpinner)();
+            (0, _api.updateAllPlayerInfo)(playerID, playerData, statsID, baseStatData, extraStatData).then(function (reply) {
+              console.log(reply);
+            })["catch"](function (err) {
+              console.error(err);
+            });
+
+          case 12:
+          case "end":
+            return _context.stop();
+        }
+      }
+    });
+  };
+
+  submitChangesButton.addEventListener("click", function () {
+    submitData();
+  });
 }

@@ -269,7 +269,7 @@ header h3 {
     text-align: right;
 }
 
-.submitButtonActive{
+.submitButtonActive, #submitChangesButton{
     font-family: 'Open Sans', sans-serif;
     background-color: #cc5500;
     padding: .5rem;

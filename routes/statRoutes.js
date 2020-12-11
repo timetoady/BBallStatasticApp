@@ -218,4 +218,19 @@ router.put("/updateUniqueStatsbyPlayer/:playerID/", (req, res) => {
   );
 });
 
+router.put("/replaceViaEdit/:id", (req, res) => {
+  const { id } = req.params
+  const update  = req.body
+  const options = {omitUndefined: true, new: true}
+  console.log(update)
+  Stats.findOneAndReplace({_id: id}, update, options, (err, result) => {
+    err
+    ? 
+    res.send(err)
+      //console.log(err)
+    : //console.log(result)
+    res.send(result)
+  })
+})
+
 module.exports = router;
