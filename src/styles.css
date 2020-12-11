@@ -243,7 +243,7 @@ header h3 {
     justify-content: space-between;
 }
 
-.editButtons2 button, .removePlayerButton, .returnToRoster{
+.editButtons2 button, .removePlayerButton, .returnToRoster, .confirmSaveChanges{
     font-family: 'Open Sans', sans-serif;
     background-color: #cc5500;
     border: 2px solid black;
@@ -269,7 +269,7 @@ header h3 {
     text-align: right;
 }
 
-.submitButtonActive, #submitChangesButton{
+.submitButtonActive, #submitChangesButton, .confirmSaveChanges {
     font-family: 'Open Sans', sans-serif;
     background-color: #cc5500;
     padding: .5rem;

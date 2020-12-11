@@ -199,6 +199,7 @@ export async function updateAllPlayerInfo(
     const data3 = await response3
     
     console.log(data1, data2, data3) 
+    return data3
   } catch (error) {
     console.error(error);
   }

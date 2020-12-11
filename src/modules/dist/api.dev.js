@@ -393,20 +393,19 @@ function updateAllPlayerInfo(playerID, playerInfo, statID, stats) {
         case 19:
           data3 = _context8.sent;
           console.log(data1, data2, data3);
-          _context8.next = 26;
-          break;
+          return _context8.abrupt("return", data3);
 
-        case 23:
-          _context8.prev = 23;
+        case 24:
+          _context8.prev = 24;
           _context8.t0 = _context8["catch"](1);
           console.error(_context8.t0);
 
-        case 26:
+        case 27:
         case "end":
           return _context8.stop();
       }
     }
-  }, null, null, [[1, 23]]);
+  }, null, null, [[1, 24]]);
 } //PUT method for editing field of all players
 
 

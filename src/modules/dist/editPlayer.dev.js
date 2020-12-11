@@ -27,8 +27,22 @@ var viewPageTitle = document.querySelector(".pageTitle");
 var switchToViewButton = document.querySelector("#viewButton");
 var confirmRemoval = document.querySelector(".confirmRemovePlayer");
 var submitChangesButton = document.querySelector("#submitChangesButton");
+var confirmChangesButton = document.querySelector(".confirmSaveChanges");
+var closeButton = document.querySelector("#editCloseButton");
+var changeModalText = document.querySelector(".confirmChangeText");
 var stats = "../stats";
 var players = "../players";
+
+var resetModal = function resetModal() {
+  confirmChangesButton.style.display = "block";
+  changeModalText.textContent = "Do you want to save these changes?";
+  closeButton.textContent = "CANCEL";
+  closeButton.removeEventListener("click", moveToHomeLink);
+};
+
+var moveToHomeLink = function moveToHomeLink() {
+  window.location.href = "/index.html";
+};
 
 function editPlayer() {
   console.log("Edit player called!");
@@ -213,6 +227,9 @@ function editPlayer() {
     starter.placeholder = "Starter";
     starter.id = "starter";
     starter.name = "starter";
+    confirmChangesButton.addEventListener("click", function () {
+      submitData();
+    });
 
     if (player.starter === true) {
       var starterYes = document.createElement("option");
@@ -332,11 +349,21 @@ function editPlayer() {
             extraStatData = (0, _createPlayer.buildJsonFormDataStats)(extraStatsForm);
             console.log(playerData);
             console.log(baseStatData);
-            console.log(extraStatData); //
-
+            console.log(extraStatData);
             (0, _api.showSpinner)();
             (0, _api.updateAllPlayerInfo)(playerID, playerData, statsID, baseStatData, extraStatData).then(function (reply) {
-              console.log(reply);
+              if (reply.ok) {
+                (0, _api.hideSpinner)();
+                confirmChangesButton.style.display = "none";
+                changeModalText.textContent = "Changes saved!";
+                closeButton.textContent = "CLOSE";
+                closeButton.addEventListener("click", function () {
+                  resetModal();
+                  moveToHomeLink();
+                });
+              } else {
+                changeModalText.textContent = "There was an error: ".concat(reply.statusText);
+              }
             })["catch"](function (err) {
               console.error(err);
             });
@@ -348,8 +375,4 @@ function editPlayer() {
       }
     });
   };
-
-  submitChangesButton.addEventListener("click", function () {
-    submitData();
-  });
 }

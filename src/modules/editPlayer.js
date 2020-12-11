@@ -14,9 +14,24 @@ const viewPageTitle = document.querySelector(".pageTitle");
 const switchToViewButton = document.querySelector("#viewButton");
 const confirmRemoval = document.querySelector(".confirmRemovePlayer");
 const submitChangesButton = document.querySelector("#submitChangesButton");
+const confirmChangesButton = document.querySelector(".confirmSaveChanges")
+const closeButton = document.querySelector("#editCloseButton")
+const changeModalText = document.querySelector(".confirmChangeText")
 
 const stats = "../stats";
 const players = "../players";
+
+const resetModal = () => {
+    confirmChangesButton.style.display = "block"
+    changeModalText.textContent = "Do you want to save these changes?"
+    closeButton.textContent= "CANCEL"
+    closeButton.removeEventListener("click", moveToHomeLink)
+}
+
+const moveToHomeLink = () => {
+    window.location.href = "/index.html"
+}
+
 
 export default function editPlayer() {
   console.log("Edit player called!");
@@ -204,6 +219,9 @@ export default function editPlayer() {
       starter.placeholder = "Starter";
       starter.id = "starter";
       starter.name = "starter";
+      confirmChangesButton.addEventListener("click",  () => {
+        submitData()
+      })
       if (player.starter === true) {
         let starterYes = document.createElement("option");
         starterYes.textContent = "Yes";
@@ -324,10 +342,7 @@ export default function editPlayer() {
     console.log(playerData)
     console.log(baseStatData)
     console.log(extraStatData)
-    //
-
     showSpinner();
-
     updateAllPlayerInfo(
       playerID,
       playerData,
@@ -335,13 +350,22 @@ export default function editPlayer() {
       baseStatData,
       extraStatData
     ).then((reply) => {
-      console.log(reply);
+      if(reply.ok) {
+        hideSpinner()
+        confirmChangesButton.style.display = "none"
+        changeModalText.textContent = "Changes saved!"
+        closeButton.textContent= "CLOSE"
+        closeButton.addEventListener("click",  () => {
+            resetModal()
+            moveToHomeLink()
+        })
+      }else {
+        changeModalText.textContent = `There was an error: ${reply.statusText}`
+      }
     }).catch((err) => {
         console.error(err)
     })
 
   };
-  submitChangesButton.addEventListener("click",  () => {
-    submitData()
-  })
+
 }

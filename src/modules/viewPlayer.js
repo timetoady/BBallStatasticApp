@@ -1,5 +1,4 @@
 import getAPIData, {showSpinner, hideSpinner } from "./api.js";
-//import { buildJsonFormData, buildJsonFormDataStats} from "./createPlayer.js"
 import removePlayer from "./removePlayer.js"
 
 const playerViewArea = document.querySelector("#playerView")
