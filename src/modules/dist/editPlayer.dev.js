@@ -26,11 +26,9 @@ var canEditPlayer = localStorage.getItem("edit");
 var viewPageTitle = document.querySelector(".pageTitle");
 var switchToViewButton = document.querySelector("#viewButton");
 var confirmRemoval = document.querySelector(".confirmRemovePlayer");
-var submitChangesButton = document.querySelector("#submitChangesButton");
 var confirmChangesButton = document.querySelector(".confirmSaveChanges");
 var closeButton = document.querySelector("#editCloseButton");
 var changeModalText = document.querySelector(".confirmChangeText");
-var stats = "../stats";
 var players = "../players";
 
 var resetModal = function resetModal() {
@@ -61,7 +59,7 @@ function editPlayer() {
     var hiddenStatID = document.createElement("input");
     hiddenStatID.type = "hidden";
     hiddenStatID.name = "stats";
-    hiddenStatID.value = localStorage.getItem('statID');
+    hiddenStatID.value = localStorage.getItem("statID");
     console.log("Hidden statID", hiddenStatID.value);
     playerInfoForm.appendChild(hiddenStatID);
     switchToViewButton.addEventListener("click", function () {
@@ -346,10 +344,10 @@ function editPlayer() {
 
             playerData = (0, _createPlayer.buildJsonFormData)(playerForm);
             baseStatData = (0, _createPlayer.buildJsonFormDataStats)(baseStatsForm);
-            extraStatData = (0, _createPlayer.buildJsonFormDataStats)(extraStatsForm);
-            console.log(playerData);
-            console.log(baseStatData);
-            console.log(extraStatData);
+            extraStatData = (0, _createPlayer.buildJsonFormDataStats)(extraStatsForm); // console.log(playerData);
+            // console.log(baseStatData);
+            // console.log(extraStatData);
+
             (0, _api.showSpinner)();
             (0, _api.updateAllPlayerInfo)(playerID, playerData, statsID, baseStatData, extraStatData).then(function (reply) {
               if (reply.ok) {
@@ -368,7 +366,7 @@ function editPlayer() {
               console.error(err);
             });
 
-          case 12:
+          case 9:
           case "end":
             return _context.stop();
         }

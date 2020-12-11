@@ -99,8 +99,8 @@ header h3 {
 
 /* Player card styles */
 
-#rosterDiv {
-    display: grid;
+#rosterDiv2 {
+    display: grid !important;
     gap: .8rem;
     margin-top: 1rem;
 }
@@ -114,8 +114,8 @@ header h3 {
 
     }
 
-    #rosterDiv {
-        grid-template-columns: 1fr 1fr 1fr 1fr 1fr;
+    #rosterDiv2 {
+        grid-template-columns: 1fr 1fr 1fr 1fr 1fr !important;
         max-width: 100%;
     }
 

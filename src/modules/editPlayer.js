@@ -13,25 +13,22 @@ const canEditPlayer = localStorage.getItem("edit");
 const viewPageTitle = document.querySelector(".pageTitle");
 const switchToViewButton = document.querySelector("#viewButton");
 const confirmRemoval = document.querySelector(".confirmRemovePlayer");
-const submitChangesButton = document.querySelector("#submitChangesButton");
-const confirmChangesButton = document.querySelector(".confirmSaveChanges")
-const closeButton = document.querySelector("#editCloseButton")
-const changeModalText = document.querySelector(".confirmChangeText")
+const confirmChangesButton = document.querySelector(".confirmSaveChanges");
+const closeButton = document.querySelector("#editCloseButton");
+const changeModalText = document.querySelector(".confirmChangeText");
 
-const stats = "../stats";
 const players = "../players";
 
 const resetModal = () => {
-    confirmChangesButton.style.display = "block"
-    changeModalText.textContent = "Do you want to save these changes?"
-    closeButton.textContent= "CANCEL"
-    closeButton.removeEventListener("click", moveToHomeLink)
-}
+  confirmChangesButton.style.display = "block";
+  changeModalText.textContent = "Do you want to save these changes?";
+  closeButton.textContent = "CANCEL";
+  closeButton.removeEventListener("click", moveToHomeLink);
+};
 
 const moveToHomeLink = () => {
-    window.location.href = "/index.html"
-}
-
+  window.location.href = "/index.html";
+};
 
 export default function editPlayer() {
   console.log("Edit player called!");
@@ -48,12 +45,12 @@ export default function editPlayer() {
     .then((player) => {
       console.log(`Player to edit is ${player.name}`);
       viewPageTitle.textContent = `Basketball Stat-tastic - Edit Player ${player.name}`;
-      let hiddenStatID = document.createElement("input")
-      hiddenStatID.type = "hidden"
-      hiddenStatID.name = "stats"
-      hiddenStatID.value = localStorage.getItem('statID')
-      console.log("Hidden statID", hiddenStatID.value)
-      playerInfoForm.appendChild(hiddenStatID)
+      let hiddenStatID = document.createElement("input");
+      hiddenStatID.type = "hidden";
+      hiddenStatID.name = "stats";
+      hiddenStatID.value = localStorage.getItem("statID");
+      console.log("Hidden statID", hiddenStatID.value);
+      playerInfoForm.appendChild(hiddenStatID);
       switchToViewButton.addEventListener("click", () => {
         localStorage.setItem("edit", false);
         window.location.href = "/playerView.html";
@@ -79,7 +76,7 @@ export default function editPlayer() {
       let picInput = document.createElement("input");
       picInput.type = "text";
       picInput.name = "img";
-      picInput.value = player.img
+      picInput.value = player.img;
       picInput.placeholder = `URL: ${player.img}`;
       picInput.setAttribute("class", "picInput");
       picDiv.appendChild(picInput);
@@ -126,7 +123,7 @@ export default function editPlayer() {
       height.required;
       height.setAttribute("class", "infoDisplay");
       height.placeholder = player.height;
-      height.value = player.height
+      height.value = player.height;
       heightDiv.appendChild(height);
 
       let weightDiv = document.createElement("div");
@@ -139,7 +136,7 @@ export default function editPlayer() {
       let weight = document.createElement("input");
       weight.id = "weight";
       weight.name = "weight";
-      weight.value = player.weight
+      weight.value = player.weight;
       weight.placeholder = player.weight;
       weight.setAttribute("class", "infoDisplay");
       weightDiv.appendChild(weight);
@@ -152,7 +149,7 @@ export default function editPlayer() {
       let position = document.createElement("input");
       position.id = "position";
       position.name = "position";
-      position.value = player.position
+      position.value = player.position;
       position.placeholder = player.position;
       position.setAttribute("class", "infoDisplay");
       positionDiv.appendChild(position);
@@ -165,7 +162,7 @@ export default function editPlayer() {
       let classYear = document.createElement("input");
       classYear.id = "classYear";
       classYear.name = "class";
-      classYear.value = player.class
+      classYear.value = player.class;
       classYear.placeholder = player.class;
       classYear.setAttribute("class", "infoDisplay");
       classDiv.appendChild(classYear);
@@ -178,7 +175,7 @@ export default function editPlayer() {
       let hometown = document.createElement("input");
       hometown.id = "hometown";
       hometown.name = "hometown";
-      hometown.value = player.hometown
+      hometown.value = player.hometown;
       hometown.placeholder = player.hometown;
       hometown.setAttribute("class", "infoDisplay");
       hometownDiv.appendChild(hometown);
@@ -204,7 +201,7 @@ export default function editPlayer() {
       let role = document.createElement("input");
       role.id = "role";
       role.name = "role";
-      role.value = player.role
+      role.value = player.role;
       role.placeholder = player.role;
       role.setAttribute("class", "infoDisplay");
       roleDiv.appendChild(role);
@@ -219,9 +216,9 @@ export default function editPlayer() {
       starter.placeholder = "Starter";
       starter.id = "starter";
       starter.name = "starter";
-      confirmChangesButton.addEventListener("click",  () => {
-        submitData()
-      })
+      confirmChangesButton.addEventListener("click", () => {
+        submitData();
+      });
       if (player.starter === true) {
         let starterYes = document.createElement("option");
         starterYes.textContent = "Yes";
@@ -247,7 +244,7 @@ export default function editPlayer() {
       //Stats forms
       let statsForm = document.createElement("form");
       statsForm.setAttribute("class", "statsForm");
-      statsForm.id = "statsEditForm"
+      statsForm.id = "statsEditForm";
       let statsDiv = document.createElement("div");
       statsDiv.setAttribute("class", "statsDiv");
       baseStats.appendChild(statsDiv);
@@ -284,7 +281,7 @@ export default function editPlayer() {
           aStat.id = `${stat[0]}p`;
           aStat.name = `${stat[0]}`;
           aStat.type = "number";
-          
+
           aStat.value = stat[1];
           typeof stat[1] === "number"
             ? (aStat.placeholder = Math.round(stat[1] * 1000) / 1000)
@@ -328,7 +325,6 @@ export default function editPlayer() {
     .catch((error) => console.error(error));
   teamName.setAttribute("class", "playerTeamName");
   teamName.name = "teamName";
-    
 
   const submitData = async () => {
     const statsID = localStorage.getItem("statID");
@@ -339,9 +335,9 @@ export default function editPlayer() {
     let playerData = buildJsonFormData(playerForm);
     let baseStatData = buildJsonFormDataStats(baseStatsForm);
     let extraStatData = buildJsonFormDataStats(extraStatsForm);
-    console.log(playerData)
-    console.log(baseStatData)
-    console.log(extraStatData)
+    // console.log(playerData);
+    // console.log(baseStatData);
+    // console.log(extraStatData);
     showSpinner();
     updateAllPlayerInfo(
       playerID,
@@ -349,23 +345,23 @@ export default function editPlayer() {
       statsID,
       baseStatData,
       extraStatData
-    ).then((reply) => {
-      if(reply.ok) {
-        hideSpinner()
-        confirmChangesButton.style.display = "none"
-        changeModalText.textContent = "Changes saved!"
-        closeButton.textContent= "CLOSE"
-        closeButton.addEventListener("click",  () => {
-            resetModal()
-            moveToHomeLink()
-        })
-      }else {
-        changeModalText.textContent = `There was an error: ${reply.statusText}`
-      }
-    }).catch((err) => {
-        console.error(err)
-    })
-
+    )
+      .then((reply) => {
+        if (reply.ok) {
+          hideSpinner();
+          confirmChangesButton.style.display = "none";
+          changeModalText.textContent = "Changes saved!";
+          closeButton.textContent = "CLOSE";
+          closeButton.addEventListener("click", () => {
+            resetModal();
+            moveToHomeLink();
+          });
+        } else {
+          changeModalText.textContent = `There was an error: ${reply.statusText}`;
+        }
+      })
+      .catch((err) => {
+        console.error(err);
+      });
   };
-
 }
