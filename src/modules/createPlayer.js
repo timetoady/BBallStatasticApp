@@ -179,7 +179,7 @@ export default function newPlayer() {
                                             && number.value 
                                             && height.value) {
                                             const setUpSubmit = () => {
-                                                submitButton.removeEventListener("click", submitData())
+                                                submitButton.removeEventListener("click", submitData)
                                                 submitButton.classList.remove("showHidden");
                                                 submitButton.classList.remove("submitButtonDisabled");
                                                 void submitButton.offsetWidth;
@@ -194,7 +194,7 @@ export default function newPlayer() {
                                             }
                                             setUpSubmit()
                                         } else {
-                                            submitButton.removeEventListener("click", submitData())
+                                            submitButton.removeEventListener("click", submitData)
                                         }
                                     
                                     })

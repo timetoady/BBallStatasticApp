@@ -226,7 +226,7 @@ function newPlayer() {
     input.addEventListener("blur", function () {
       if (teamName.value && nameInput.value && number.value && height.value) {
         var setUpSubmit = function setUpSubmit() {
-          submitButton.removeEventListener("click", submitData());
+          submitButton.removeEventListener("click", submitData);
           submitButton.classList.remove("showHidden");
           submitButton.classList.remove("submitButtonDisabled");
           void submitButton.offsetWidth;
@@ -240,7 +240,7 @@ function newPlayer() {
 
         setUpSubmit();
       } else {
-        submitButton.removeEventListener("click", submitData());
+        submitButton.removeEventListener("click", submitData);
       }
     });
   };
