@@ -99,6 +99,7 @@ var getPlayers = function getPlayers(schema) {
           window.location.href = "/playerEdit.html";
         });
         var numberPlaque = document.createElement("h3");
+        numberPlaque.setAttribute("class", "numberPlaque");
         numberPlaque.textContent = "#".concat(player.number);
         var bottomDiv = document.createElement("div");
         bottomDiv.setAttribute("class", "bottomDiv");
@@ -116,6 +117,11 @@ var getPlayers = function getPlayers(schema) {
         statButton.textContent = "SEE STATS";
         statButton.value = player._id;
         statButton.addEventListener("click", function () {
+          localStorage.setItem("playerID", player._id);
+          localStorage.setItem("edit", false), localStorage.setItem("statID", player.stats[0]._id);
+          window.location.href = "/playerView.html";
+        });
+        playerPic.addEventListener("click", function () {
           localStorage.setItem("playerID", player._id);
           localStorage.setItem("edit", false), localStorage.setItem("statID", player.stats[0]._id);
           window.location.href = "/playerView.html";

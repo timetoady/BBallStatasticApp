@@ -68,24 +68,19 @@ export default function viewPlayer() {
                     nameAndNumberDiv.setAttribute("class", "nameAndNumberDiv")
                     playerInfoDiv.appendChild(nameAndNumberDiv)
                     let nameInput = document.createElement("h2")
-                        //nameInput.type = "text"
                         nameInput.name = "name"
                         nameInput.required
-                        //nameInput.placeholder = "Player Name*"
                         nameInput.textContent = player.name
                         nameInput.setAttribute('class', 'editInputs')
                         nameInput.setAttribute('id', 'nameInput')
                         nameAndNumberDiv.appendChild(nameInput)
                     let number = document.createElement("h2")
-                        //number.type = "number"
                         number.name = "number"
                         number.setAttribute("min", "0")
                         number.required
-                        //number.placeholder = "Num*"
-                        number.textContent = player.number
+                        number.textContent = `#${player.number}`
                         number.setAttribute('class', 'infoDisplay')
                         number.setAttribute('id', 'numberDisplay')
-                        
                         nameAndNumberDiv.appendChild(number)
                 let detailsDiv = document.createElement("div")
                     detailsDiv.setAttribute("class", "detailsDiv")

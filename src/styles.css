@@ -17,6 +17,10 @@ body {
     max-width: 1200px;
 }
 
+.playerDiv{
+    margin: 0 auto;
+}
+
 
 
 header a {
@@ -105,7 +109,9 @@ header h3 {
     margin-top: 1rem;
 }
 
-
+.numberPlaque{
+    font-weight: 900;
+}
 
 @media screen and (min-width: 503px) {
     .container {
@@ -188,6 +194,7 @@ header h3 {
 
 .bottomDiv img {
     max-width: 100%;
+    cursor: pointer;
 
 }
 
@@ -370,7 +377,7 @@ header h3 {
 
 .detailsDiv {
     display: grid;
-    gap: .05rem 2rem;
+    gap: .05rem 3rem;
     grid-template-columns: 1fr 1fr;
 }
 

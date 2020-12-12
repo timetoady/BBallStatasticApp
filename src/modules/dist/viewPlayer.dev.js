@@ -90,22 +90,18 @@ function viewPlayer() {
     var nameAndNumberDiv = document.createElement("div");
     nameAndNumberDiv.setAttribute("class", "nameAndNumberDiv");
     playerInfoDiv.appendChild(nameAndNumberDiv);
-    var nameInput = document.createElement("h2"); //nameInput.type = "text"
-
+    var nameInput = document.createElement("h2");
     nameInput.name = "name";
-    nameInput.required; //nameInput.placeholder = "Player Name*"
-
+    nameInput.required;
     nameInput.textContent = player.name;
     nameInput.setAttribute('class', 'editInputs');
     nameInput.setAttribute('id', 'nameInput');
     nameAndNumberDiv.appendChild(nameInput);
-    var number = document.createElement("h2"); //number.type = "number"
-
+    var number = document.createElement("h2");
     number.name = "number";
     number.setAttribute("min", "0");
-    number.required; //number.placeholder = "Num*"
-
-    number.textContent = player.number;
+    number.required;
+    number.textContent = "#".concat(player.number);
     number.setAttribute('class', 'infoDisplay');
     number.setAttribute('id', 'numberDisplay');
     nameAndNumberDiv.appendChild(number);

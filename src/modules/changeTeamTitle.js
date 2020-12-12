@@ -1,4 +1,8 @@
-import getAPIData, { showSpinner, hideSpinner, updateTeamNameForAll } from "./api.js";
+import getAPIData, {
+  showSpinner,
+  hideSpinner,
+  updateTeamNameForAll,
+} from "./api.js";
 import getPlayers from "./getPlayerData.js";
 const players = "../players";
 let changeTeamInput = document.querySelector(".newTeamInput");
@@ -20,15 +24,16 @@ const teamNameChanger = async () => {
             "teamName",
             teamName,
             changeTeamInput.value.trim()
-          ).then((response) => {
-            console.log("Change all response", response);
-            changeTeamText.textContent = `Team name updated to ${changeTeamInput.value.trim()}.`;
-            changeTeamButton.style.display = "none";
-            changeTeamInputBody.style.opacity = 0;
-            closer4.textContent = "CLOSE";
-            hideSpinner();
-            
-          }).catch((error) => console.error(error));
+          )
+            .then((response) => {
+              console.log("Change all response", response);
+              changeTeamText.textContent = `Team name updated to ${changeTeamInput.value.trim()}.`;
+              changeTeamButton.style.display = "none";
+              changeTeamInputBody.style.opacity = 0;
+              closer4.textContent = "CLOSE";
+              hideSpinner();
+            })
+            .catch((error) => console.error(error));
         });
   } catch (error) {
     hideSpinner();
@@ -37,17 +42,12 @@ const teamNameChanger = async () => {
 };
 
 const resetModal = () => {
-  
-    location.reload();
-  
   changeTeamText.textContent = "Change the team name?";
   changeTeamButton.style.display = "block";
   changeTeamInputBody.style.opacity = 1;
   closer4.textContent = "CANCEL";
   hideSpinner();
   getPlayers(players);
-
-  
 };
 
 export default function changeTeamTitle() {

@@ -91,6 +91,7 @@ const getPlayers = (schema) => {
           window.location.href = "/playerEdit.html";
         });
         let numberPlaque = document.createElement("h3");
+        numberPlaque.setAttribute("class", "numberPlaque")
         numberPlaque.textContent = `#${player.number}`;
         let bottomDiv = document.createElement("div");
         bottomDiv.setAttribute("class", "bottomDiv");
@@ -119,6 +120,14 @@ const getPlayers = (schema) => {
 
           window.location.href = "/playerView.html";
         });
+        playerPic.addEventListener("click", () => {
+          localStorage.setItem("playerID", player._id);
+          localStorage.setItem("edit", false),
+            localStorage.setItem("statID", player.stats[0]._id);
+
+          window.location.href = "/playerView.html";
+        });
+        
 
         rosterDiv.appendChild(playerDiv);
         playerDiv.appendChild(topDiv);

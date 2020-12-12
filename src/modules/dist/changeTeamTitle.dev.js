@@ -58,7 +58,6 @@ var teamNameChanger = function teamNameChanger() {
 };
 
 var resetModal = function resetModal() {
-  location.reload();
   changeTeamText.textContent = "Change the team name?";
   changeTeamButton.style.display = "block";
   changeTeamInputBody.style.opacity = 1;
