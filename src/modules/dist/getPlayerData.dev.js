@@ -7,52 +7,28 @@ exports["default"] = void 0;
 
 var _api = _interopRequireDefault(require("./api.js"));
 
+var _nestedValueGetter = _interopRequireDefault(require("./nestedValueGetter.js"));
+
 function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { "default": obj }; }
 
-// const sortFuction = (data, sortBy) => {
-//   const theSorting = data.sort((a, b) => {
-//     a.sortBy > b.sortBy ? 1 : -1;
-//   });
-//   return theSorting;
-// };
-function compareValues(key) {
-  var order = arguments.length > 1 && arguments[1] !== undefined ? arguments[1] : 'asc';
-  return function innerSort(a, b) {
-    if (!a.hasOwnProperty(key) || !b.hasOwnProperty(key)) {
-      // property doesn't exist on either object
-      return 0;
-    }
-
-    var varA = typeof a[key] === 'string' ? a[key].toUpperCase() : a[key];
-    var varB = typeof b[key] === 'string' ? b[key].toUpperCase() : b[key];
-    var comparison = 0;
-
-    if (varA > varB) {
-      comparison = 1;
-    } else if (varA < varB) {
-      comparison = -1;
-    }
-
-    return order === 'desc' ? comparison * -1 : comparison;
-  };
-}
-
+//Main get function to call to supply info on roser/team name/sort categories and populate DOM
 var getPlayers = function getPlayers(schema) {
   var teamDisplay = document.querySelector("#team");
   var rosterDiv2 = document.createElement("div");
   rosterDiv2.setAttribute("id", "rosterDiv2");
   teamDisplay.appendChild(rosterDiv2);
   var sortBox = document.querySelector("#sortDropbox");
-  var teamTitle = document.querySelector(".teamTitle");
+  var teamTitle = document.querySelector(".teamTitle"); //API call for needed schema. Mostly players schema, in this case.
+
   (0, _api["default"])(schema).then(function (data) {
     domBuilder(data);
     sortBox.addEventListener("change", function (event) {
       console.log(event.target.value);
       var itemToSortBy = event.target.value;
-      var sortedData = data.sort(compareValues(itemToSortBy, "desc"));
+      var sortedData = data.sort((0, _nestedValueGetter["default"])(itemToSortBy, "desc"));
       domBuilder(sortedData);
     });
-  });
+  }); //Takes data and builds DOM objects (roster view and sort by box)
 
   var domBuilder = function domBuilder(incomingData) {
     console.log(incomingData);
@@ -61,7 +37,6 @@ var getPlayers = function getPlayers(schema) {
     var oldDiv = document.querySelector("#rosterDiv2");
 
     if (oldDiv) {
-      console.log("oldDiv removed!");
       oldDiv.remove();
       var rosterDiv = document.createElement("div");
       rosterDiv.setAttribute("id", "rosterDiv2");
@@ -72,13 +47,13 @@ var getPlayers = function getPlayers(schema) {
       _rosterDiv.setAttribute("id", "rosterDiv2");
 
       teamDisplay.appendChild(_rosterDiv);
-    }
+    } //Populate sort by dropdown
+
 
     incomingData.forEach(function (player) {
-      //Sort by dropdown
       for (var item in player) {
-        if (player.name === "TheShadowMaster" && item !== "__v" && item !== "_id") {
-          console.log(item);
+        if (player.name === "TheShadowMaster" && //TheShadowMaster is the hidden db account to keep track of stats/team name
+        item !== "__v" && item !== "_id") {
           var option = document.createElement("option");
           option.textContent = item.toUpperCase();
           option.value = item.toLowerCase();
@@ -91,9 +66,7 @@ var getPlayers = function getPlayers(schema) {
           var _option = document.createElement("option");
 
           _option.textContent = stat[0].toUpperCase();
-          _option.value = ".stats[0][\"".concat([stat[0]], "\"]"); //console.log(player.stats[0][stat[0]])
-
-          console.log(player[["stats"]]);
+          _option.value = stat[0];
           sortBox.appendChild(_option);
         }
       });

@@ -1,36 +1,7 @@
 import getAPIData from "./api.js";
+import compareValues from "./nestedValueGetter.js";
 
-// const sortFuction = (data, sortBy) => {
-//   const theSorting = data.sort((a, b) => {
-//     a.sortBy > b.sortBy ? 1 : -1;
-//   });
-//   return theSorting;
-// };
-
-function compareValues(key, order = 'asc') {
-  return function innerSort(a, b) {
-    if (!a.hasOwnProperty(key) || !b.hasOwnProperty(key)) {
-      // property doesn't exist on either object
-      return 0;
-    }
-
-    const varA = (typeof a[key] === 'string')
-      ? a[key].toUpperCase() : a[key];
-    const varB = (typeof b[key] === 'string')
-      ? b[key].toUpperCase() : b[key];
-
-    let comparison = 0;
-    if (varA > varB) {
-      comparison = 1;
-    } else if (varA < varB) {
-      comparison = -1;
-    }
-    return (
-      (order === 'desc') ? (comparison * -1) : comparison
-    );
-  };
-}
-
+//Main get function to call to supply info on roser/team name/sort categories and populate DOM
 const getPlayers = (schema) => {
   const teamDisplay = document.querySelector("#team");
   const rosterDiv2 = document.createElement("div");
@@ -39,6 +10,7 @@ const getPlayers = (schema) => {
   const sortBox = document.querySelector("#sortDropbox");
   let teamTitle = document.querySelector(".teamTitle");
 
+  //API call for needed schema. Mostly players schema, in this case.
   getAPIData(schema).then((data) => {
     domBuilder(data);
     sortBox.addEventListener("change", (event) => {
@@ -48,14 +20,13 @@ const getPlayers = (schema) => {
       domBuilder(sortedData);
     });
   });
-
+  //Takes data and builds DOM objects (roster view and sort by box)
   const domBuilder = (incomingData) => {
     console.log(incomingData);
     teamTitle.textContent = incomingData[0].teamName;
     console.log("Sortbox value:", sortBox.value);
     let oldDiv = document.querySelector("#rosterDiv2");
     if (oldDiv) {
-      console.log("oldDiv removed!");
       oldDiv.remove();
       const rosterDiv = document.createElement("div");
       rosterDiv.setAttribute("id", "rosterDiv2");
@@ -65,16 +36,14 @@ const getPlayers = (schema) => {
       rosterDiv.setAttribute("id", "rosterDiv2");
       teamDisplay.appendChild(rosterDiv);
     }
-
+    //Populate sort by dropdown
     incomingData.forEach((player) => {
-      //Sort by dropdown
       for (const item in player) {
         if (
-          player.name === "TheShadowMaster" &&
+          player.name === "TheShadowMaster" && //TheShadowMaster is the hidden db account to keep track of stats/team name
           item !== "__v" &&
           item !== "_id"
         ) {
-          console.log(item)
           let option = document.createElement("option");
           option.textContent = item.toUpperCase();
           option.value = item.toLowerCase();
@@ -90,9 +59,7 @@ const getPlayers = (schema) => {
         ) {
           let option = document.createElement("option");
           option.textContent = stat[0].toUpperCase();
-          option.value = `.stats[0]["${[stat[0]]}"]`
-          //console.log(player.stats[0][stat[0]])
-          console.log(player[["stats"]])
+          option.value = stat[0];
           sortBox.appendChild(option);
         }
       });
@@ -109,7 +76,7 @@ const getPlayers = (schema) => {
 
       //Render roster area
       if (player.name !== "TheShadowMaster") {
-        let rosterDiv = document.querySelector("#rosterDiv2")
+        let rosterDiv = document.querySelector("#rosterDiv2");
         let playerDiv = document.createElement("div");
         playerDiv.setAttribute("class", "playerDiv");
         if (player.starter) playerDiv.classList.add("starterAura");

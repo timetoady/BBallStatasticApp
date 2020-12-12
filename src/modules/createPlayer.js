@@ -3,8 +3,6 @@ import getAPIData,
 {showSpinner, hideSpinner, sendAPIStatDataChain, finalResponse } 
 from "./api.js";
 
-
-
 const playerArea = document.querySelector("#playerArea")
 const baseStats = document.querySelector(".baseStats")
 const submitButton = document.querySelector("#submitButton")
@@ -12,16 +10,11 @@ const finishModalTitle = document.querySelector(".finishTitle")
 const finishModalText = document.querySelector(".saveCompleteModal")
 const returnToRosterButton = document.querySelector(".returnToRoster")
 const addAnotherPlayerButton = document.querySelector(".addAnother")
-
-
-
-
-
 const stats = "../stats"
 const players = "../players"
 
+//Pair of functions to build json from HTML forms.
 export const buildJsonFormData = (form) => {
-    console.log("Form is:", form)
     const jsonFormData = {}
     for (const pair of new FormData(form)) {
         jsonFormData[pair[0]] = pair[1]
@@ -30,8 +23,6 @@ return jsonFormData
 }
 
 export const buildJsonFormDataStats = (form) => {
-
-    console.log("Form is:", form)
     const jsonFormData = {}
     for (const pair of new FormData(form)) {
         jsonFormData[pair[0]] = parseFloat(pair[1])
@@ -63,20 +54,18 @@ $(function () {
     $('[data-toggle="tooltip"]').tooltip()
   })
 
-
+//Main new player create function
 export default function newPlayer() {
 
+    //Some event listeners and helper functions for Modal operation
     returnToRosterButton.addEventListener("click", () =>{
         resetModel()
         window.location.href = "/"
-        
-    
     })
     
     addAnotherPlayerButton.addEventListener("click", () => {
         resetModel()
         location.reload();
-        
     })
     
     const resetModel = () => {
@@ -102,7 +91,7 @@ export default function newPlayer() {
     }
 
 
-
+    //Main form constuction
     const playerInfoForm = document.createElement('form')
         playerInfoForm.setAttribute("id", "playerInfoForm")
         playerArea.appendChild(playerInfoForm)
@@ -182,6 +171,7 @@ export default function newPlayer() {
                                 itIsRequired(height)
                                 heightDiv.appendChild(height)
 
+                                //Authentication for required info
                                 const checkIfRequiredMet = (input) =>{
                                     input.addEventListener("blur",() =>{
                                         if (teamName.value 
@@ -189,8 +179,7 @@ export default function newPlayer() {
                                             && number.value 
                                             && height.value) {
                                             const setUpSubmit = () => {
-                                                console.log("added submit listener")
-                                                submitButton.removeEventListener("click", console.log("Removed submit listener!"))
+                                                submitButton.removeEventListener("click", submitData())
                                                 submitButton.classList.remove("showHidden");
                                                 submitButton.classList.remove("submitButtonDisabled");
                                                 void submitButton.offsetWidth;
@@ -200,42 +189,23 @@ export default function newPlayer() {
                                                 .attr('data-original-title', 'Click to save new player.')
                                                 
                                                 submitButton.addEventListener("click", () => {
-                                                    
                                                     submitData()
                                                 })
                                             }
                                             setUpSubmit()
                                         } else {
-                                            submitButton.removeEventListener("click", console.log("Removed submit listener!"))
+                                            submitButton.removeEventListener("click", submitData())
                                         }
                                     
                                     })
-                                    // window.addEventListener("wheel", () =>{
-                                    //     if (teamName.value 
-                                    //         && nameInput.value 
-                                    //         && number.value 
-                                    //         && height.value) {
-                                    //             console.log("wheel!")
-                                    //             submitButton.classList.remove("showHidden");
-                                    //             submitButton.classList.remove("submitButtonDisabled");
-                                    //             void submitButton.offsetWidth;
-                                    //             submitButton.classList.add("submitButtonActive");
-                                    //             submitButton.title = "Click to save player."
-                                    //             $('[data-toggle="tooltip"]').tooltip('hide')
-                                    //             .attr('data-original-title', 'Click to save new player.')
-                                                
-                                    //             submitButton.addEventListener("click", () => {
-                                    //                 submitData()
-                                    //             })
-                                    //         }
-                                    //     }, {once: true})
+                              
                                 }
                                 checkIfRequiredMet(teamName)
                                 checkIfRequiredMet(nameInput)
                                 checkIfRequiredMet(number)
                                 checkIfRequiredMet(height)
                                 
-
+                    //The rest of the top player info form
                     let weightDiv = document.createElement("div")
                         weightDiv.setAttribute("class", "weightDiv")
                         detailsDiv.appendChild(weightDiv)
@@ -325,7 +295,7 @@ export default function newPlayer() {
                                     starter.appendChild(starterYes)
                 
 
-                                // starter.setAttribute('class', "editInputs")
+    // Base stats section form creator
     let statsForm = document.createElement("form")
         statsForm.setAttribute("class", "statsForm")             
     let statsDiv = document.createElement("div")
@@ -376,7 +346,7 @@ export default function newPlayer() {
             extraStatsForm.setAttribute("class", "extraStatsForm")
             extraStatDiv.appendChild(extraStatsForm)
 
-            
+            //User created stats form data.
             if (data[0]["otherStats"].length !== 0) {
                 data[0]["otherStats"].forEach(extraStat => {
                     const extraStatDiv2 = document.createElement("div")
@@ -399,53 +369,32 @@ export default function newPlayer() {
 
         })
     
- 
+        // Convert forms to FormData and submit new player via API call
     const submitData = async () => {
         let playerForm = document.querySelector("#playerInfoForm")
         let baseStatsForm = document.querySelector(".statsForm")
         let extraStatsForm = document.querySelector(".extraStatsForm")
-        //console.log(extraStatsForm.value)
         let playerData = buildJsonFormData(playerForm)
         let baseStatData = buildJsonFormDataStats(baseStatsForm)
         let extraStatData = buildJsonFormDataStats(extraStatsForm)
-        
-        
-        console.log("Create Forms sent as:",playerForm, baseStatData)
-         console.log(extraStatData)
-
-        showSpinner()
+       showSpinner()
        $('#finishCreatePlayer').modal('toggle')
         const response = await sendAPIStatDataChain(
             players, playerData, baseStatData, extraStatData).then((reply)=>{
             setTimeout( () => {
                 if (finalResponse) {
                     hideSpinner()
-                    console.log("dataChain reply", reply)
                     console.log("Final responce in create", finalResponse.response)
                 }
                 
             finalResponse.response.ok 
             ? playerSaveModal()
             : errorModal(finalResponse.status)
-
             }, 500)
-            
-               
-
-
-               
-
-                  
-           })
+            })
         .catch ((err) => {
             console.error(err)
         })
-       
-        
-        
-        //do then here to send for each extra stat if extraStat exists
-
     }
- 
 
-    }
+}

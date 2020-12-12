@@ -7,10 +7,6 @@ import editPlayer from "./editPlayer.js";
 
 localStorage.setItem("edit", false);
 const players = "../players";
-const stats = "../stats";
-const playerID = localStorage.getItem("playerID");
-const canEditPlayer = localStorage.getItem("edit");
-
 const addPlayerButton = document.querySelector(".addPlayerButton");
 
 //do a switch for loading here?
@@ -32,11 +28,9 @@ if (window.location.href.indexOf("player") > -1) {
   });
 }
 
-//required: name, teamName, number (or do default 00), height
-//others: imgURL, weight, position, class, hometown, rosterSeason, role, starter
-//lower part:
-//minuites, gp, points, fga, fgm, fta ftm, asissts, steals, blocks, fouls tos, off, def, reb,
-//load current set of otherStats from current player 0 as inputs
+
+
+
 //place to add new stats that will add on to otherStats
 //have to build form with validation
 //have to build button that when clicked assembles form into JSON and sends as POST

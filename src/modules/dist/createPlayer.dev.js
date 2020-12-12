@@ -22,10 +22,9 @@ var finishModalText = document.querySelector(".saveCompleteModal");
 var returnToRosterButton = document.querySelector(".returnToRoster");
 var addAnotherPlayerButton = document.querySelector(".addAnother");
 var stats = "../stats";
-var players = "../players";
+var players = "../players"; //Pair of functions to build json from HTML forms.
 
 var buildJsonFormData = function buildJsonFormData(form) {
-  console.log("Form is:", form);
   var jsonFormData = {};
   var _iteratorNormalCompletion = true;
   var _didIteratorError = false;
@@ -57,7 +56,6 @@ var buildJsonFormData = function buildJsonFormData(form) {
 exports.buildJsonFormData = buildJsonFormData;
 
 var buildJsonFormDataStats = function buildJsonFormDataStats(form) {
-  console.log("Form is:", form);
   var jsonFormData = {};
   var _iteratorNormalCompletion2 = true;
   var _didIteratorError2 = false;
@@ -109,9 +107,10 @@ var itIsRequired = function itIsRequired(input) {
 
 $(function () {
   $('[data-toggle="tooltip"]').tooltip();
-});
+}); //Main new player create function
 
 function newPlayer() {
+  //Some event listeners and helper functions for Modal operation
   returnToRosterButton.addEventListener("click", function () {
     resetModel();
     window.location.href = "/";
@@ -140,7 +139,8 @@ function newPlayer() {
     addAnotherPlayerButton.style.display = "none";
     finishModalText.textContent = "Uh oh, that looks like an error: ".concat(error);
     finishModalTitle.textContent = "ERROR";
-  };
+  }; //Main form constuction
+
 
   var playerInfoForm = document.createElement('form');
   playerInfoForm.setAttribute("id", "playerInfoForm");
@@ -220,14 +220,13 @@ function newPlayer() {
   height.required;
   height.setAttribute('class', "editInputs");
   itIsRequired(height);
-  heightDiv.appendChild(height);
+  heightDiv.appendChild(height); //Authentication for required info
 
   var checkIfRequiredMet = function checkIfRequiredMet(input) {
     input.addEventListener("blur", function () {
       if (teamName.value && nameInput.value && number.value && height.value) {
         var setUpSubmit = function setUpSubmit() {
-          console.log("added submit listener");
-          submitButton.removeEventListener("click", console.log("Removed submit listener!"));
+          submitButton.removeEventListener("click", submitData());
           submitButton.classList.remove("showHidden");
           submitButton.classList.remove("submitButtonDisabled");
           void submitButton.offsetWidth;
@@ -241,32 +240,16 @@ function newPlayer() {
 
         setUpSubmit();
       } else {
-        submitButton.removeEventListener("click", console.log("Removed submit listener!"));
+        submitButton.removeEventListener("click", submitData());
       }
-    }); // window.addEventListener("wheel", () =>{
-    //     if (teamName.value 
-    //         && nameInput.value 
-    //         && number.value 
-    //         && height.value) {
-    //             console.log("wheel!")
-    //             submitButton.classList.remove("showHidden");
-    //             submitButton.classList.remove("submitButtonDisabled");
-    //             void submitButton.offsetWidth;
-    //             submitButton.classList.add("submitButtonActive");
-    //             submitButton.title = "Click to save player."
-    //             $('[data-toggle="tooltip"]').tooltip('hide')
-    //             .attr('data-original-title', 'Click to save new player.')
-    //             submitButton.addEventListener("click", () => {
-    //                 submitData()
-    //             })
-    //         }
-    //     }, {once: true})
+    });
   };
 
   checkIfRequiredMet(teamName);
   checkIfRequiredMet(nameInput);
   checkIfRequiredMet(number);
-  checkIfRequiredMet(height);
+  checkIfRequiredMet(height); //The rest of the top player info form
+
   var weightDiv = document.createElement("div");
   weightDiv.setAttribute("class", "weightDiv");
   detailsDiv.appendChild(weightDiv);
@@ -353,7 +336,7 @@ function newPlayer() {
   var starterYes = document.createElement("option");
   starterYes.textContent = "Yes";
   starterYes.value = true;
-  starter.appendChild(starterYes); // starter.setAttribute('class', "editInputs")
+  starter.appendChild(starterYes); // Base stats section form creator
 
   var statsForm = document.createElement("form");
   statsForm.setAttribute("class", "statsForm");
@@ -398,7 +381,7 @@ function newPlayer() {
     var extraStatDiv = document.querySelector("#extraStats");
     var extraStatsForm = document.createElement("form");
     extraStatsForm.setAttribute("class", "extraStatsForm");
-    extraStatDiv.appendChild(extraStatsForm);
+    extraStatDiv.appendChild(extraStatsForm); //User created stats form data.
 
     if (data[0]["otherStats"].length !== 0) {
       data[0]["otherStats"].forEach(function (extraStat) {
@@ -418,7 +401,7 @@ function newPlayer() {
         extraStatDiv2.appendChild(aStat);
       });
     }
-  });
+  }); // Convert forms to FormData and submit new player via API call
 
   var submitData = function submitData() {
     var playerForm, baseStatsForm, extraStatsForm, playerData, baseStatData, extraStatData, response;
@@ -428,21 +411,17 @@ function newPlayer() {
           case 0:
             playerForm = document.querySelector("#playerInfoForm");
             baseStatsForm = document.querySelector(".statsForm");
-            extraStatsForm = document.querySelector(".extraStatsForm"); //console.log(extraStatsForm.value)
-
+            extraStatsForm = document.querySelector(".extraStatsForm");
             playerData = buildJsonFormData(playerForm);
             baseStatData = buildJsonFormDataStats(baseStatsForm);
             extraStatData = buildJsonFormDataStats(extraStatsForm);
-            console.log("Create Forms sent as:", playerForm, baseStatData);
-            console.log(extraStatData);
             (0, _api.showSpinner)();
             $('#finishCreatePlayer').modal('toggle');
-            _context.next = 12;
+            _context.next = 10;
             return regeneratorRuntime.awrap((0, _api.sendAPIStatDataChain)(players, playerData, baseStatData, extraStatData).then(function (reply) {
               setTimeout(function () {
                 if (_api.finalResponse) {
                   (0, _api.hideSpinner)();
-                  console.log("dataChain reply", reply);
                   console.log("Final responce in create", _api.finalResponse.response);
                 }
 
@@ -452,10 +431,10 @@ function newPlayer() {
               console.error(err);
             }));
 
-          case 12:
+          case 10:
             response = _context.sent;
 
-          case 13:
+          case 11:
           case "end":
             return _context.stop();
         }
